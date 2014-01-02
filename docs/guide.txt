@@ -1,0 +1,16 @@
+1. Setup DEV environment:
+	1.1. Download appengine-java-sdk at: http://googleappengine.googlecode.com/files/appengine-java-sdk-1.8.8.zip
+	1.2. Extract sdk at: D:\Tool\appengine-java-sdk
+	1.3. Add D:\Tool\appengine-java-sdk\bin to path enviroment variable
+	1.4. Test a sample:
+		1.4.1. Running this command:
+			+ dev_appserver.cmd D:\Tool\appengine-java-sdk\demos\guestbook\war
+			+ http://localhost:8080/
+
+2. Create and build Maven project:
+	2.1. Run this command to create a Maven project:
+		mvn archetype:generate -DgroupId=app.jvn -DartifactId=JVN
+	2.2. Run this command to build and package project:
+		mvn clean package
+	2.3. Run this command to deploy project to googleappengine
+		dev_appserver.cmd D:\PR-JavaProjects\JVN\target\JVN
