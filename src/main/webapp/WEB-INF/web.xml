@@ -13,4 +13,7 @@
 		<filter-name>sitemesh</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<welcome-file-list>
+		<welcome-file>jobs_list.jsp</welcome-file>
+	</welcome-file-list>
 </web-app>
