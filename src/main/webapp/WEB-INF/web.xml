@@ -4,6 +4,11 @@
 
 <web-app>
 	<display-name>Java Work</display-name>
+	<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/dao-config.xml, classpath:spring/service-config.xml</param-value>
+    </context-param>
+    
 	<filter>
 		<filter-name>sitemesh</filter-name>
 		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
@@ -11,8 +16,27 @@
 
 	<filter-mapping>
 		<filter-name>sitemesh</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>*.jv</url-pattern>
 	</filter-mapping>
+	
+	<listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+	<servlet>
+		<servlet-name>SpringDispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/mvc-core-config.xml</param-value>
+        </init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SpringDispatcher</servlet-name>
+		<url-pattern>*.jv</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>jobs_list.jsp</welcome-file>
 	</welcome-file-list>

@@ -1,0 +1,15 @@
+<ehcache>
+	<diskStore path="java.io.tmpdir/javawork" />
+ 	<defaultCache
+		maxElementsInMemory="50"
+		eternal="false"
+		overflowToDisk="true"
+		timeToIdleSeconds="86400"
+		timeToLiveSeconds="86400"/>
+
+	<!-- Please see CacheConstants to define correct cache name which will be used in code also -->
+	<cache name="site.global.cache"
+		maxElementsInMemory="500" 
+		eternal="true"/>
+	
+</ehcache>

@@ -64,80 +64,13 @@
             <div class='container-fluid'>
                 <a class='brand' href='index.html'>
                     <i class='icon-heart-empty'></i>
-                    <span class='hidden-phone'>Flatty</span>
+                    <span class='hidden-phone'>Java Work</span>
                 </a>
                 <a class='toggle-nav btn pull-left' href='#'>
                     <i class='icon-reorder'></i>
                 </a>
                 <ul class='nav pull-right'>
-                    <li class='dropdown light only-icon'>
-                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
-                            <i class='icon-adjust'></i>
-                        </a>
-                        <ul class='dropdown-menu color-settings'>
-                            <li class='color-settings-body-color'>
-                                <div class='color-title'>Body color</div>
-                                <a data-change-to='assets/stylesheets/light-theme.css' href='#'>
-                                    Light
-                                    <small>(default)</small>
-                                </a>
-                                <a data-change-to='assets/stylesheets/dark-theme.css' href='#'>
-                                    Dark
-                                </a>
-                                <a data-change-to='assets/stylesheets/dark-blue-theme.css' href='#'>
-                                    Dark blue
-                                </a>
-                            </li>
-                            <li class='divider'></li>
-                            <li class='color-settings-contrast-color'>
-                                <div class='color-title'>Contrast color</div>
-                                <a href="#" data-change-to="contrast-red"><i class='icon-adjust text-red'></i>
-                                    Red
-                                    <small>(default)</small>
-                                </a>
-                                <a href="#" data-change-to="contrast-blue"><i class='icon-adjust text-blue'></i>
-                                    Blue
-                                </a>
-                                <a href="#" data-change-to="contrast-orange"><i class='icon-adjust text-orange'></i>
-                                    Orange
-                                </a>
-                                <a href="#" data-change-to="contrast-purple"><i class='icon-adjust text-purple'></i>
-                                    Purple
-                                </a>
-                                <a href="#" data-change-to="contrast-green"><i class='icon-adjust text-green'></i>
-                                    Green
-                                </a>
-                                <a href="#" data-change-to="contrast-muted"><i class='icon-adjust text-muted'></i>
-                                    Muted
-                                </a>
-                                <a href="#" data-change-to="contrast-fb"><i class='icon-adjust text-fb'></i>
-                                    Facebook
-                                </a>
-                                <a href="#" data-change-to="contrast-dark"><i class='icon-adjust text-dark'></i>
-                                    Dark
-                                </a>
-                                <a href="#" data-change-to="contrast-pink"><i class='icon-adjust text-pink'></i>
-                                    Pink
-                                </a>
-                                <a href="#" data-change-to="contrast-grass-green"><i class='icon-adjust text-grass-green'></i>
-                                    Grass green
-                                </a>
-                                <a href="#" data-change-to="contrast-sea-blue"><i class='icon-adjust text-sea-blue'></i>
-                                    Sea blue
-                                </a>
-                                <a href="#" data-change-to="contrast-banana"><i class='icon-adjust text-banana'></i>
-                                    Banana
-                                </a>
-                                <a href="#" data-change-to="contrast-dark-orange"><i class='icon-adjust text-dark-orange'></i>
-                                    Dark orange
-                                </a>
-                                <a href="#" data-change-to="contrast-brown"><i class='icon-adjust text-brown'></i>
-                                    Brown
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class='dropdown medium only-icon widget'>
+                    <li class='dropdown light only-icon widget'>
                         <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
                             <i class='icon-rss'></i>
                             <div class='label'>5</div>
@@ -150,7 +83,7 @@
                                             <i class='icon-user text-success'></i>
                                         </div>
                                         <div class='pull-left text'>
-                                            John Doe signed up
+                                            ClearPath invite you to apply J2EE Developer job
                                             <small class='muted'>just now</small>
                                         </div>
                                     </div>
@@ -164,7 +97,7 @@
                                             <i class='icon-inbox text-error'></i>
                                         </div>
                                         <div class='pull-left text'>
-                                            New Order #002
+                                            Kevin applied J2EE Developer job
                                             <small class='muted'>3 minutes ago</small>
                                         </div>
                                     </div>
@@ -178,7 +111,7 @@
                                             <i class='icon-comment text-warning'></i>
                                         </div>
                                         <div class='pull-left text'>
-                                            America Leannon commented Flatty with veeery long text.
+                                            J2EE Developer job will expired soon
                                             <small class='muted'>1 hour ago</small>
                                         </div>
                                     </div>
@@ -192,7 +125,7 @@
                                             <i class='icon-user text-success'></i>
                                         </div>
                                         <div class='pull-left text'>
-                                            Jane Doe signed up
+                                            .NET Developer job is closed.
                                             <small class='muted'>last week</small>
                                         </div>
                                     </div>
@@ -206,8 +139,8 @@
                                             <i class='icon-inbox text-error'></i>
                                         </div>
                                         <div class='pull-left text'>
-                                            New Order #001
-                                            <small class='muted'>1 year ago</small>
+                                            Tom accept interviewed appointment.
+                                            <small class='muted'>2 weeks ago</small>
                                         </div>
                                     </div>
                                 </a>
@@ -217,7 +150,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class='dropdown dark user-menu'>
+                    <li class='dropdown medium user-menu'>
                         <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
                             <img alt='Mila Kunis' height='23' src='assets/images/avatar.jpg' width='23' />
                             <span class='user-name hidden-phone'>Mila Kunis</span>
@@ -274,13 +207,13 @@
     </a>
 </li>
 <li class=''>
-    <a href='buttons_and_icons.html'>
+    <a href='post_job.jsp'>
         <i class=' icon-upload'></i>
         <span>Post job</span>
     </a>
 </li>
 <li class=''>
-    <a href='buttons_and_icons.html'>
+    <a href='javascript:;'>
         <i class=' icon-tasks'></i>
         <span>Manage jobs</span>
     </a>
@@ -293,13 +226,13 @@
     </a>
     <ul class='in nav nav-stacked'>
         <li class=''>
-            <a href='invoice.html'>
+            <a href='profile.jsp'>
                 <i class='icon-user'></i>
                 <span>Profile</span>
             </a>
         </li>
         <li class=''>
-            <a href='gallery.html'>
+            <a href='setting.jsp'>
                 <i class='icon-cog'></i>
                 <span>Setting</span>
             </a>
@@ -313,7 +246,7 @@
     </ul>
 </li>
 <li class=''>
-    <a href='email_templates.html'>
+    <a href='faq.jsp'>
         <i class='icon-question'></i>
         <span>FAQ</span>
     </a>
