@@ -8,7 +8,7 @@ import vn.jv.util.Lib;
 
 /**
  * 
- * @author Max
+ * 
  *
  */
 public class AcRolePermissionDAO extends BaseDAO<Integer, AcRolePermission> implements IAcRolePermissionDAO {

@@ -9,7 +9,7 @@ import vn.jv.db.entity.AcResource;
 
 /**
  * 
- * @author Max
+ * 
  *
  */
 public interface IAcPermissionDAO extends IBaseDAO<Integer, AcPermission> {

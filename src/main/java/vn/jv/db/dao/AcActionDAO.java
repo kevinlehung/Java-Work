@@ -6,7 +6,6 @@ import vn.jv.db.entity.AcAction;
 
 /**
  * 
- * @author Max
  *
  */
 public class AcActionDAO extends BaseDAO<Integer, AcAction> implements IAcActionDAO {

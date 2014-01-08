@@ -6,7 +6,7 @@ import vn.jv.db.entity.User;
 
 /**
  * 
- * @author Max
+ * 
  *
  */
 public interface IUserDAO extends IBaseDAO<Integer, User> {

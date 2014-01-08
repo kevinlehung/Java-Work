@@ -11,7 +11,7 @@ import vn.jv.web.bean.RoleResourceBean;
 
 /**
  * 
- * @author Max
+ * 
  *
  */
 public class AcResourceDAO extends BaseDAO<Integer, AcResource> implements IAcResourceDAO {

@@ -19,7 +19,7 @@ import vn.jv.cache.CacheHelper;
 
 /**
  * Contains common methods for every DAO
- * @author Max
+ * 
  *
  * @param <K>
  * @param <E>

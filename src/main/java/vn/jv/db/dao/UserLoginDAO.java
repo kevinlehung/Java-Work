@@ -13,7 +13,7 @@ import vn.jv.util.Lib;
 
 /**
  * 
- * @author Max
+ * 
  *
  */
 public class UserLoginDAO extends BaseDAO<Integer, UserLogin> implements IUserLoginDAO {

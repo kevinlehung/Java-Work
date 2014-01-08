@@ -8,7 +8,7 @@ import vn.jv.db.entity.RoleMenuItem;
 
 /**
  * DAO used to interact with Role
- * @author Max
+ * 
  *
  */
 public interface IAcRoleDAO extends IBaseDAO<Integer, AcRole> {

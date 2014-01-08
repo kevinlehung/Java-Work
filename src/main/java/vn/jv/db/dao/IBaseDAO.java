@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Interface used for every DAO
- * @author Max
+ * 
  *
  * @param <K>
  * @param <E>

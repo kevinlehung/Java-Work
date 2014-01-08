@@ -23,7 +23,7 @@ import vn.jv.util.Lib;
 
 /**
  * 
- * @author Max
+ * 
  * 
  */
 public class AcRoleDAO extends BaseDAO<Integer, AcRole> implements IAcRoleDAO {

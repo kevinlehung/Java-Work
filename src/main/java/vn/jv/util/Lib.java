@@ -6,12 +6,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * 
- * @author Max
+ * 
  *
  */
 public class Lib {
@@ -66,4 +69,33 @@ public class Lib {
 		return map;
 	}
 	
+	public static String convertToString(Object object) {
+		if(object==null) {
+			return null;
+		}
+		String data = null;
+		if(object instanceof String) {
+			data = (String) object;
+		} else {
+			try {
+				data = ToStringBuilder.reflectionToString(object);
+			} catch (Exception e) {
+				data = object.toString();
+			}
+		}
+		return data;
+	}
+	
+	public static final String getHostUrl(HttpServletRequest request) {
+		StringBuffer redirectURL = new StringBuffer("");
+		redirectURL.append(request.getScheme());
+		redirectURL.append("://");
+		redirectURL.append(request.getServerName());
+		redirectURL.append(request.getServerPort() != 80 ? ":" + request.getServerPort() : "");
+		return redirectURL.toString();
+	}
+	
+	public static final String getSiteUrl(HttpServletRequest request) {
+		return Lib.getHostUrl(request) + request.getContextPath();
+	}
 }

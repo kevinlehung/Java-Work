@@ -13,7 +13,7 @@ public class UserDAO extends BaseDAO<Integer, User> implements IUserDAO {
 	
 	public User findByEmail(String email) {
 		try {
-			String query = "FROM com.aklero.idea.db.entity.User u WHERE u.userEmail = :userEmail";
+			String query = "FROM vn.jv.db.entity.User u WHERE u.userEmail = :userEmail";
 			Map<String, Object> map = Lib.buildParamsMap("userEmail", email);
 			List<User> users = findByNamedQuery(query, map);
 			if (users != null && !users.isEmpty()) {
@@ -39,7 +39,7 @@ public class UserDAO extends BaseDAO<Integer, User> implements IUserDAO {
 	
 	public User findByPasswordHash(String passwordHash) {
 		try {
-			String query = "FROM com.aklero.idea.db.entity.User u WHERE u.passwordHash = :passwordHash";
+			String query = "FROM vn.jv.db.entity.User u WHERE u.passwordHash = :passwordHash";
 			Map<String, Object> map = Lib.buildParamsMap("passwordHash", passwordHash);
 			List<User> users = findByNamedQuery(query, map);
 			if (users != null && !users.isEmpty()) {

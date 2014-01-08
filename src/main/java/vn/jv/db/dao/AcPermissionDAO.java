@@ -14,7 +14,6 @@ import vn.jv.util.Lib;
 
 /**
  * DAO used to handle permissions
- * @author Max
  *
  */
 public class AcPermissionDAO extends BaseDAO<Integer, AcPermission> implements IAcPermissionDAO {

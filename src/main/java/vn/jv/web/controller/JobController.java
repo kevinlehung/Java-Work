@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class JobController extends BaseController {
-	@RequestMapping(value="/helloWorld", method = RequestMethod.GET)
+	@RequestMapping(value="/jobs_list", method = RequestMethod.GET)
 	public String helloWorld(Model model) {
 		model.addAttribute("message", "Hello World!");
 		return "jobs_list";

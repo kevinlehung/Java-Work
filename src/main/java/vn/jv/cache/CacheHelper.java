@@ -27,7 +27,6 @@ import vn.jv.util.Lib;
 
 /**
  * @Description: This class contains helper methods to Ehcache CacheManager.
- * @author Max
  * @version 1.0
  */
 public class CacheHelper implements InitializingBean{

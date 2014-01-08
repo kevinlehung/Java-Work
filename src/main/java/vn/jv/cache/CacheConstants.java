@@ -2,7 +2,6 @@ package vn.jv.cache;
 
 /**
  * Contains all constants used for caching
- * @author Max
  *
  */
 public interface CacheConstants {
@@ -26,5 +25,9 @@ public interface CacheConstants {
 	
 	public interface AcPermissionDAO{
 		public final static String FIND_PERMISSIONS_FOR_ROLE_CACHE = "AcPermissionDAO.findPermissionsForRole.cache";
+	}
+	
+	public interface MailUtil {
+		public final static String GET_MAIL_SENDER_CACHE = "MailUtil.getMailSender.cache";
 	}
 }
