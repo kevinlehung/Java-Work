@@ -10,15 +10,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import vn.jv.db.dao.IUserDAO;
 import vn.jv.db.entity.User;
 
-/**
- * Custom UserDetailsService which loads users from Jv database
- * 
- *
- */
+@Service
 public class JvUserDetailsService implements UserDetailsService {
 	@Autowired@Qualifier("userDAO")
 	private IUserDAO userDAO;
