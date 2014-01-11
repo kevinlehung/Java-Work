@@ -3,9 +3,12 @@ package vn.jv.db.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import vn.jv.db.entity.AcRoleHierarchy;
 import vn.jv.util.Lib;
 
+@Component
 public class AcRoleHierarchyDAO extends BaseDAO<Integer, AcRoleHierarchy> implements IAcRoleHierarchyDAO {
 	
 	private static final String FIND_PARENT_ROLE = "SELECT parentAcRole.roleName FROM AcRoleHierarchy WHERE acRole.acRoleId = :roleId";

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -42,12 +43,7 @@ import vn.jv.util.Lib;
 import vn.jv.util.PasswordEnforcementUtil;
 import vn.jv.util.PasswordGeneratorUtil;
 
-/**
- * Security service to check permission on resource
- * 
- * 
- * 
- */
+@Service
 public class SecurityService implements ISecurityService {
 	@Autowired
 	@Qualifier("acRoleDAO")

@@ -6,9 +6,12 @@ import java.util.Map;
 
 import javax.persistence.Query;
 
+import org.springframework.stereotype.Component;
+
 import vn.jv.db.entity.UserPassword;
 import vn.jv.util.Lib;
 
+@Component
 public class UserPasswordDAO extends BaseDAO<Integer, UserPassword> implements IUserPasswordDAO {
 	
 	private static final String FIND_BY_USER_ID = 

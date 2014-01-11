@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.jpa.JpaCallback;
+import org.springframework.stereotype.Component;
 
 import vn.jv.cache.CacheConstants;
 import vn.jv.db.entity.AcRole;
@@ -21,11 +22,7 @@ import vn.jv.db.entity.RoleMenuItem;
 import vn.jv.db.entity.User;
 import vn.jv.util.Lib;
 
-/**
- * 
- * 
- * 
- */
+@Component
 public class AcRoleDAO extends BaseDAO<Integer, AcRole> implements IAcRoleDAO {
 	@Autowired
 	@Qualifier("userDAO")

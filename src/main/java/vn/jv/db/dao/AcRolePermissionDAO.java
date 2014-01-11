@@ -3,14 +3,12 @@ package vn.jv.db.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import vn.jv.db.entity.AcRolePermission;
 import vn.jv.util.Lib;
 
-/**
- * 
- * 
- *
- */
+@Component
 public class AcRolePermissionDAO extends BaseDAO<Integer, AcRolePermission> implements IAcRolePermissionDAO {
 
 	/**

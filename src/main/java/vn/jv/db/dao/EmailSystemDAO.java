@@ -2,8 +2,11 @@ package vn.jv.db.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import vn.jv.db.entity.EmailSystem;
 
+@Component
 public class EmailSystemDAO extends BaseDAO<Integer, EmailSystem> implements IEmailSystemDAO {
 	@SuppressWarnings("unchecked")
 	public EmailSystem getDefaultEmailSystem() {

@@ -9,7 +9,7 @@ public interface WebConstants {
 	public static final String JSESSIONID = ";jsessionid=";
 	public static final String USER_ID = "userId";
     public static final String SUPER_ADMIN = "Super Admin";
-    public static final String PAGE_SUFFIX = ".sp";   
+    public static final String PAGE_SUFFIX = ".jv";   
     public static final String LAST_LOGIN = "lastLogin";
     public static final String DATE_FORMAT = "MM/dd/yyyy h:mm a";
     public static final String NOT_AVAILABLE = "N/A";
@@ -36,6 +36,7 @@ public interface WebConstants {
 	public interface Params {
 		public static final String TIME_ZONE = "timeZone";
     }
+    
 	public static final Map<String, String> TIME_ZONES = new HashMap<String, String>() {
 		{
 			put("-12:00,0", "International Date Line Wes");
@@ -91,4 +92,23 @@ public interface WebConstants {
 			put("+13:00,0", "Nuku'alofa");
 		}
 	};
+	
+    public interface Views {
+        public static final String PAGE_NOT_FOUND = "pageNotFound";
+        public static final String ERROR = "error";
+        
+        public static final String SIGN_IN = "security/sign_in";
+        public static final String SESSION_EXPIRED = "security/sessionExpired";
+        public static final String PASSWORD_RESET = "security/ResetPassSucess";
+        public static final String FORGOT_PASSWORD = "security/forgotPassword";
+        public static final String RESET_PASSWORD = "security/resetPassword";
+        public static final String ACCESS_DENIED = "security/AccessDenied";
+        
+    }
+    
+    public interface Pages {
+        public static final String JOBS_LIST = "jobs_list." + PAGE_SUFFIX;
+        
+    }
+    
 }

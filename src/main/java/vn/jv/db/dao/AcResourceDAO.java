@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import vn.jv.db.entity.AcAction;
 import vn.jv.db.entity.AcResource;
 import vn.jv.util.Lib;
 import vn.jv.web.bean.RoleResourceBean;
 
-/**
- * 
- * 
- *
- */
+@Component
 public class AcResourceDAO extends BaseDAO<Integer, AcResource> implements IAcResourceDAO {
 
 	/**

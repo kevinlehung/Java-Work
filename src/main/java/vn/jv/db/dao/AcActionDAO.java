@@ -2,12 +2,11 @@ package vn.jv.db.dao;
 
 import javax.persistence.Query;
 
+import org.springframework.stereotype.Component;
+
 import vn.jv.db.entity.AcAction;
 
-/**
- * 
- *
- */
+@Component
 public class AcActionDAO extends BaseDAO<Integer, AcAction> implements IAcActionDAO {
 
 	/**

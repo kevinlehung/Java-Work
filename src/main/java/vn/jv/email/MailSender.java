@@ -9,18 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Component;
 
 import vn.jv.cache.CacheConstants;
 import vn.jv.cache.CacheHelper;
 import vn.jv.db.dao.IEmailSystemDAO;
 import vn.jv.db.entity.EmailSystem;
 
-/**
- * Mail sender used to send emails using our mail systems defined
- * in email_system table
- * 
- *
- */
+@Component
 public class MailSender implements IMailSender {
 	protected final Logger log = LoggerFactory.getLogger(getClass());
 	private CacheHelper cacheHelper = CacheHelper.getInstance();

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
 import vn.jv.cache.CacheConstants;
 import vn.jv.db.entity.AcAction;
@@ -12,10 +13,7 @@ import vn.jv.db.entity.AcPermission;
 import vn.jv.db.entity.AcResource;
 import vn.jv.util.Lib;
 
-/**
- * DAO used to handle permissions
- *
- */
+@Component
 public class AcPermissionDAO extends BaseDAO<Integer, AcPermission> implements IAcPermissionDAO {
 	
 	private static final String FIND_RESOURCES_FOR_ROLE = "SELECT rp.acPermission.acResource.resourceName FROM AcRolePermission rp WHERE rp.acRole.acRoleId = :roleId";

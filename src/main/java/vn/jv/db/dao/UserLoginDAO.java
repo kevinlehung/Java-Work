@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,11 +12,7 @@ import vn.jv.db.entity.User;
 import vn.jv.db.entity.UserLogin;
 import vn.jv.util.Lib;
 
-/**
- * 
- * 
- *
- */
+@Component
 public class UserLoginDAO extends BaseDAO<Integer, UserLogin> implements IUserLoginDAO {
 	
 	/**

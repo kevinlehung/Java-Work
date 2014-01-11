@@ -4,10 +4,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import vn.jv.db.entity.AcRole;
 import vn.jv.db.entity.AcRoleUser;
 import vn.jv.util.Lib;
 
+@Component
 public class AcRoleUserDAO extends BaseDAO<Integer, AcRoleUser> implements IAcRoleUserDAO {
 
 	/**

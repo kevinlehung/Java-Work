@@ -6,11 +6,36 @@
 		1.4.1. Running this command:
 			+ dev_appserver.cmd D:\Tool\appengine-java-sdk\demos\guestbook\war
 			+ http://localhost:8080/
+	1.5. Goto https://appengine.google.com and create an app with named "Java-Work"
+		Note: <application> tag in "appengine-web.xml" file must match above app ID. It is "Java-Work" in this case
+		URL for this application is: java-work.appspot.com
 
 2. Create and build Maven project:
 	2.1. Run this command to create a Maven project:
 		mvn archetype:generate -DgroupId=app.jvn -DartifactId=JVN
 	2.2. Run this command to build and package project:
 		mvn clean package
-	2.3. Run this command to deploy project to googleappengine
-		dev_appserver.cmd D:\PR-JavaProjects\JVN\target\JVN
+	2.3. Run this command to deploy project to googleappengine on local server
+		dev_appserver.cmd D:\PR-JavaProjects\Java-Work\target\JVN
+	2.3. Run this command to deploy project to googleappengine on remote server
+		appcfg.cmd update D:\PR-JavaProjects\Java-Work\target\JVN
+		Use this url for testing: http://java-work.appspot.com/jobs_list.jsp
+
+3. Setup domain java.vn:
+	3.1. DNS Managament for java.vn:
+		3.1.1. URL: http://www.dns.net.vn with username/password = java.vn/025088324
+			+ Find the CNAME settings and enter the following as the CNAME value or alias:dev
+			+ Set the CNAME destination to the following address:ghs.googlehosted.com. (Important note: has DOT sign at the end of ghs.googlehosted.com)
+		3.2.2. Domain information: http://access.esc.vn with username/password = java.vn/025088324
+	
+	3.2. Setup google app for java.vn:
+		3.2.1. Goto: https://admin.google.com/java.vn/AdminHome?firsttime=pre with username/password=hunglevn@java.vn/Depl9y@123
+	
+	3.3. Add domain to Google App Engine:
+		3.3.1. Goto https://appengine.google.com/ => select Java-Work application
+		3.3.2. Administrator => Application Settings => Domain Setup + Add Domain => fill java.vn => Activate service
+---------------------------------------------------------------------------------------------------------------------
+Trouble shooter:
+1. Run "appcfg.cmd update D:\PR-JavaProjects\Java-Work\target\JVN" command and get error: "Cannot get the System Java Compiler"
+	Solution: Place %JAVA_HOME%\bin at the beginning of PATH enviroment variable
+

@@ -5,16 +5,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-/**
- * Helper to build message from template file using FreeMarker
- * 
- *
- */
+@Component
 public class MailTemplateBuilder implements IMailTemplateBuilder {
 	private static final Map<String, Object> COMMON_VARS;
 	static {
