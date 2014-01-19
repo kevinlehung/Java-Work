@@ -99,8 +99,10 @@ public interface WebConstants {
         
         public static final String SIGN_IN = "security/sign_in";
         public static final String SESSION_EXPIRED = "security/sessionExpired";
-        public static final String PASSWORD_RESET = "security/ResetPassSucess";
-        public static final String FORGOT_PASSWORD = "security/forgotPassword";
+        public static final String FORGOT_PASSWORD = "security/forgot_password";
+        public static final String PASSWORD_IS_SENT = "security/password_is_sent";
+        public static final String JOBS_LIST = "jobs_list";
+        
         public static final String RESET_PASSWORD = "security/resetPassword";
         public static final String ACCESS_DENIED = "security/AccessDenied";
         

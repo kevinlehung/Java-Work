@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<!--
+		Ticket 204: IDEA Log Files - Need to be Daily Rolling Appenders
+	-->
+	<appender name="JvAppAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/jv/log_files/jv.log"/>
+		<param name="Append" value="true"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%5p [%d{dd MMM yyyy HH:mm:ss}] (%F:%M:%L) - %m%n"/>
+		</layout>
+	</appender>
+	
+	<logger name="vn.jv">
+		<level value="WARN"/>
+		<appender-ref ref="IdeaAppAppender"/>
+	</logger>
+	<logger name="org.springframework">
+		<level value="WARN"/>
+		<appender-ref ref="IdeaAppAppender"/>
+	</logger>
+</log4j:configuration>

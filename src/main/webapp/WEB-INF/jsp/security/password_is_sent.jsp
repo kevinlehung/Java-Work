@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
-<html >
+<html>
 <head>
-    <title>Sign-in Java Work</title>
+    <title>Java Work</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport' />
     
     <!--[if lt IE 9]>
@@ -52,7 +53,7 @@
     <!-- / demo -->
     <link href='assets/stylesheets/demo.css' media='all' rel='stylesheet' type='text/css' />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
-<body class='contrast-red sign-in contrast-background'>
+<body class='contrast-red forgot-password contrast-background'>
 <div id='wrapper'>
     <div class='application'>
         <div class='application-content'>
@@ -64,32 +65,16 @@
     <div class='controls'>
         <div class='caret'></div>
         <div class='form-wrapper'>
-            <h1 class='text-center'>Sign in</h1>
-            <form accept-charset="UTF-8" action="security_check.jv" method="post" />
-            	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            	<div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
-                <div class='row-fluid'>
-                    <div class='span12 icon-over-input'>
-                        <input class="span12" id="email" name="email" placeholder="E-mail" type="text" value="" />
-                        <i class='icon-user muted'></i>
-                    </div>
-                </div>
-                <div class='row-fluid'>
-                    <div class='span12 icon-over-input'>
-                        <input class="span12" id="password" name="password" placeholder="Password" type="password" value="" />
-                        <i class='icon-lock muted'></i>
-                    </div>
-                </div>
-                <label class="checkbox" for="remember_me"><input id="remember_me" name="remember_me" type="checkbox" value="1" />
-                    Remember me
-                </label>
-                <button class="btn btn-block" name="button" type="submit">Sign in</button>
-            </form>
-
-            
+            <h1 class='text-center'>Your password is reset</h1>
             <div class='text-center'>
                 <hr class='hr-normal' />
-                <a href="forgot_password.html">Forgot your password?</a>
+                    New password is sent to your email address. Please check mailbox and sign-in with new password
+            </div>
+            <div class='text-center'>
+                <hr class='hr-normal' />
+                <a href="sign_in.html"><i class='icon-chevron-left'></i>
+                    Sign-in with new password
+                </a>
             </div>
         </div>
     </div>

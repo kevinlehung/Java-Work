@@ -27,30 +27,18 @@ public class SignInController extends BaseController {
 	
     @RequestMapping("/sign_in")
     public ModelAndView showLoginPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if(isAlreadyLoginedAndStillValid(request)){
-			response.sendRedirect(WebConstants.Pages.JOBS_LIST);
-			return null;
-		}
 		Map<String, Object> model = new HashMap<String, Object>();
-        String error = getError(request, response);
-		model.put("error", error);
         return new ModelAndView(WebConstants.Views.SIGN_IN, "model", model);
     }
 	
-    private String getError(HttpServletRequest request, HttpServletResponse response) {
-		Object exception = request.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			exception = (AuthenticationException) session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-		}
-		String errorMsg = "";
-		if(exception instanceof AuthenticationException) {
-			AuthenticationException loginEx = (AuthenticationException) exception;
-			errorMsg = loginEx.getMessage();
-		}
-		return errorMsg;
+    @RequestMapping("/sign_in_fail")
+    public ModelAndView loginFail(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Map<String, Object> model = new HashMap<String, Object>();
+        String error = "Invalid Username or Password.";
+		model.put("error", error);
+        return new ModelAndView(WebConstants.Views.SIGN_IN, "model", model);
     }
-
+    
     @RequestMapping("/sessionExpired")
     public ModelAndView sessionExpired(HttpServletRequest request, HttpServletResponse response) {
         return new ModelAndView(WebConstants.Views.SESSION_EXPIRED);
