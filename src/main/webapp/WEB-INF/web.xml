@@ -4,13 +4,20 @@
 	<display-name>Java Work</display-name>
 	<context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>
+        <!-- param-value>
         	/WEB-INF/context/dao-config.xml,
+        	/WEB-INF/context/service-config.xml
+        	/WEB-INF/context/email-config.xml
+        </param-value -->
+        <param-value>
         	/WEB-INF/context/service-config.xml
         	/WEB-INF/context/email-config.xml
         </param-value>
     </context-param>
-    
+	<context-param>
+	    <param-name>log4jConfigLocation</param-name>
+	    <param-value>/WEB-INF/log4j.xml</param-value>
+	  </context-param>
 	<filter>
 		<filter-name>sitemesh</filter-name>
 		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
@@ -23,7 +30,9 @@
 	<listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
 	<servlet>
 		<servlet-name>SpringDispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

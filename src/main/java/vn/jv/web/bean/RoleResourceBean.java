@@ -1,7 +1,7 @@
 package vn.jv.web.bean;
 
-import vn.jv.db.entity.AcAction;
-import vn.jv.db.entity.AcResource;
+import vn.jv.persist.domain.AcAction;
+import vn.jv.persist.domain.AcResource;
 
 public class RoleResourceBean {
 
