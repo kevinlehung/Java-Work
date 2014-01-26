@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class='login-action text-center'>
-        <a href="sign_up.html"><i class='icon-user'></i>
+        <a href="${contextPath}/sec/sign_up.jv"><i class='icon-user'></i>
             New to Java Work?
             <strong>Sign up</strong>
         </a>

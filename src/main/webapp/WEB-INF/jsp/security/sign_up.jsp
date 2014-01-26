@@ -1,4 +1,4 @@
-
+<%@ include file="/WEB-INF/jsp/include/taglibs_include.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,44 +66,50 @@
         <div class='caret'></div>
         <div class='form-wrapper'>
             <h1 class='text-center'>Sign up</h1>
-            <form accept-charset="UTF-8" action="index.html" method="get" /><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
-                <div class='row-fluid'>
+            <form:form accept-charset="UTF-8" action="${contextPath}/sec/sign_up.jv" method="post" commandName = "userSignUpForm"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <div class='row-fluid row-fluid control-group'>
                     <div class='span12 icon-over-input'>
-                        <input class="span12" id="email" name="email" placeholder="E-mail" type="text" value="" />
+                        <form:input class="span12" id="email" name="email" placeholder="E-mail" value="" data-rule-required="true" data-rule-email="true" path="email"/>
                         <i class='icon-user muted'></i>
                     </div>
+                    <form:errors path="email" cssClass="help-block error"/>
                 </div>
-                <div class='row-fluid'>
+                <div class='row-fluid control-group'>
                     <div class='span12 icon-over-input'>
-                        <input class="span12" id="password" name="password" placeholder="Password" type="password" value="" />
+                        <form:password class="span12" id="password" name="password" placeholder="Password" value="" path="password"/>
                         <i class='icon-lock muted'></i>
                     </div>
+                    <form:errors path="password"  cssClass="help-block error"/>
                 </div>
-                <div class='row-fluid'>
+                <div class='row-fluid control-group'>
                     <div class='span12 icon-over-input'>
-                        <input class="span12" id="password_confirmation" name="password_confirmation" placeholder="Password confirmation" type="password" value="" />
+                        <form:password class="span12" id="password_confirmation" name="confirmPassword" placeholder="Password confirmation" value="" path="confirmPassword"/>
                         <i class='icon-lock muted'></i>
                     </div>
+                    <form:errors path="confirmPassword"  cssClass="help-block error"/>
                 </div>
                 
                 <div class='control-group'>
 	                <label class="radio inline">
-	                    <input type="radio" value="">
+	                    <form:radiobutton value="HIRE" name="purpose" path="purpose"/>
 	                    I want to <b>Hire</b>
 	                </label>
 	                <label class="radio inline">
-	                    <input type="radio" value="">
+	                    <form:radiobutton value="WORK" name="purpose" path="purpose"/>
 	                    I want to <b>Work</b>
 	                </label>
+	                <form:errors path="purpose"  cssClass="help-block error"/>
                 </div>
                 <div class='control-group'>
-	                <label class="checkbox" for="agreement"><input id="agreement" name="agreement" type="checkbox" value="1" />
+	                <label class="checkbox" for="agreement"><form:checkbox id="agreement" name="acceptAgreement" value="1" path="acceptAgreement" />
 	                    I accept
 	                    <a href="#" class="text-contrast">user agreements</a>
 	                </label>
+	                <form:errors path="acceptAgreement"  cssClass="help-block error"/>
                 </div>
                 <button class="btn btn-block" name="button" type="submit">Sign up</button>
-            </form>
+            </form:form>
             <div class='text-center'>
                 <hr class='hr-normal' />
                 <a href="sign_in.html"><i class='icon-chevron-left'></i>

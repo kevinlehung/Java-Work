@@ -98,6 +98,8 @@ public interface WebConstants {
         public static final String ERROR = "error";
         
         public static final String SIGN_IN = "security/sign_in";
+        public static final String SIGN_UP = "security/sign_up";
+        public static final String SIGN_UP_SUCCESS = "security/sign_up_success";
         public static final String SESSION_EXPIRED = "security/sessionExpired";
         public static final String FORGOT_PASSWORD = "security/forgot_password";
         public static final String PASSWORD_IS_SENT = "security/password_is_sent";

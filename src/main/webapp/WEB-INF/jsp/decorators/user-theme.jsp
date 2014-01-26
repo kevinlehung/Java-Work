@@ -58,7 +58,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <decorator:head />
 </head>
-<body>
+<body class='contrast-sea-blue contrast-background'>
 <header>
     <div class='navbar'>
         <div class='navbar-inner'>

@@ -57,7 +57,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<decorator:head />
 </head>
-<body class='contrast-red sign-in contrast-background'>
+<body class='contrast-sea-blue sign-in contrast-background'>
 	<decorator:body />
 <!-- / jquery -->
 <script src='${contextPath}/assets/javascripts/jquery/jquery.min.js' type='text/javascript'></script>

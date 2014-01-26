@@ -1495,7 +1495,8 @@ input[type="checkbox"][readonly] {
 
 .control-group.error .control-label,
 .control-group.error .help-block,
-.control-group.error .help-inline {
+.control-group.error .help-inline,
+.help-block.error {
     color: #b94a48;
 }
 

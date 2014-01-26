@@ -24,7 +24,12 @@ import org.hibernate.annotations.AccessType;
 @Table(name="user")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
+	public interface PURPOSE {
+		public String WORK = "WORK";
+		public String HIRE = "HIRE";
+	}
+	
 	@Id
 	@Column(name="USER_ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -81,6 +86,9 @@ public class User implements Serializable {
 	@Column(name="PASSWORD_HASH_DATE")
 	private Date passwordHashDate;
 
+	@Column(name="PURPOSE")
+	private String purpose;
+	
 	@Transient
 	private Integer vendor;
 	@Transient 
@@ -305,4 +313,14 @@ public class User implements Serializable {
 	public void setPasswordHashDate(Date passwordHashDate) {
 		this.passwordHashDate = passwordHashDate;
 	}
+
+	public String getPurpose() {
+		return purpose;
+	}
+
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
+	}
+	
+	
 }
