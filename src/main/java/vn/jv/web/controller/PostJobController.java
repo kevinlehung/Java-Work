@@ -16,6 +16,17 @@ import org.springframework.web.bind.support.SessionStatus;
 import vn.jv.constant.WebConstants;
 import vn.jv.web.form.PostJobForm;
 
+/**
+ * Controller for posting job. Include these action:
+ * + Show Post Job page.
+ * + Preview Job.
+ * + Cancel posting job.
+ * + Submit job.
+ * 
+ * @author hunglevn@outlook.com
+ *
+ */
+
 @Controller
 @SessionAttributes("postJobForm")
 public class PostJobController {
