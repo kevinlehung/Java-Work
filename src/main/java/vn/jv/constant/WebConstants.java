@@ -103,6 +103,10 @@ public interface WebConstants {
         public static final String SESSION_EXPIRED = "security/sessionExpired";
         public static final String FORGOT_PASSWORD = "security/forgot_password";
         public static final String PASSWORD_IS_SENT = "security/password_is_sent";
+        
+        public static final String POST_JOB = "post_job";
+        public static final String POST_JOB_PREVIEW = "post_job_preview";
+        public static final String POST_JOB_DONE = "post_job_done";
         public static final String JOBS_LIST = "jobs_list";
         
         public static final String RESET_PASSWORD = "security/resetPassword";

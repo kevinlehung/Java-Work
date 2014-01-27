@@ -58,7 +58,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <decorator:head />
 </head>
-<body class='contrast-sea-blue contrast-background'>
+<body class='contrast-sea-blue'>
 <header>
     <div class='navbar'>
         <div class='navbar-inner'>
@@ -172,7 +172,7 @@
                             </li>
                             <li class='divider'></li>
                             <li>
-                                <a href='sign_in.html'>
+                                <a href='${contextPath}/sec/sign_out.jv'>
                                     <i class='icon-signout'></i>
                                     Sign out
                                 </a>
@@ -208,7 +208,7 @@
     </a>
 </li>
 <li class=''>
-    <a href='post_job.jsp'>
+    <a href='${contextPath}/u/post_job.jv'>
         <i class=' icon-upload'></i>
         <span>Post job</span>
     </a>
@@ -239,7 +239,7 @@
             </a>
         </li>
         <li class=''>
-            <a href='timeline.html'>
+            <a href='${contextPath}/sec/sign_out.jv'>
                 <i class='icon-signout'></i>
                 <span>Signout</span>
             </a>

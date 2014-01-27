@@ -112,7 +112,7 @@
             </form:form>
             <div class='text-center'>
                 <hr class='hr-normal' />
-                <a href="sign_in.html"><i class='icon-chevron-left'></i>
+                <a href="${contextPath}/sec/sign_in.jv"><i class='icon-chevron-left'></i>
                     Go back to sign in
                 </a>
             </div>

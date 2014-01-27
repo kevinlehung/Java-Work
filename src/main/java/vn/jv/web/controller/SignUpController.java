@@ -9,8 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -20,13 +25,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import vn.jv.constant.WebConstants;
+import vn.jv.persist.domain.User;
 import vn.jv.service.IUserService;
 import vn.jv.web.form.UserSignUpForm;
 import vn.jv.web.validator.UserSignUpFormValidator;
 
+/**
+ * Process sign-up.
+ * 
+ * Auto login after sign-up successfully.
+ * 
+ * @author hunglevn@outlook.com
+ *
+ */
 @Controller(value="/sec/sign_up")
 public class SignUpController extends BaseController {
-	
+    @Autowired@Qualifier("jvAuthenticationManager")
+    protected AuthenticationManager authenticationManager;
+    
 	@Autowired
 	IUserService userService;
 	
@@ -51,11 +67,27 @@ public class SignUpController extends BaseController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		boolean hasError = result.hasErrors();
 		if (!hasError) {
-			userService.createUser(userSignUpForm.getEmail(), userSignUpForm.getPassword(), userSignUpForm.getPurpose());
+			User user = userService.createUser(userSignUpForm.getEmail(), userSignUpForm.getPassword(), userSignUpForm.getPurpose());
+			authenticateUserAndSetSession(user, request);
 			return WebConstants.Views.SIGN_UP_SUCCESS;
 		} else {
 			return WebConstants.Views.SIGN_UP;
 		}
     }
+    
+	private void authenticateUserAndSetSession(User user,
+			HttpServletRequest request) {
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+				user.getUserEmail(), user.getUserPassword());
+
+		// generate session if one doesn't exist
+		request.getSession();
+
+		token.setDetails(new WebAuthenticationDetails(request));
+		Authentication authenticatedUser = authenticationManager
+				.authenticate(token);
+
+		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+	}
 
 }

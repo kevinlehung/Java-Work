@@ -26,6 +26,8 @@
 	<filter-mapping>
 		<filter-name>sitemesh</filter-name>
 		<url-pattern>*.jv</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -50,6 +52,6 @@
 		<url-pattern>*.jv</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>sign_in.jv</welcome-file>
+		<welcome-file>u/jobs_list.jv</welcome-file>
 	</welcome-file-list>
 </web-app>
