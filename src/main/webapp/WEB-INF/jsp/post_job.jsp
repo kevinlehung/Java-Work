@@ -1,3 +1,4 @@
+<%@ include file="/WEB-INF/jsp/include/taglibs_include.jsp" %>
 <!DOCTYPE html>
 <html>
 <title>Post Java Job - Compose</title>
@@ -44,8 +45,8 @@
 					</div>
 					<div class='step-content'>
 						<hr class='hr-normal' />
-						<form accept-charset="UTF-8" action="#" class="form form-striped"
-							method="post" style="margin-bottom: 0;" />
+						<form:form accept-charset="UTF-8" action="#" class="form form-striped"
+							method="post" style="margin-bottom: 0;">
 						<div style="margin: 0; padding: 0; display: inline">
 							<input name="utf8" type="hidden" value="&#x2713;" /><input
 								name="authenticity_token" type="hidden"
@@ -53,45 +54,39 @@
 						</div>
 						<div class='step-pane active' id='step1'>
 							<div class='control-group'>
-								<label class='control-label' for='inputText'>Name your
-									job</label>
+								<label class='control-label' for='inputText'>Name your job</label>
 								<div class='controls'>
-									<input class='input-block-level' id='inputText'
-										placeholder='Text field' type='text' />
+									<form:input class='input-block-level' id='inputText'
+										placeholder='Text field' path="title"/>
 								</div>
 							</div>
 							<div class='control-group'>
 								<label class='control-label' for='inputText'>Briefly
 									describe the skills required</label>
 								<div class='controls'>
-									<textarea class='input-block-level' id='inputTextArea'
-										placeholder='Textarea' rows='6'></textarea>
+									<form:textarea class='input-block-level' id='inputTextArea'
+										placeholder='Textarea' rows='6' path="requiredSkill"/>
 								</div>
 							</div>
 							<div class='control-group'>
 								<label class='control-label' for='inputText'>Job
 									description</label>
 								<div class='controls'>
-									<textarea class='input-block-level' id='inputTextArea'
-										placeholder='Textarea' rows='12'></textarea>
+									<form:textarea class='input-block-level' id='inputTextArea'
+										placeholder='Textarea' rows='12' path="description"/>
 								</div>
 							</div>
 							<div class="control-group">
 								<label for="inputSelect" class="control-label">Select
 									the category of work</label>
 								<div class="controls">
-									<select id="inputSelect">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
+									<form:select id="inputSelect" path="workCategoryId" items="workCategories" itemLabel="domain" itemValue="workCategoryId">
+									</form:select>
 								</div>
 							</div>
 							<div class="control-group">
 								<label for="inputSelectMulti" class="control-label">Request
-									specific skills or groups</label>
+									specific skills</label>
 								<div class="controls">
 									<select multiple="multiple" id="inputSelectMulti">
 										<option>1</option>
@@ -182,7 +177,7 @@
 								</div>
 							</div>
 						</div>
-						</form>
+						</form:form>
 					</div>
 				</div>
 			</div>
