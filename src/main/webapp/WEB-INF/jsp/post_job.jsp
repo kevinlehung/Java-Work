@@ -45,8 +45,9 @@
 					</div>
 					<div class='step-content'>
 						<hr class='hr-normal' />
-						<form:form accept-charset="UTF-8" action="#" class="form form-striped"
-							method="post" style="margin-bottom: 0;">
+						<form:form accept-charset="UTF-8" action="${contextPath}/u/post_job/preview.jv" class="form form-striped"
+							method="post" style="margin-bottom: 0;" commandName="postJobForm">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<div style="margin: 0; padding: 0; display: inline">
 							<input name="utf8" type="hidden" value="&#x2713;" /><input
 								name="authenticity_token" type="hidden"
@@ -65,7 +66,7 @@
 									describe the skills required</label>
 								<div class='controls'>
 									<form:textarea class='input-block-level' id='inputTextArea'
-										placeholder='Textarea' rows='6' path="requiredSkill"/>
+										placeholder='Textarea' rows='6' path="customRequiredSkill"/>
 								</div>
 							</div>
 							<div class='control-group'>
@@ -80,7 +81,7 @@
 								<label for="inputSelect" class="control-label">Select
 									the category of work</label>
 								<div class="controls">
-									<form:select id="inputSelect" path="workCategoryId" items="workCategories" itemLabel="domain" itemValue="workCategoryId">
+									<form:select id="inputSelect" path="workCategoryId" items="${workCategories}" itemLabel="domain" itemValue="workCategoryId">
 									</form:select>
 								</div>
 							</div>
@@ -88,13 +89,8 @@
 								<label for="inputSelectMulti" class="control-label">Request
 									specific skills</label>
 								<div class="controls">
-									<select multiple="multiple" id="inputSelectMulti">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
+									<form:select multiple="multiple" id="inputSelectMulti"  path="requiredSkillIds" items="${skills}" itemLabel="name" itemValue="skillId">
+									</form:select>
 								</div>
 							</div>
 							<div class="control-group">
@@ -137,9 +133,9 @@
 								<a href="/" class="btn btn-danger btn-large">
 									<i class="icon-remove"></i> Cancel
 								</a>
-								<a href="post_job_preview.jsp" class="btn btn-primary btn-large">
+								<button type="submit" class="btn btn-primary btn-large">
 									<i class="icon-check"></i> Preview
-								</a>
+								</button>
 							</div>
 						</div>
 						<div class='step-pane' id='step2'>

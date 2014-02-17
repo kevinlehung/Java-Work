@@ -7,7 +7,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class RepositoryTesting {
 	public static void main(String args[]) {
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(RepoConfig.class);
-		IUserRepo userRepo = ctx.getBean(IUserRepo.class);
-		System.out.println(userRepo.findByUserEmail("kevin.le.hung@clearpathdevelopment.com").getUserPassword());
+		ISkillRepo skillRepo = ctx.getBean(ISkillRepo.class);
+		for (int i = 0; i < 10; i++ ) {
+			//System.out.println(userRepo.findByUserEmail("kevin.le.hung@clearpathdevelopment.com").getUserPassword());
+			System.out.println(skillRepo.findAll());
+		}
 	}
 }

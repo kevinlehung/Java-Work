@@ -14,25 +14,23 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import vn.jv.validator.EnumCheckValidator;
+import vn.jv.validator.NumberCheckValidator;
 
 /**
  * 
- * Constraint validation. String must be existed in enumeration.
+ * Constraint validation. String must be a number.
  * 
  * @author hunglevn@outlook.com
  *
  */
 @Documented
-@Constraint(validatedBy = {EnumCheckValidator.class})
+@Constraint(validatedBy = {NumberCheckValidator.class})
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
-public @interface EnumCheck {
-	String message() default "{vn.jv.validator.constraint.EnumCheck.message}";
+public @interface NumberCheck {
+	String message() default "{vn.jv.validator.constraint.NumberCheck.message}";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
-	
-	String[] enumValues ();
 }

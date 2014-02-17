@@ -11,7 +11,6 @@
         </param-value -->
         <param-value>
         	/WEB-INF/context/service-config.xml
-        	/WEB-INF/context/email-config.xml
         </param-value>
     </context-param>
 	<context-param>

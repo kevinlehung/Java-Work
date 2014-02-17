@@ -1,5 +1,15 @@
 package vn.jv.web.form;
 
+import java.util.List;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import vn.jv.persist.domain.Job;
+import vn.jv.validator.constraint.EnumCheck;
+
 /**
  * Backing form object for Post Job feature.
  * 
@@ -7,20 +17,32 @@ package vn.jv.web.form;
  *
  */
 public class PostJobForm {
+	@NotBlank(message = "Title for the job is required.")
+	@Size(min = 8, max = 64, message = "Length of title must be from 8 to 64 characters")
 	private String title;
 	
+	@NotBlank(message = "Description for the job is required.")
+	@Size(min = 32, max = 1024, message = "Length of description must be from 32 to 1024 characters")
 	private String description;
 
-	private String requiredSkill;
+	private List<Integer> requiredSkillIds;
 
-	private int salaryAmount;
+	@NotBlank(message = "Skills for the job is required.")
+	@Size(min = 16, max = 1024, message = "Length of description must be from 16 to 512 characters")
+	private String customRequiredSkill;
+	
+	@Min(value = 0)
+	private long salaryAmount;
 
+	@EnumCheck(enumValues = {Job.SalaryType.FIXED_PRICE, Job.SalaryType.PER_HOUR, Job.SalaryType.PER_MONTH})
 	private String salaryType;
-
-	private String status;
 
 	private int workCategoryId;
 
+	private int cityId;
+	
+	private int countryId;
+	
 	public String getDescription() {
 		return description;
 	}
@@ -29,19 +51,27 @@ public class PostJobForm {
 		this.description = description;
 	}
 
-	public String getRequiredSkill() {
-		return requiredSkill;
+	public List<Integer> getRequiredSkillIds() {
+		return requiredSkillIds;
 	}
 
-	public void setRequiredSkill(String requiredSkill) {
-		this.requiredSkill = requiredSkill;
+	public void setRequiredSkillIds(List<Integer> requiredSkillIds) {
+		this.requiredSkillIds = requiredSkillIds;
 	}
 
-	public int getSalaryAmount() {
+	public String getCustomRequiredSkill() {
+		return customRequiredSkill;
+	}
+
+	public void setCustomRequiredSkill(String customRequiredSkill) {
+		this.customRequiredSkill = customRequiredSkill;
+	}
+
+	public long getSalaryAmount() {
 		return salaryAmount;
 	}
 
-	public void setSalaryAmount(int salaryAmount) {
+	public void setSalaryAmount(long salaryAmount) {
 		this.salaryAmount = salaryAmount;
 	}
 
@@ -51,14 +81,6 @@ public class PostJobForm {
 
 	public void setSalaryType(String salaryType) {
 		this.salaryType = salaryType;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	public String getTitle() {
@@ -77,5 +99,20 @@ public class PostJobForm {
 		this.workCategoryId = workCategoryId;
 	}
 
+	public int getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
+	}
+
+	public int getCountryId() {
+		return countryId;
+	}
+
+	public void setCountryId(int countryId) {
+		this.countryId = countryId;
+	}
 	
 }

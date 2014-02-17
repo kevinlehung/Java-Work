@@ -10,20 +10,4 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="vn.jv"/>
-
-	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
-        <property name="freemarkerSettings">
-            <props>
-                <prop key="datetime_format">MM/dd/yyyy</prop>
-                <prop key="number_format">0.######</prop>
-            </props>
-        </property>
-        <property name="freemarkerVariables">
-            <map>
-                <entry key="xml_escape" value-ref="fmXmlEscape"/>
-            </map>
-        </property>
-    </bean>
-
 </beans>

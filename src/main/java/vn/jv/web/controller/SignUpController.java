@@ -64,7 +64,6 @@ public class SignUpController extends BaseController {
     @RequestMapping(method = RequestMethod.POST)
     public String doSignup(HttpServletRequest request, HttpServletResponse response,
     		@Valid @ModelAttribute UserSignUpForm userSignUpForm, BindingResult result) throws IOException {
-		Map<String, Object> model = new HashMap<String, Object>();
 		boolean hasError = result.hasErrors();
 		if (!hasError) {
 			User user = userService.createUser(userSignUpForm.getEmail(), userSignUpForm.getPassword(), userSignUpForm.getPurpose());

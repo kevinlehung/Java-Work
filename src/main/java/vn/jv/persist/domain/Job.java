@@ -18,6 +18,12 @@ import java.util.Date;
 public class Job implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public interface SalaryType {
+		public static final String FIXED_PRICE = "FIXED_PRICE";
+		public static final String PER_HOUR = "PER_HOUR";
+		public static final String PER_MONTH = "PER_MONTH";
+	}
+	
 	@Id
 	@Column(name="JOB_ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,11 +39,11 @@ public class Job implements Serializable {
 
 	private String description;
 
-	@Column(name="REQUIRED_SKILL")
-	private String requiredSkill;
+	@Column(name="CUSTOM_REQUIRED_SKILL")
+	private String customRequiredSkill;
 
 	@Column(name="SALARY_AMOUNT")
-	private int salaryAmount;
+	private long salaryAmount;
 
 	@Column(name="SALARY_TYPE")
 	private String salaryType;
@@ -88,19 +94,19 @@ public class Job implements Serializable {
 		this.description = description;
 	}
 
-	public String getRequiredSkill() {
-		return this.requiredSkill;
+	public String getCustomRequiredSkill() {
+		return this.customRequiredSkill;
 	}
 
-	public void setRequiredSkill(String requiredSkill) {
-		this.requiredSkill = requiredSkill;
+	public void setCustomRequiredSkill(String customRequiredSkill) {
+		this.customRequiredSkill = customRequiredSkill;
 	}
 
-	public int getSalaryAmount() {
+	public long getSalaryAmount() {
 		return this.salaryAmount;
 	}
 
-	public void setSalaryAmount(int salaryAmount) {
+	public void setSalaryAmount(long salaryAmount) {
 		this.salaryAmount = salaryAmount;
 	}
 
