@@ -1,5 +1,7 @@
 package vn.jv.persist.repositories;
 
+import java.util.List;
+
 import vn.jv.persist.domain.City;
 
 /**
@@ -8,5 +10,7 @@ import vn.jv.persist.domain.City;
  *
  */
 public interface ICityRepo extends ICityCustomRepo<City, Integer>, IBaseRepo<City, Integer> {
+
+	List<City> findByCountryId(int countryId);
 
 }

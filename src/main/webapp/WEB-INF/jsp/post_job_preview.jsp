@@ -1,3 +1,4 @@
+<%@ include file="/WEB-INF/jsp/include/taglibs_include.jsp" %>
 <!DOCTYPE html>
 <html>
 <title>Post Java Job - Preview</title>
@@ -56,12 +57,12 @@
 							</div>
 							<div class="box-content">
 								<div class="row-fluid">
-									<i class="icon-time"></i> Posted: Dec 16, 2013 <br /> <i
-										class="icon-group"></i> Company: Global <br /> <i
-										class="icon-location-arrow"></i> Location: HCM<br /> <i
-										class="icon-adjust"></i> Job: Fulltime <br /> <i
-										class="icon-money"></i> Salary: 1000 US$/Month <br /> <i
-										class="icon-smile"></i> Applied: 6
+									<i class="icon-time"></i> Posted: ${createdDate} <br /> 
+									<i class="icon-group"></i> Company: Global <br /> 
+									<i class="icon-location-arrow"></i> Location: ${location}<br /> 
+									<!-- <i class="icon-adjust"></i> Job: Fulltime <br /> --> 
+									<i class="icon-money"></i> Salary: ${postJobForm.salary2Text} <br /> 
+									<i class="icon-smile"></i> Applied: 0
 								</div>
 							</div>
 						</div>
@@ -87,8 +88,9 @@
 							</div>
 							<div class="box-content">
 								<div class="row-fluid">
-									<a href="javascript:;">Java</a>, <a href="javascript:;">PHP</a>,
-									<a href="javascript:;">Html/Css</a>
+									<c:forEach items="${requiredSkills}" var="skill">
+										<a href="javascript:;">${skill.name}</a>,
+									</c:forEach>
 								</div>
 							</div>
 							<hr class="hr-normal">

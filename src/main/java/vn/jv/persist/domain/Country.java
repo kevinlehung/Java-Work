@@ -21,10 +21,15 @@ public class Country implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@AccessType("property")
 	private int countryId;
-
+	
+	@Column(name="COUNTRY_NAME")
 	private String countryName;
 
-
+	public Country(int countryId, String countryName) {
+		this.countryId = countryId;
+		this.countryName = countryName;
+	}
+	
 	public Country() {
 	}
 

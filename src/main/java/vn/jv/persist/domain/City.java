@@ -22,9 +22,16 @@ public class City implements Serializable {
 	@AccessType("property")
 	private int cityId;
 
+	@Column(name="CITY_NAME")
 	private String cityName;
 
+	@Column(name="COUNTRY_ID")
 	private int countryId;
+	
+	public City(int cityId, String cityName) {
+		this.cityId = cityId;
+		this.cityName = cityName;
+	}
 	
 	public City() {
 	}

@@ -1,6 +1,8 @@
 package vn.jv.web.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +19,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import vn.jv.constant.WebConstants;
+import vn.jv.persist.domain.City;
+import vn.jv.persist.domain.Country;
 import vn.jv.persist.domain.Skill;
-import vn.jv.persist.domain.User;
 import vn.jv.persist.domain.WorkCategory;
+import vn.jv.persist.repositories.ICityRepo;
+import vn.jv.persist.repositories.ICountryRepo;
 import vn.jv.service.IJobService;
 import vn.jv.service.ISkillService;
 import vn.jv.service.IWorkCategoryService;
@@ -48,6 +53,12 @@ public class PostJobController {
 	@Autowired
 	private IWorkCategoryService workCategoryService;
 	
+	@Autowired
+	private ICityRepo cityRepo;
+	
+	@Autowired
+	private ICountryRepo countryRepo;
+	
 	@ModelAttribute("postJobForm")
 	public PostJobForm postJobForm() {
 		return new PostJobForm(); // populates form for the first time if its null
@@ -63,6 +74,14 @@ public class PostJobController {
     	List<Skill> skills = skillService.findAll();
     	model.addAttribute("skills", skills);
     	
+    	List<Country> countries = countryRepo.findAll();
+    	countries.add(new Country(0, "Select country"));
+    	model.addAttribute("countries", countries);
+    	
+    	List<City> cities = new ArrayList<City>();
+    	cities.add(new City(0, "Select city"));
+    	model.addAttribute("cities", cities);
+    	
         return WebConstants.Views.POST_JOB;
     }
     
@@ -73,6 +92,29 @@ public class PostJobController {
 		if (!hasError) {
 			return WebConstants.Views.POST_JOB_PREVIEW;
 		} else {
+			model.addAttribute("createdDate", new Date());
+			
+			String location = "";
+			int selectedCountryId = postJobForm.getCountryId();
+			
+			if (selectedCountryId != 0) {
+				Country country = countryRepo.findOne(selectedCountryId);
+				location = country.getCountryName();
+			}
+			
+			int selectedCityId = postJobForm.getCityId();
+			
+			if (selectedCityId != 0) {
+				City city = cityRepo.findOne(selectedCityId);
+				location = location + "/" + city.getCityName();
+			}
+			model.addAttribute("location", location);
+			
+			List<Integer> requiredSkillIds = postJobForm.getRequiredSkillIds();
+			List<Skill> requiredSkills = skillService.findByIds(requiredSkillIds);
+			
+			model.addAttribute("requiredSkills", requiredSkills);
+			
 			return WebConstants.Views.POST_JOB;
 		}
     }

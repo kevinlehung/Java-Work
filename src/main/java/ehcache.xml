@@ -18,6 +18,14 @@
 	<cache name="WorkCategoryService.findAll" eternal="false" maxElementsInMemory="100"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
 		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
+
+	<cache name="SkillService.findById" eternal="false" maxElementsInMemory="100"
+		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
+		
+	<cache name="LocationService.findByCountryId" eternal="false" maxElementsInMemory="100"
+		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
 		
 	<!-- <cache name="locationSearchCache" eternal="false"
 		maxElementsInMemory="100" overflowToDisk="false" diskPersistent="false"

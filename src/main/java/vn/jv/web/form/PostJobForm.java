@@ -115,4 +115,19 @@ public class PostJobForm {
 		this.countryId = countryId;
 	}
 	
+	public String getSalary2Text () {
+		if (Job.SalaryType.FIXED_PRICE.equalsIgnoreCase(salaryType)){
+			return salaryType + "$";
+		} else {
+			if (Job.SalaryType.PER_HOUR.equalsIgnoreCase(salaryType)) {
+				return salaryType + "$/hour";
+			} else {
+				if (Job.SalaryType.PER_MONTH.equalsIgnoreCase(salaryType)) {
+					return salaryType + "$/month";
+				} else {
+					return salaryType + "$";
+				}
+			}
+		} 
+	}
 }

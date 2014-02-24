@@ -9,9 +9,9 @@ import vn.jv.persist.domain.City;
  * @author hunglevn@outlook.com
  *
  */
-public class CityRepo extends BaseRepo<City, Integer> implements ICityCustomRepo<City, Integer> {
+public class CityRepoImpl extends BaseRepo<City, Integer> implements ICityCustomRepo<City, Integer> {
 
-	public CityRepo(Class<City> domainClass, EntityManager entityManager) {
+	public CityRepoImpl(Class<City> domainClass, EntityManager entityManager) {
 		super(domainClass, entityManager);
 	}
 

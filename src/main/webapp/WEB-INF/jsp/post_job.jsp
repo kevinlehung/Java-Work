@@ -1,7 +1,10 @@
 <%@ include file="/WEB-INF/jsp/include/taglibs_include.jsp" %>
 <!DOCTYPE html>
 <html>
-<title>Post Java Job - Compose</title>
+<head>
+	<title>Post Java Job - Compose</title>
+	<script src='${contextPath}/assets/javascripts/javawork/post_job.js' type='text/javascript'></script>
+</head>
 <body class='contrast-red '>
 	<div class='row-fluid'>
 		<div class='span12'>
@@ -108,15 +111,10 @@
 							<div class="control-group">
 								<label class='control-label' for='inputText'>Location</label>
 								<div class="controls">
-									<select id="inputSelect" class="span2">
-										<option>Country</option>
-										<option>Singapore</option>
-										<option>Vietnam</option>
-									</select> <select id="inputSelect" class="span2">
-										<option>City</option>
-										<option>Singapore</option>
-										<option>Vietnam</option>
-									</select>
+									<form:select path="countryId" items="${countries }" itemLabel="countryName" itemValue="countryId" cssClass="span2" id="countries">
+									</form:select>
+									<form:select path="cityId" items="${cities }" itemLabel="cityName" itemValue="cityId" cssClass="span2" id="cities" title="Select">
+									</form:select>
 								</div>
 							</div>
 							<div class='control-group'>

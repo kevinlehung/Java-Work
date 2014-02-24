@@ -11,4 +11,8 @@ import vn.jv.persist.domain.Skill;
  */
 public interface ISkillService extends IBaseService {
 	public List<Skill> findAll();
+
+	public Skill findById(Integer skillId);
+	
+	public List<Skill> findByIds(List<Integer> skillIds);
 }
