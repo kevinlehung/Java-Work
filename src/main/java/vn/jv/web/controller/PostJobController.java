@@ -1,12 +1,13 @@
 package vn.jv.web.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,12 +23,16 @@ import vn.jv.constant.WebConstants;
 import vn.jv.persist.domain.City;
 import vn.jv.persist.domain.Country;
 import vn.jv.persist.domain.Skill;
+import vn.jv.persist.domain.User;
 import vn.jv.persist.domain.WorkCategory;
-import vn.jv.persist.repositories.ICityRepo;
 import vn.jv.persist.repositories.ICountryRepo;
+import vn.jv.security.bean.JvUserDetails;
 import vn.jv.service.IJobService;
+import vn.jv.service.ILocationService;
 import vn.jv.service.ISkillService;
 import vn.jv.service.IWorkCategoryService;
+import vn.jv.web.common.util.SecurityUtil;
+import vn.jv.web.common.util.WebHelper;
 import vn.jv.web.form.PostJobForm;
 
 /**
@@ -45,16 +50,19 @@ import vn.jv.web.form.PostJobForm;
 @SessionAttributes("postJobForm")
 public class PostJobController {
 	@Autowired
+	private WebHelper webHelper;
+	
+	@Autowired
 	private IJobService jobService;
+	
+	@Autowired
+	private ILocationService locationService;
 	
 	@Autowired
 	private ISkillService skillService;
 	
 	@Autowired
 	private IWorkCategoryService workCategoryService;
-	
-	@Autowired
-	private ICityRepo cityRepo;
 	
 	@Autowired
 	private ICountryRepo countryRepo;
@@ -66,54 +74,21 @@ public class PostJobController {
 	 
     @RequestMapping(value = "/u/post_job", method = RequestMethod.GET)
     public String postJob(HttpServletRequest request, HttpServletResponse response, 
-    		@ModelAttribute("postJobForm") PostJobForm postJobForm, BindingResult result, Model model) throws IOException {
-    	model.addAttribute("postJobForm", postJobForm);
-    	List<WorkCategory> workCategories = workCategoryService.findAll();
-    	model.addAttribute("workCategories", workCategories);
-    	
-    	List<Skill> skills = skillService.findAll();
-    	model.addAttribute("skills", skills);
-    	
-    	List<Country> countries = countryRepo.findAll();
-    	countries.add(new Country(0, "Select country"));
-    	model.addAttribute("countries", countries);
-    	
-    	List<City> cities = new ArrayList<City>();
-    	cities.add(new City(0, "Select city"));
-    	model.addAttribute("cities", cities);
-    	
+    		@ModelAttribute("postJobForm") PostJobForm postJobForm, BindingResult result, Model model, SessionStatus status) throws IOException {
+    	status.setComplete();
+    	setModelAttributesForPostJob(postJobForm, model);
         return WebConstants.Views.POST_JOB;
     }
     
     @RequestMapping(value = "/u/post_job/preview", method = RequestMethod.POST)
     public String postJobPreview(HttpServletRequest request, HttpServletResponse response, 
-    		@ModelAttribute("postJobForm") PostJobForm postJobForm, BindingResult result, Model model) throws IOException {
+    		@Valid @ModelAttribute("postJobForm") PostJobForm postJobForm, BindingResult result, Model model) throws IOException {
     	boolean hasError = result.hasErrors();
 		if (!hasError) {
+			setModelAttributesForPostJobPreview(postJobForm, model);
 			return WebConstants.Views.POST_JOB_PREVIEW;
 		} else {
-			model.addAttribute("createdDate", new Date());
-			
-			String location = "";
-			int selectedCountryId = postJobForm.getCountryId();
-			
-			if (selectedCountryId != 0) {
-				Country country = countryRepo.findOne(selectedCountryId);
-				location = country.getCountryName();
-			}
-			
-			int selectedCityId = postJobForm.getCityId();
-			
-			if (selectedCityId != 0) {
-				City city = cityRepo.findOne(selectedCityId);
-				location = location + "/" + city.getCityName();
-			}
-			model.addAttribute("location", location);
-			
-			List<Integer> requiredSkillIds = postJobForm.getRequiredSkillIds();
-			List<Skill> requiredSkills = skillService.findByIds(requiredSkillIds);
-			
-			model.addAttribute("requiredSkills", requiredSkills);
+			setModelAttributesForPostJob(postJobForm, model);
 			
 			return WebConstants.Views.POST_JOB;
 		}
@@ -132,4 +107,58 @@ public class PostJobController {
     	status.setComplete();
     	return WebConstants.Views.POST_JOB_DONE;
     }
+	private void setModelAttributesForPostJobPreview(PostJobForm postJobForm,
+			Model model) {
+		String location = webHelper.buildocationText(postJobForm.getCountryId(), postJobForm.getCityId());
+		model.addAttribute("location", location);
+		
+		String createdDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+		model.addAttribute("createdDate", createdDate);
+		
+		String salaryType = webHelper.buildSalaryTypeText(postJobForm.getSalaryType());
+		model.addAttribute("salaryType", salaryType);
+		
+		String salary = webHelper.buildSalaryText(postJobForm.getSalaryFromAmount(), postJobForm.getSalaryToAmount());
+		model.addAttribute("salary", salary);
+		
+		String clientInfo = buildClientInfoText();
+		model.addAttribute("clientInfo", clientInfo);
+		
+		List<Skill> requiredSkills = skillService.findByIds(postJobForm.getRequiredSkillIds());
+		model.addAttribute("requiredSkills", requiredSkills);
+	}
+
+	private String buildClientInfoText() {
+		JvUserDetails userDetail = SecurityUtil.getUserDetail();
+		User jvUser = userDetail.getJvUser();
+		String clientInfo = "Hidden";
+		if (jvUser.getFirstName() != null || jvUser.getLastName() != null) {
+			clientInfo = String.format("%s %s", jvUser.getFirstName(), jvUser.getLastName());
+		}
+		return clientInfo;
+	}
+
+	private void setModelAttributesForPostJob(PostJobForm postJobForm, Model model) {
+		model.addAttribute("postJobForm", postJobForm);
+		
+		List<Skill> skills = skillService.findAll();
+		model.addAttribute("skills", skills);
+		
+		List<WorkCategory> workCategories = workCategoryService.findAll();
+		workCategories.add(0, new WorkCategory(0, "Select", "Select"));
+		model.addAttribute("workCategories", workCategories);
+		
+		List<Country> countries = countryRepo.findAll();
+		countries.add(0, new Country(0, "Select a country"));
+		model.addAttribute("countries", countries);
+		
+		int selectedCountryId = postJobForm.getCountryId();
+		if (selectedCountryId != 0) {
+			List<City> cities = locationService.findByCountryId(selectedCountryId);
+			cities.add(0, new City(0, "Select"));
+			model.addAttribute("cities", cities);
+		}
+	}
+
+	
 }

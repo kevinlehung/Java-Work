@@ -31,12 +31,16 @@ public class PostJobForm {
 	@Size(min = 16, max = 1024, message = "Length of description must be from 16 to 512 characters")
 	private String customRequiredSkill;
 	
-	@Min(value = 0)
-	private long salaryAmount;
+	private long salaryFromAmount;
+	
+	private long salaryToAmount;
 
 	@EnumCheck(enumValues = {Job.SalaryType.FIXED_PRICE, Job.SalaryType.PER_HOUR, Job.SalaryType.PER_MONTH})
 	private String salaryType;
-
+	
+	private String otherOption;
+	
+	@Min(value = 1, message = "Must select a catefory of work.")
 	private int workCategoryId;
 
 	private int cityId;
@@ -67,14 +71,22 @@ public class PostJobForm {
 		this.customRequiredSkill = customRequiredSkill;
 	}
 
-	public long getSalaryAmount() {
-		return salaryAmount;
+	public long getSalaryFromAmount() {
+		return salaryFromAmount;
 	}
 
-	public void setSalaryAmount(long salaryAmount) {
-		this.salaryAmount = salaryAmount;
+	public void setSalaryFromAmount(long salaryFromAmount) {
+		this.salaryFromAmount = salaryFromAmount;
 	}
 
+	public long getSalaryToAmount() {
+		return salaryToAmount;
+	}
+
+	public void setSalaryToAmount(long salaryToAmount) {
+		this.salaryToAmount = salaryToAmount;
+	}
+	
 	public String getSalaryType() {
 		return salaryType;
 	}
@@ -89,6 +101,14 @@ public class PostJobForm {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getOtherOption() {
+		return otherOption;
+	}
+
+	public void setOtherOption(String otherOption) {
+		this.otherOption = otherOption;
 	}
 
 	public int getWorkCategoryId() {
@@ -115,19 +135,5 @@ public class PostJobForm {
 		this.countryId = countryId;
 	}
 	
-	public String getSalary2Text () {
-		if (Job.SalaryType.FIXED_PRICE.equalsIgnoreCase(salaryType)){
-			return salaryType + "$";
-		} else {
-			if (Job.SalaryType.PER_HOUR.equalsIgnoreCase(salaryType)) {
-				return salaryType + "$/hour";
-			} else {
-				if (Job.SalaryType.PER_MONTH.equalsIgnoreCase(salaryType)) {
-					return salaryType + "$/month";
-				} else {
-					return salaryType + "$";
-				}
-			}
-		} 
-	}
+	
 }

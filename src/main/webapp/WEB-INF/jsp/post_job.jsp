@@ -63,6 +63,7 @@
 									<form:input class='input-block-level' id='inputText'
 										placeholder='Text field' path="title"/>
 								</div>
+								<form:errors path="title"  cssClass="help-block error"/>
 							</div>
 							<div class='control-group'>
 								<label class='control-label' for='inputText'>Briefly
@@ -71,6 +72,7 @@
 									<form:textarea class='input-block-level' id='inputTextArea'
 										placeholder='Textarea' rows='6' path="customRequiredSkill"/>
 								</div>
+								<form:errors path="customRequiredSkill"  cssClass="help-block error"/>
 							</div>
 							<div class='control-group'>
 								<label class='control-label' for='inputText'>Job
@@ -79,6 +81,7 @@
 									<form:textarea class='input-block-level' id='inputTextArea'
 										placeholder='Textarea' rows='12' path="description"/>
 								</div>
+								<form:errors path="description"  cssClass="help-block error"/>
 							</div>
 							<div class="control-group">
 								<label for="inputSelect" class="control-label">Select
@@ -87,6 +90,7 @@
 									<form:select id="inputSelect" path="workCategoryId" items="${workCategories}" itemLabel="domain" itemValue="workCategoryId">
 									</form:select>
 								</div>
+								<form:errors path="workCategoryId"  cssClass="help-block error"/>
 							</div>
 							<div class="control-group">
 								<label for="inputSelectMulti" class="control-label">Request
@@ -95,18 +99,20 @@
 									<form:select multiple="multiple" id="inputSelectMulti"  path="requiredSkillIds" items="${skills}" itemLabel="name" itemValue="skillId">
 									</form:select>
 								</div>
+								<form:errors path="requiredSkillIds"  cssClass="help-block error"/>
 							</div>
 							<div class="control-group">
 								<label class="control-label">Salary</label>
 								<div class="controls controls-row">
-									<input type="text" class="span2" placeholder="From (US$)">
-									<input type="text" class="span2" placeholder="To (US$)">
-									<select id="inputSelect" class="span2">
-										<option>Fixed Price</option>
-										<option>Per Month</option>
-										<option>Per Hour</option>
-									</select>
+									<form:input type="text" class="span2" placeholder="From (US$)" path="salaryFromAmount"/>
+									<form:input type="text" class="span2" placeholder="To (US$)" path="salaryToAmount"/>
+									<form:select id="inputSelect" cssClass="span2" path="salaryType">
+										<option value="FIXED_PRICE">Fixed Price</option>
+										<option value="PER_MONTH">Per Month</option>
+										<option value="PER_HOUR">Per Hour</option>
+									</form:select>
 								</div>
+								<%-- <form:errors path="requiredSkillIds"  cssClass="help-block error"/> --%>
 							</div>
 							<div class="control-group">
 								<label class='control-label' for='inputText'>Location</label>
@@ -121,8 +127,7 @@
 								<label class='control-label' for='inputText'>Privacy and
 									Other Options</label>
 								<div class='controls'>
-									<textarea class='input-block-level' id='inputTextArea'
-										placeholder='Textarea' rows='3'></textarea>
+									<form:textarea path="otherOption" cssClass="input-block-level" rows="3" id='otherOption'/>
 								</div>
 							</div>
 							<hr class="hr-normal">

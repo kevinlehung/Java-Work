@@ -7,6 +7,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.AccessType;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -22,6 +24,19 @@ public class Job implements Serializable {
 		public static final String FIXED_PRICE = "FIXED_PRICE";
 		public static final String PER_HOUR = "PER_HOUR";
 		public static final String PER_MONTH = "PER_MONTH";
+	}
+	
+	public interface SalaryTypeText {
+		public static final String FIXED_PRICE = "Fixed Price";
+		public static final String PER_HOUR = "Hourly";
+		public static final String PER_MONTH = "Monthly";
+	}
+	
+	public static Map<String,String> SALARY_TYPE_TEXT_MAPPING = new HashMap<String, String>();
+	static {
+		SALARY_TYPE_TEXT_MAPPING.put(SalaryType.FIXED_PRICE, SalaryTypeText.FIXED_PRICE);
+		SALARY_TYPE_TEXT_MAPPING.put(SalaryType.PER_HOUR, SalaryTypeText.PER_HOUR);
+		SALARY_TYPE_TEXT_MAPPING.put(SalaryType.PER_MONTH, SalaryTypeText.PER_MONTH);
 	}
 	
 	@Id
@@ -42,9 +57,12 @@ public class Job implements Serializable {
 	@Column(name="CUSTOM_REQUIRED_SKILL")
 	private String customRequiredSkill;
 
-	@Column(name="SALARY_AMOUNT")
-	private long salaryAmount;
+	@Column(name="SALARY_FROM_AMOUNT")
+	private long salaryFromAmount;
 
+	@Column(name="SALARY_TO_AMOUNT")
+	private long salaryToAmount;
+	
 	@Column(name="SALARY_TYPE")
 	private String salaryType;
 
@@ -52,6 +70,9 @@ public class Job implements Serializable {
 
 	private String title;
 
+	@Column(name="OTHER_OPTION")
+	private String otherOption;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="UPDATED_DATE")
 	private Date updatedDate;
@@ -102,14 +123,22 @@ public class Job implements Serializable {
 		this.customRequiredSkill = customRequiredSkill;
 	}
 
-	public long getSalaryAmount() {
-		return this.salaryAmount;
+	public long getSalaryFromAmount() {
+		return this.salaryFromAmount;
 	}
 
-	public void setSalaryAmount(long salaryAmount) {
-		this.salaryAmount = salaryAmount;
+	public void setSalaryFromAmount(long salaryFromAmount) {
+		this.salaryFromAmount = salaryFromAmount;
 	}
 
+	public long getSalaryToAmount() {
+		return this.salaryToAmount;
+	}
+
+	public void setSalaryToAmount(long salaryToAmount) {
+		this.salaryToAmount = salaryToAmount;
+	}
+	
 	public String getSalaryType() {
 		return this.salaryType;
 	}
@@ -132,6 +161,14 @@ public class Job implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getOtherOption() {
+		return otherOption;
+	}
+
+	public void setOtherOption(String otherOption) {
+		this.otherOption = otherOption;
 	}
 
 	public Date getUpdatedDate() {

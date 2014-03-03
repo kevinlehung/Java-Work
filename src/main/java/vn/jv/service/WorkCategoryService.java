@@ -19,6 +19,7 @@ public class WorkCategoryService extends BaseService implements IWorkCategorySer
 	@Autowired
 	IWorkCategoryRepo workCategoryRepo;
 	
+	//@CopyReturnValue
 	@Cacheable("WorkCategoryService.findAll")
 	public List<WorkCategory> findAll() {
 		return workCategoryRepo.findAll();

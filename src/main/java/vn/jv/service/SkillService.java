@@ -28,9 +28,11 @@ public class SkillService extends BaseService implements ISkillService {
 	
 	public List<Skill> findByIds(List<Integer> skillIds) {
 		List<Skill> skills = new ArrayList<Skill>();
-		for (Integer skillId : skillIds) {
-			Skill skill = findById(skillId);
-			skills.add(skill);
+		if (skillIds != null) {
+			for (Integer skillId : skillIds) {
+				Skill skill = findById(skillId);
+				skills.add(skill);
+			}
 		}
 		return skills;
 	}

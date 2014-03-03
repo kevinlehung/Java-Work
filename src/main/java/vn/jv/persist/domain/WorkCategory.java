@@ -27,6 +27,12 @@ public class WorkCategory implements Serializable {
 
 	private String technology;
 
+	public WorkCategory(int workCategoryId, String domain, String technology) {
+		this.workCategoryId = workCategoryId;
+		this.domain = domain;
+		this.technology = technology;
+	}
+	
 	public WorkCategory() {
 	}
 

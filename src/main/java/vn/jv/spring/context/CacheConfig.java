@@ -28,21 +28,4 @@ public class CacheConfig {
         cacheManager.setCacheManager(ehCacheManagerFactoryBean().getObject());
         return cacheManager;
     }
-	
-	/*
-	@Bean(name = "cacheManagerx")
-	public CacheManager cacheManager() {
-		EhCacheManagerFactoryBean ehCacheManagerFactoryBean = new EhCacheManagerFactoryBean();
-		
-		
-		ehCacheManagerFactoryBean.setAcceptExisting(true);
-		ehCacheManagerFactoryBean.setCacheManagerName("javaword");
-		ehCacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
-		ehCacheManagerFactoryBean.setShared(true);
-		
-		net.sf.ehcache.CacheManager cacheManager = ehCacheManagerFactoryBean.getObject();
-		EhCacheCacheManager ehCacheCacheManager =  new EhCacheCacheManager();
-		ehCacheCacheManager.setCacheManager(cacheManager);
-		return ehCacheCacheManager;
-	}*/
 }

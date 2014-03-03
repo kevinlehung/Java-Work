@@ -37,7 +37,7 @@ public class JvUserDetailsService implements UserDetailsService {
 		UserDetails userDetails = new JvUserDetails(userEmail, password, enabled,
 				accountNonExpired, credentialsNonExpired,
 				accountNonLocked,
-				authorities);
+				authorities, user);
 		return userDetails;
 	}
 

@@ -45,6 +45,9 @@
 						</div>
 					</div>
 					<div class="step-content">
+						<form:form accept-charset="UTF-8" action="${contextPath}/u/post_job/done.jv" class="form form-striped"
+							method="post" style="margin-bottom: 0;" commandName="postJobForm">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<div class='box'>
 							<div class="box-header">
 								<div class="title">
@@ -58,10 +61,10 @@
 							<div class="box-content">
 								<div class="row-fluid">
 									<i class="icon-time"></i> Posted: ${createdDate} <br /> 
-									<i class="icon-group"></i> Company: Global <br /> 
+									<i class="icon-group"></i> Client Info: ${clientInfo} <br /> 
 									<i class="icon-location-arrow"></i> Location: ${location}<br /> 
 									<!-- <i class="icon-adjust"></i> Job: Fulltime <br /> --> 
-									<i class="icon-money"></i> Salary: ${postJobForm.salary2Text} <br /> 
+									<i class="icon-money"></i> ${salaryType}: ${salary} <br /> 
 									<i class="icon-smile"></i> Applied: 0
 								</div>
 							</div>
@@ -81,29 +84,46 @@
 						<div class='box'>
 							<div class="box-header">
 								<div class="title">Desired skills</div>
-								<div class="actions">
-									<a class="btn box-collapse btn-mini btn-link" href="#"><i></i>
-									</a>
-								</div>
 							</div>
 							<div class="box-content">
 								<div class="row-fluid">
-									<c:forEach items="${requiredSkills}" var="skill">
-										<a href="javascript:;">${skill.name}</a>,
+								Tags: 
+									<c:set var="skillCount" value="${fn:length(requiredSkills) }"/>
+									<c:forEach items="${requiredSkills}" var="skill" varStatus="status" >
+										<a href="javascript:;">${skill.name}</a><c:if test="${status.index <  skillCount - 1}">, </c:if>
 									</c:forEach>
 								</div>
+								<div class="row-fluid">
+									${postJobForm.customRequiredSkill}
+								</div>
 							</div>
+							
+						</div>
+						<c:if test="${not empty postJobForm.otherOption}">
+						<div class='box'>
+							<div class="box-header">
+								<div class="title">Other Options</div>
+							</div>
+							<div class="box-content">
+								<div class="row-fluid">
+									${postJobForm.otherOption}
+								</div>
+							</div>
+						</div>
+						</c:if>
+						<div class='box'>
 							<hr class="hr-normal">
 
 							<div class="text-right">
 								<a href="/" class="btn btn-danger btn-large">
 									<i class="icon-remove"></i> Cancel
 								</a>
-								<a href="post_job_done.jsp" class="btn btn-primary btn-large">
+								<button type="submit" class="btn btn-primary btn-large">
 									<i class="icon-check"></i> Post Job
-								</a>
+								</button>
 							</div>
 						</div>
+						</form:form>
 					</div>
 				</div>
 			</div>

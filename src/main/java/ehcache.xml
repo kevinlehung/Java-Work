@@ -9,23 +9,23 @@
 
 	<defaultCache eternal="false" maxElementsInMemory="1000"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU" />
+		timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU" copyOnRead="true"  copyOnWrite="true"/>
 
 	<cache name="SkillService.findAll" eternal="false" maxElementsInMemory="100"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
+		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" copyOnRead="true"  copyOnWrite="true"/>
 
 	<cache name="WorkCategoryService.findAll" eternal="false" maxElementsInMemory="100"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
+		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" copyOnRead="true" copyOnWrite="true"/>
 
 	<cache name="SkillService.findById" eternal="false" maxElementsInMemory="100"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
+		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" copyOnRead="true"  copyOnWrite="true"/>
 		
 	<cache name="LocationService.findByCountryId" eternal="false" maxElementsInMemory="100"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
+		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" copyOnRead="true"  copyOnWrite="true"/>
 		
 	<!-- <cache name="locationSearchCache" eternal="false"
 		maxElementsInMemory="100" overflowToDisk="false" diskPersistent="false"
