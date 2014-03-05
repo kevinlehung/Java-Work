@@ -8,7 +8,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import vn.jv.persist.domain.Skill;
-import vn.jv.persist.repositories.ISkillRepo;
+import vn.jv.persist.repositories.SkillRepo;
 
 /**
  * 
@@ -18,7 +18,7 @@ import vn.jv.persist.repositories.ISkillRepo;
 @Service("skillService")
 public class SkillService extends BaseService implements ISkillService {
 	@Autowired
-	ISkillRepo skillRepo;
+	SkillRepo skillRepo;
 	
 	@Cacheable("SkillService.findAll")
 	public List<Skill> findAll() {

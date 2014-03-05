@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.jv.constant.WebConstants;
-import vn.jv.persist.repositories.IUserRepo;
+import vn.jv.persist.repositories.UserRepo;
 import vn.jv.web.form.UserSignInForm;
 
 /**
@@ -27,7 +27,7 @@ import vn.jv.web.form.UserSignInForm;
 public class SignInController extends BaseController {
 	
 	@Autowired
-	IUserRepo userRepo;
+	UserRepo userRepo;
 
     @RequestMapping("/sec/sign_in")
     public String showLoginPage(HttpServletRequest request, HttpServletResponse response, @ModelAttribute UserSignInForm userSignInForm, @RequestParam(value="error", required = false) String error, BindingResult result, Model model) throws IOException {

@@ -25,7 +25,7 @@ import vn.jv.persist.domain.Country;
 import vn.jv.persist.domain.Skill;
 import vn.jv.persist.domain.User;
 import vn.jv.persist.domain.WorkCategory;
-import vn.jv.persist.repositories.ICountryRepo;
+import vn.jv.persist.repositories.CountryRepo;
 import vn.jv.security.bean.JvUserDetails;
 import vn.jv.service.IJobService;
 import vn.jv.service.ILocationService;
@@ -65,7 +65,7 @@ public class PostJobController {
 	private IWorkCategoryService workCategoryService;
 	
 	@Autowired
-	private ICountryRepo countryRepo;
+	private CountryRepo countryRepo;
 	
 	@ModelAttribute("postJobForm")
 	public PostJobForm postJobForm() {
@@ -97,6 +97,9 @@ public class PostJobController {
     @RequestMapping(value = "/u/post_job/done", method = RequestMethod.POST)
     public String postJobDone(HttpServletRequest request, HttpServletResponse response, 
     		@ModelAttribute("postJobForm") PostJobForm postJobForm, BindingResult result, Model model, SessionStatus status) throws IOException {
+    	JvUserDetails userDetail = SecurityUtil.getUserDetail();
+    	
+    	jobService.postJob(postJobForm, userDetail.getJvUser().getUserId());
     	status.setComplete();
     	return WebConstants.Views.POST_JOB_DONE;
     }

@@ -19,7 +19,12 @@ import java.util.Map;
 @NamedQuery(name="Job.findAll", query="SELECT j FROM Job j")
 public class Job implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
+	public interface Status {
+		public static final String OPENING = "OPENING";
+		public static final String CLOSED = "CLOSED";
+	}
+	
 	public interface SalaryType {
 		public static final String FIXED_PRICE = "FIXED_PRICE";
 		public static final String PER_HOUR = "PER_HOUR";

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vn.jv.persist.domain.User;
-import vn.jv.persist.repositories.IUserRepo;
+import vn.jv.persist.repositories.UserRepo;
 
 /**
  * Contain operations relate to User
@@ -15,7 +15,7 @@ import vn.jv.persist.repositories.IUserRepo;
 @Service
 public class UserService extends BaseService implements IUserService {
 	@Autowired
-	private IUserRepo userRepo;
+	private UserRepo userRepo;
 	
 	/**
 	 * Create user with minimum fields and set default properties:

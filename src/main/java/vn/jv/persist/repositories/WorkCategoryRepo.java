@@ -7,6 +7,6 @@ import vn.jv.persist.domain.WorkCategory;
  * @author hunglevn@outlook.com
  *
  */
-public interface IWorkCategoryRepo extends IBaseRepo<WorkCategory, Integer>, IWorkCategoryCustomRepo<WorkCategory, Integer> {
+public interface WorkCategoryRepo extends BaseRepo<WorkCategory, Integer> {
 
 }

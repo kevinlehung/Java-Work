@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import vn.jv.persist.domain.City;
 import vn.jv.persist.domain.Country;
 import vn.jv.persist.domain.Job;
-import vn.jv.persist.repositories.ICityRepo;
-import vn.jv.persist.repositories.ICountryRepo;
-import vn.jv.persist.repositories.ISkillRepo;
+import vn.jv.persist.repositories.CityRepo;
+import vn.jv.persist.repositories.CountryRepo;
+import vn.jv.persist.repositories.SkillRepo;
 
 /**
  *
@@ -19,13 +19,13 @@ import vn.jv.persist.repositories.ISkillRepo;
 @Service
 public class WebHelper {
 	@Autowired
-	private static ICountryRepo countryRepo;
+	private CountryRepo countryRepo;
 	
 	@Autowired
-	private static ICityRepo cityRepo;
+	private CityRepo cityRepo;
 	
 	@Autowired
-	private static ISkillRepo skillRepo;
+	private SkillRepo skillRepo;
 	
 	public String buildocationText(int countryId, int cityId) {
 		String location = "";

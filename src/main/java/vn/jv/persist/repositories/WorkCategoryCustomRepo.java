@@ -7,6 +7,6 @@ package vn.jv.persist.repositories;
  * @param <WorkCategory>
  * @param <Integer>
  */
-public interface IWorkCategoryCustomRepo<WorkCategory, Integer> {
+public interface WorkCategoryCustomRepo<WorkCategory, Integer> {
 
 }

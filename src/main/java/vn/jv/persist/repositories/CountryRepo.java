@@ -7,6 +7,6 @@ import vn.jv.persist.domain.Country;
  * @author hunglevn@outlook.com
  *
  */
-public interface ICountryRepo extends IBaseRepo<Country, Integer>, ICountryCustomRepo<Country, Integer> {
+public interface CountryRepo extends BaseRepo<Country, Integer> {
 
 }

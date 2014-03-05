@@ -7,5 +7,5 @@ import vn.jv.persist.domain.Skill;
  * @author hunglevn@outlook.com
  *
  */
-public interface ISkillRepo extends IBaseRepo<Skill, Integer>, ISkillCustomRepo {
+public interface SkillRepo extends BaseRepo<Skill, Integer>{
 }

@@ -1,15 +1,14 @@
 package vn.jv.persist.repositories;
 
 import javax.annotation.Resource;
-import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -19,7 +18,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySources({
     @PropertySource("classpath:/vn/jv/config/db_config.properties")
 })
-@EnableJpaRepositories("vn.jv.persist.repositories")
+@EnableJpaRepositories(
+	basePackages = "vn.jv.persist.repositories",
+	repositoryImplementationPostfix = "Impl")
+@ComponentScan({
+    "vn.jv.persist.repositories",
+    "vn.jv.service"
+})
 public class RepoConfig {
 	private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";  
     private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";  
@@ -31,7 +36,7 @@ public class RepoConfig {
     @Resource  
     private Environment env;
       
-    @Bean  
+    /*@Bean  
     public DataSource dataSource() {  
         DriverManagerDataSource dataSource = new DriverManagerDataSource();  
 
@@ -41,12 +46,14 @@ public class RepoConfig {
         dataSource.setPassword(env.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));  
 
         return dataSource;  
-    }
+    }*/
     
-    @Bean
+    @Bean()
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {  
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean(); 
         entityManagerFactoryBean.setPersistenceUnitName(PERSISTENCE_UNIT_NAME);
+        //entityManagerFactoryBean.setDataSource(dataSource());
+        entityManagerFactoryBean.setPackagesToScan("vn.jv.persist.domain");
         return entityManagerFactoryBean;  
     }  
       
@@ -54,6 +61,7 @@ public class RepoConfig {
     public JpaTransactionManager transactionManager() {  
         JpaTransactionManager transactionManager = new JpaTransactionManager();  
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());  
+        //transactionManager.setNestedTransactionAllowed(true);
         return transactionManager;  
-    } 
+    }
 }

@@ -61,7 +61,7 @@
 								<label class='control-label' for='inputText'>Name your job</label>
 								<div class='controls'>
 									<form:input class='input-block-level' id='inputText'
-										placeholder='Text field' path="title"/>
+										placeholder='Name your job' path="title"/>
 								</div>
 								<form:errors path="title"  cssClass="help-block error"/>
 							</div>
@@ -70,7 +70,7 @@
 									describe the skills required</label>
 								<div class='controls'>
 									<form:textarea class='input-block-level' id='inputTextArea'
-										placeholder='Textarea' rows='6' path="customRequiredSkill"/>
+										placeholder='Required skills' rows='6' path="customRequiredSkill"/>
 								</div>
 								<form:errors path="customRequiredSkill"  cssClass="help-block error"/>
 							</div>
@@ -79,7 +79,7 @@
 									description</label>
 								<div class='controls'>
 									<form:textarea class='input-block-level' id='inputTextArea'
-										placeholder='Textarea' rows='12' path="description"/>
+										placeholder='Job description' rows='12' path="description"/>
 								</div>
 								<form:errors path="description"  cssClass="help-block error"/>
 							</div>

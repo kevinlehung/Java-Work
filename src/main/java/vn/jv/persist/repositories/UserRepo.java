@@ -8,6 +8,6 @@ import vn.jv.persist.domain.User;
  * @author hunglevn@outlook.com
  *
  */
-public interface IUserRepo extends IBaseRepo<User, Integer>, IUserCustomRepo<User, Integer> {
+public interface UserRepo extends BaseRepo<User, Integer> {
 	public User findByUserEmail(String userEmail);
 }

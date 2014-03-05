@@ -11,13 +11,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import vn.jv.persist.domain.User;
-import vn.jv.persist.repositories.IUserRepo;
+import vn.jv.persist.repositories.UserRepo;
 import vn.jv.security.bean.JvUserDetails;
 
 @Component
 public class JvUserDetailsService implements UserDetailsService {
 	@Autowired
-	private IUserRepo userRepo;
+	private UserRepo userRepo;
 	
 	public UserDetails loadUserByUsername(String userEmail)
 			throws UsernameNotFoundException {

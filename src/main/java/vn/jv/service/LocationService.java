@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import vn.jv.persist.domain.City;
-import vn.jv.persist.repositories.ICityRepo;
+import vn.jv.persist.repositories.CityRepo;
 
 /**
  *
@@ -17,7 +17,7 @@ import vn.jv.persist.repositories.ICityRepo;
 @Service
 public class LocationService implements ILocationService {
 	@Autowired
-	private ICityRepo cityRepo;
+	private CityRepo cityRepo;
 	
 	@Cacheable(value = "LocationService.findByCountryId", key="#countryId")
 	public List<City> findByCountryId(int countryId) {

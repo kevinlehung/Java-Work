@@ -9,7 +9,7 @@ import vn.jv.persist.domain.City;
  * @author hunglevn@outlook.com
  *
  */
-public interface ICityRepo extends ICityCustomRepo<City, Integer>, IBaseRepo<City, Integer> {
+public interface CityRepo extends BaseRepo<City, Integer>  {
 
 	List<City> findByCountryId(int countryId);
 

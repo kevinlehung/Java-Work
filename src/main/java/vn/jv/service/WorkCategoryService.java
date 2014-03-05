@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import vn.jv.persist.domain.WorkCategory;
-import vn.jv.persist.repositories.IWorkCategoryRepo;
+import vn.jv.persist.repositories.WorkCategoryRepo;
 
 /**
  *
@@ -17,7 +17,7 @@ import vn.jv.persist.repositories.IWorkCategoryRepo;
 @Service("workCategoryService")
 public class WorkCategoryService extends BaseService implements IWorkCategoryService {
 	@Autowired
-	IWorkCategoryRepo workCategoryRepo;
+	WorkCategoryRepo workCategoryRepo;
 	
 	//@CopyReturnValue
 	@Cacheable("WorkCategoryService.findAll")
