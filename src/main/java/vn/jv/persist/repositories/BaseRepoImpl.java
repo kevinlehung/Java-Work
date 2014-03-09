@@ -58,6 +58,7 @@ public class BaseRepoImpl<T, ID extends Serializable> implements BaseRepo<T, ID>
 		return target.findAll(ids);
 	}
 
+	@Transactional
 	public <S extends T> List<S> save(Iterable<S> entities) {
 		return target.save(entities);
 	}
@@ -67,15 +68,18 @@ public class BaseRepoImpl<T, ID extends Serializable> implements BaseRepo<T, ID>
 		
 	}
 
+	@Transactional
 	public T saveAndFlush(T entity) {
 		return target.saveAndFlush(entity);
 	}
 
+	@Transactional
 	public void deleteInBatch(Iterable<T> entities) {
 		target.deleteInBatch(entities);
 		
 	}
 
+	@Transactional
 	public void deleteAllInBatch() {
 		target.deleteAllInBatch();
 		
@@ -102,18 +106,22 @@ public class BaseRepoImpl<T, ID extends Serializable> implements BaseRepo<T, ID>
 		return target.count();
 	}
 
+	@Transactional
 	public void delete(ID id) {
 		target.delete(id);
 	}
 
+	@Transactional
 	public void delete(T entity) {
 		target.delete(entity);
 	}
 
+	@Transactional
 	public void delete(Iterable<? extends T> entities) {
 		target.delete(entities);
 	}
 
+	@Transactional
 	public void deleteAll() {
 		target.deleteAll();
 	}

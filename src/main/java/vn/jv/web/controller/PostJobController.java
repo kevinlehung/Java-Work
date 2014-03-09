@@ -48,7 +48,7 @@ import vn.jv.web.form.PostJobForm;
 
 @Controller
 @SessionAttributes("postJobForm")
-public class PostJobController {
+public class PostJobController extends BaseController {
 	@Autowired
 	private WebHelper webHelper;
 	

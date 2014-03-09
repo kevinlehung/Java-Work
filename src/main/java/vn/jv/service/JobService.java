@@ -5,6 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +20,7 @@ import vn.jv.persist.domain.JobSkill;
 import vn.jv.persist.repositories.JobRepo;
 import vn.jv.persist.repositories.JobSkillRepo;
 import vn.jv.persist.repositories.WorkCategoryRepo;
+import vn.jv.web.bean.JobViewBean;
 import vn.jv.web.form.PostJobForm;
 
 /**
@@ -39,6 +46,29 @@ public class JobService implements IJobService {
 		return job;
 	}
 
+	public List<JobViewBean> findJobs(int pageIndex) {
+		List<JobViewBean> jobViewBeans = new ArrayList<JobViewBean>();
+		
+		final int PAGE_SIZE = 20;
+		Sort sort = new Sort(new Order(Direction.DESC, "createdDate"));
+		Pageable pageable = new PageRequest(pageIndex, PAGE_SIZE, sort);
+		Page<Job> jobs = jobRepo.findAll(pageable);
+		
+		for (Job job : jobs) {
+			JobViewBean jobViewBean = buildJobViewBean(job);
+			
+			
+			jobViewBeans.add(jobViewBean);
+		}
+		
+		return jobViewBeans;
+	}
+	
+	private JobViewBean buildJobViewBean(Job job) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Transactional(propagation = Propagation.REQUIRED)
 	private List<JobSkill> insertJobSkillEntities(PostJobForm postJobForm, int jobId) {
 		List<JobSkill> jobSkills = new ArrayList<JobSkill>();
@@ -51,9 +81,6 @@ public class JobService implements IJobService {
 			jobSkillRepo.save(jobSkill);
 			
 			jobSkills.add(jobSkill);
-			if (true == true) {
-				throw new RuntimeException();
-			}
 		}
 		return jobSkills;
 		
@@ -79,4 +106,6 @@ public class JobService implements IJobService {
 		
 		return job;
 	}
+	
+	
 }
