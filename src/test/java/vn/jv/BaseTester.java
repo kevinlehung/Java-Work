@@ -7,6 +7,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import vn.jv.persist.repositories.RepoConfig;
 import vn.jv.spring.context.CacheConfig;
+import vn.jv.spring.context.ServiceConfig;
 import vn.jv.spring.context.SpringConfig;
 
 /**
@@ -16,7 +17,7 @@ import vn.jv.spring.context.SpringConfig;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 //@WebAppConfiguration
-@ContextConfiguration(loader= AnnotationConfigContextLoader.class, classes = {/*WebConfig.class, */SpringConfig.class, CacheConfig.class, RepoConfig.class})
+@ContextConfiguration(loader= AnnotationConfigContextLoader.class, classes = {/*WebConfig.class, */SpringConfig.class, CacheConfig.class, RepoConfig.class, ServiceConfig.class})
 public class BaseTester {
 
 }

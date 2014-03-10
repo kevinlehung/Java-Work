@@ -115,7 +115,7 @@ public interface WebConstants {
     }
     
     public interface Pages {
-        public static final String JOBS_LIST = "jobs_list." + PAGE_SUFFIX;
+        public static final String JOBS_LIST = "jobs/%s/list." + PAGE_SUFFIX;
         
     }
     

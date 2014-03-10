@@ -7,6 +7,6 @@ import vn.jv.persist.domain.Skill;
  * @author hunglevn@outlook.com
  *
  */
-public class SkillRepoImpl extends BaseRepoImpl<Skill, Integer> implements SkillCustomRepo<Skill, Integer> {
+public class SkillRepoImpl implements SkillCustomRepo<Skill, Integer> {
 
 }

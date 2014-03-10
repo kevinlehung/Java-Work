@@ -7,6 +7,6 @@ import vn.jv.persist.domain.Country;
  * @author hunglevn@outlook.com
  *
  */
-public class CountryRepoImpl extends BaseRepoImpl<Country, Integer> implements CountryCustomRepo<Country, Integer> {
+public class CountryRepoImpl implements CountryCustomRepo<Country, Integer> {
 
 }

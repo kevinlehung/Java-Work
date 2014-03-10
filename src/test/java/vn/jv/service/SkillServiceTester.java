@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import vn.jv.BaseTester;
 import vn.jv.persist.domain.Skill;
+import vn.jv.persist.repositories.UserRepo;
 
 /**
  *

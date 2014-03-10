@@ -165,7 +165,7 @@
     <div class='navbar'>
         <div class='navbar-inner'>
             <div class='container-fluid'>
-                <a class='brand' href='index.html'>
+                <a class='brand' href='${contextPath}'>
                     <i class='icon-heart-empty'></i>
                     <span class='hidden-phone'>Java Work</span>
                 </a>

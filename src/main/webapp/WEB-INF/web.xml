@@ -4,13 +4,8 @@
 	<display-name>Java Work</display-name>
 	<context-param>
         <param-name>contextConfigLocation</param-name>
-        <!-- param-value>
-        	/WEB-INF/context/dao-config.xml,
-        	/WEB-INF/context/service-config.xml
-        	/WEB-INF/context/email-config.xml
-        </param-value -->
         <param-value>
-        	/WEB-INF/context/service-config.xml
+        /WEB-INF/context/application-context.xml
         </param-value>
     </context-param>
 	<context-param>
@@ -51,6 +46,6 @@
 		<url-pattern>*.jv</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>u/jobs_list.jv</welcome-file>
+		<welcome-file>u/jobs/1/list.jv</welcome-file>
 	</welcome-file-list>
 </web-app>

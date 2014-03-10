@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .loginProcessingUrl("/sec/security_check.jv")
             .failureHandler(new JvAuthenticationFailureHandler())
             .successHandler(jvAuthenticationSuccessHandler)
-            .defaultSuccessUrl("/u/jobs_list.jv")
+            .defaultSuccessUrl("/u/jobs/1/list.jv")
             .permitAll();
 		
 		http.logout().logoutUrl("/sec/sign_out.jv").logoutSuccessUrl("/sec/sign_in.jv");

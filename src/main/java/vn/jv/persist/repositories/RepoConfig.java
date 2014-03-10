@@ -1,6 +1,7 @@
 package vn.jv.persist.repositories;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -19,11 +21,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
     @PropertySource("classpath:/vn/jv/config/db_config.properties")
 })
 @EnableJpaRepositories(
-	basePackages = "vn.jv.persist.repositories",
-	repositoryImplementationPostfix = "Impl")
+	basePackages = "vn.jv.persist.repositories")
 @ComponentScan({
-    "vn.jv.persist.repositories",
-    "vn.jv.service"
+    "vn.jv.persist.repositories"
 })
 public class RepoConfig {
 	private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";  
