@@ -4,7 +4,7 @@
     <title>Sign-up Java Work</title>
     <script type="text/javascript">
     	setTimeout(function() {
-    		window.location = "${contextPath}/u/jobs_list.jv";
+    		window.location = "${contextPath}/u/jobs/1/list.jv";
     	}, 1000);
     </script>
 </head>
