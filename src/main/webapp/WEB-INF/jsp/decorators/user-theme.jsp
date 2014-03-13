@@ -306,38 +306,62 @@
 <li class=''>
     <a href='index.html'>
         <i class=' icon-search'></i>
-        <span>Openning jobs</span>
+        <span>Search Jobs</span>
     </a>
 </li>
 <li class=''>
     <a href='${contextPath}/u/post_job.jv'>
         <i class=' icon-upload'></i>
-        <span>Post job</span>
+        <span>Post a Job</span>
     </a>
 </li>
 <li class=''>
     <a href='javascript:;'>
         <i class=' icon-tasks'></i>
-        <span>Manage jobs</span>
+        <span>Take a Skill Test</span>
     </a>
 </li>
 <li>
-    <a class='dropdown-collapse in' href='#'>
-        <i class='icon-book'></i>
-        <span>Account</span>
+    <a class='dropdown-collapse' href='#'>
+        <i class='icon-user'></i>
+        <span>My Account</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
-    <ul class='in nav nav-stacked'>
+    <ul class='nav nav-stacked' style='display:none'>
         <li class=''>
             <a href='profile.jsp'>
-                <i class='icon-user'></i>
-                <span>Profile</span>
+                <i class=' icon-dashboard'></i>
+                <span>Overview</span>
             </a>
         </li>
         <li class=''>
             <a href='setting.jsp'>
-                <i class='icon-cog'></i>
-                <span>Setting</span>
+                <i class=' icon-mail-reply'></i>
+                <span>Jobs History</span>
+            </a>
+        </li>
+        <li class=''>
+            <a href='setting.jsp'>
+                <i class='icon-lightbulb'></i>
+                <span>Porfolio</span>
+            </a>
+        </li>
+        <li class=''>
+            <a href='setting.jsp'>
+                <i class=' icon-ok'></i>
+                <span>My Skills</span>
+            </a>
+        </li>
+        <li class=''>
+            <a href='setting.jsp'>
+                <i class='icon-file'></i>
+                <span>Resume/CV</span>
+            </a>
+        </li>
+        <li class=''>
+            <a href='setting.jsp'>
+                <i class=' icon-envelope'></i>
+                <span>Contact Info</span>
             </a>
         </li>
         <li class=''>

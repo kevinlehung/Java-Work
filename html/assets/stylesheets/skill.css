@@ -1,0 +1,8 @@
+.test-enable .choice:hover, .test-disable .choice-correct {
+	border:5px solid #F8A326 !important;
+}
+
+.test-complete .choice-correct {
+	border:5px solid #F8A326 !important;
+	background-color: #49BF67 !important;
+}
