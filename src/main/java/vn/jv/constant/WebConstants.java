@@ -108,6 +108,7 @@ public interface WebConstants {
         public static final String POST_JOB_PREVIEW = "post_job_preview";
         public static final String POST_JOB_DONE = "post_job_done";
         public static final String JOBS_LIST = "jobs_list";
+        public static final String JOB_DETAIL = "job_detail";
         
         public static final String RESET_PASSWORD = "security/resetPassword";
         public static final String ACCESS_DENIED = "security/AccessDenied";

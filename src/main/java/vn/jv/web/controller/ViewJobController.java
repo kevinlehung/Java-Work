@@ -38,11 +38,12 @@ public class ViewJobController extends BaseController {
 	@RequestMapping("/u/jobs/{pageIndex}/list")
 	public String jobsList(HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("pageIndex") int pageIndex, Model model) throws IOException {
-		
-		
-		
 		return WebConstants.Views.JOBS_LIST;
 	}
 	
-	
+	@RequestMapping("/u/jobs/{jobId}/view")
+	public String viewJob(HttpServletRequest request,
+			HttpServletResponse response, @PathVariable("jobId") int jobId, Model model) throws IOException {
+		return WebConstants.Views.JOB_DETAIL;
+	}
 }
