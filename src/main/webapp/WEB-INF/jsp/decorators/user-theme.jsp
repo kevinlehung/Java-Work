@@ -55,7 +55,7 @@
     <!-- / flatty theme -->
     <link href='${contextPath}/assets/stylesheets/light-theme.css' id='color-settings-body-color' media='all' rel='stylesheet' type='text/css' />
     <!-- / demo -->
-    <link href='${contextPath}/assets/stylesheets/demo.css' media='all' rel='stylesheet' type='text/css' />
+    <link href='${contextPath}/assets/stylesheets/javawork.css' media='all' rel='stylesheet' type='text/css' />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<!-- / jquery -->
 	<script src='${contextPath}/assets/javascripts/jquery/jquery.min.js' type='text/javascript'></script>
@@ -154,8 +154,6 @@
 	<script src='${contextPath}/assets/javascripts/theme.js' type='text/javascript'></script>
 	<!-- / demo -->
 	<script src='${contextPath}/assets/javascripts/demo/jquery.mockjax.js' type='text/javascript'></script>
-	<script src='${contextPath}/assets/javascripts/demo/inplace_editing.js' type='text/javascript'></script>
-	<script src='${contextPath}/assets/javascripts/demo/charts.js' type='text/javascript'></script>
 	<script src='${contextPath}/assets/javascripts/javawork/java_work.js' type='text/javascript'></script>
 	
     <decorator:head />
@@ -291,105 +289,105 @@
     </div>
 </header>
 <div id='wrapper'>
-<div id='main-nav-bg'></div>
-<nav class='' id='main-nav'>
-<div class='navigation'>
-<div class='search'>
-    <form accept-charset="UTF-8" action="search_results.html" method="get" /><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
-        <div class='search-wrapper'>
-            <input autocomplete="off" class="search-query" id="q" name="q" placeholder="Search..." type="text" value="" />
-            <button class="btn btn-link icon-search" name="button" type="submit"></button>
-        </div>
-    </form>
-</div>
-<ul class='nav nav-stacked'>
-<li class=''>
-    <a href='index.html'>
-        <i class=' icon-search'></i>
-        <span>Search Jobs</span>
-    </a>
-</li>
-<li class=''>
-    <a href='${contextPath}/u/post_job.jv'>
-        <i class=' icon-upload'></i>
-        <span>Post a Job</span>
-    </a>
-</li>
-<li class=''>
-    <a href='javascript:;'>
-        <i class=' icon-tasks'></i>
-        <span>Take a Skill Test</span>
-    </a>
-</li>
-<li>
-    <a class='dropdown-collapse' href='#'>
-        <i class='icon-user'></i>
-        <span>My Account</span>
-        <i class='icon-angle-down angle-down'></i>
-    </a>
-    <ul class='nav nav-stacked' style='display:none'>
-        <li class=''>
-            <a href='profile.jsp'>
-                <i class=' icon-dashboard'></i>
-                <span>Overview</span>
-            </a>
-        </li>
-        <li class=''>
-            <a href='setting.jsp'>
-                <i class=' icon-mail-reply'></i>
-                <span>Jobs History</span>
-            </a>
-        </li>
-        <li class=''>
-            <a href='setting.jsp'>
-                <i class='icon-lightbulb'></i>
-                <span>Porfolio</span>
-            </a>
-        </li>
-        <li class=''>
-            <a href='setting.jsp'>
-                <i class=' icon-ok'></i>
-                <span>My Skills</span>
-            </a>
-        </li>
-        <li class=''>
-            <a href='setting.jsp'>
-                <i class='icon-file'></i>
-                <span>Resume/CV</span>
-            </a>
-        </li>
-        <li class=''>
-            <a href='setting.jsp'>
-                <i class=' icon-envelope'></i>
-                <span>Contact Info</span>
-            </a>
-        </li>
-        <li class=''>
-            <a href='${contextPath}/sec/sign_out.jv'>
-                <i class='icon-signout'></i>
-                <span>Signout</span>
-            </a>
-        </li>
-    </ul>
-</li>
-<li class=''>
-    <a href='faq.jsp'>
-        <i class='icon-question'></i>
-        <span>FAQ</span>
-    </a>
-</li>
-</ul>
-</div>
-</nav>
-<section id='content'>
-    <div class='container-fluid'>
-        <div class='row-fluid' id='content-wrapper'>
-            <div class='span12'>
-				<decorator:body />
-            </div>
-        </div>
-    </div>
-</section>
+	<div id='main-nav-bg'></div>
+	<nav class='' id='main-nav'>
+		<div class='navigation'>
+			<div class='search'>
+			    <form accept-charset="UTF-8" action="search_results.html" method="get" /><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+			        <div class='search-wrapper'>
+			            <input autocomplete="off" class="search-query" id="q" name="q" placeholder="Search..." type="text" value="" />
+			            <button class="btn btn-link icon-search" name="button" type="submit"></button>
+			        </div>
+			    </form>
+			</div>
+			<ul class='nav nav-stacked'>
+			<li class=''>
+			    <a href='index.html'>
+			        <i class=' icon-search'></i>
+			        <span>Search Jobs</span>
+			    </a>
+			</li>
+			<li class=''>
+			    <a href='${contextPath}/u/post_job.jv'>
+			        <i class=' icon-upload'></i>
+			        <span>Post a Job</span>
+			    </a>
+			</li>
+			<li class=''>
+			    <a href='javascript:;'>
+			        <i class=' icon-tasks'></i>
+			        <span>Take a Skill Test</span>
+			    </a>
+			</li>
+			<li>
+			    <a class='dropdown-collapse' href='#'>
+			        <i class='icon-user'></i>
+			        <span>My Account</span>
+			        <i class='icon-angle-down angle-down'></i>
+			    </a>
+			    <ul class='nav nav-stacked' style='display:none'>
+			        <li class=''>
+			            <a href='profile.jsp'>
+			                <i class=' icon-dashboard'></i>
+			                <span>Overview</span>
+			            </a>
+			        </li>
+			        <li class=''>
+			            <a href='setting.jsp'>
+			                <i class=' icon-mail-reply'></i>
+			                <span>Jobs History</span>
+			            </a>
+			        </li>
+			        <li class=''>
+			            <a href='setting.jsp'>
+			                <i class='icon-lightbulb'></i>
+			                <span>Porfolio</span>
+			            </a>
+			        </li>
+			        <li class=''>
+			            <a href='setting.jsp'>
+			                <i class=' icon-ok'></i>
+			                <span>My Skills</span>
+			            </a>
+			        </li>
+			        <li class=''>
+			            <a href='setting.jsp'>
+			                <i class='icon-file'></i>
+			                <span>Resume/CV</span>
+			            </a>
+			        </li>
+			        <li class=''>
+			            <a href='setting.jsp'>
+			                <i class=' icon-envelope'></i>
+			                <span>Contact Info</span>
+			            </a>
+			        </li>
+			        <li class=''>
+			            <a href='${contextPath}/sec/sign_out.jv'>
+			                <i class='icon-signout'></i>
+			                <span>Signout</span>
+			            </a>
+			        </li>
+			    </ul>
+			</li>
+			<li class=''>
+			    <a href='faq.jsp'>
+			        <i class='icon-question'></i>
+			        <span>FAQ</span>
+			    </a>
+			</li>
+			</ul>
+		</div>
+	</nav>
+	<section id='content'>
+	    <div class='container-fluid'>
+	        <div class='row-fluid' id='content-wrapper'>
+	            <div class='span12'>
+					<decorator:body />
+	            </div>
+	        </div>
+	    </div>
+	</section>
 </div>
 
 </body>
