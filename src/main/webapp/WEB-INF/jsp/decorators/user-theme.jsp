@@ -353,7 +353,7 @@
 			        <li class=''>
 			            <a href='setting.jsp'>
 			                <i class='icon-file'></i>
-			                <span>Resume/CV</span>
+			                <span>Create Printable Resume/CV</span>
 			            </a>
 			        </li>
 			        <li class=''>
