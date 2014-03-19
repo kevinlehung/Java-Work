@@ -314,7 +314,7 @@
 			    </a>
 			</li>
 			<li class=''>
-			    <a href='javascript:;'>
+			    <a href='${contextPath}/u/skill_test.jv'>
 			        <i class=' icon-tasks'></i>
 			        <span>Take a Skill Test</span>
 			    </a>
