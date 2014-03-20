@@ -8,11 +8,13 @@
     <script src='${contextPath}/assets/javascripts/account.js' type='text/javascript'></script>
 </head>
 <body class='contrast-red '>
+<div class='row-fluid' id='content-wrapper'>
+<div class='span12'>
 	<div class='row-fluid'>
 		<div class='span12'>
 			<div class='page-header'>
 				<h1 class='pull-left'>
-					<i class='icon-edit'></i> <span>Preview Your Post</span>
+					<i class='icon-info'></i> <span>Job Details</span>
 				</h1>
 				<div class='pull-right'>
 					<ul class='breadcrumb'>
@@ -21,7 +23,7 @@
 						<li class='separator'><i class='icon-angle-right'></i></li>
 						<li>Java Work</li>
 						<li class='separator'><i class='icon-angle-right'></i></li>
-						<li class='active'>Preview Your Post</li>
+						<li class='active'>Job Details</li>
 					</ul>
 				</div>
 			</div>
@@ -120,5 +122,7 @@
 			</div>
 		</div>
 	</div>
+</div>
+</div>
 </body>
 </html>
