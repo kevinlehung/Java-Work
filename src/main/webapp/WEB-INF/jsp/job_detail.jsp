@@ -1,8 +1,11 @@
-
+<%@ include file="/WEB-INF/jsp/include/taglibs_include.jsp" %>
+<%@ include file="/WEB-INF/jsp/include/server_variables.jsp" %>
+<%@ include file="/WEB-INF/jsp/include/js_variables.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Job Detail</title>
+    <title>Job detail</title>
+    <script src='${contextPath}/assets/javascripts/account.js' type='text/javascript'></script>
 </head>
 <body class='contrast-red '>
 	<div class='row-fluid'>
