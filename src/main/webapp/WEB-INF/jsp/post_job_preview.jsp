@@ -1,7 +1,12 @@
 <%@ include file="/WEB-INF/jsp/include/taglibs_include.jsp" %>
+<%@ include file="/WEB-INF/jsp/include/server_variables.jsp" %>
+<%@ include file="/WEB-INF/jsp/include/js_variables.jsp" %>
 <!DOCTYPE html>
 <html>
-<title>Post Java Job - Preview</title>
+<head>
+    <title>Post Java Job - Preview</title>
+    <script src='${contextPath}/assets/javascripts/account.js' type='text/javascript'></script>
+</head>
 <body class='contrast-red '>
 	<div class='row-fluid'>
 		<div class='span12'>

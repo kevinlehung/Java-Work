@@ -1,4 +1,6 @@
 <%@ include file="/WEB-INF/jsp/include/taglibs_include.jsp" %>
+<%@ include file="/WEB-INF/jsp/include/server_variables.jsp" %>
+<%@ include file="/WEB-INF/jsp/include/js_variables.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
