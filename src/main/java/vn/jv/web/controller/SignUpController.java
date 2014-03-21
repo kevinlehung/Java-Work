@@ -38,7 +38,7 @@ import vn.jv.web.validator.UserSignUpFormValidator;
  * @author hunglevn@outlook.com
  *
  */
-@Controller(value="/sec/sign_up")
+@Controller
 public class SignUpController extends BaseController {
     @Autowired@Qualifier("jvAuthenticationManager")
     protected AuthenticationManager authenticationManager;
@@ -54,14 +54,14 @@ public class SignUpController extends BaseController {
         binder.addValidators(userSignUpFormValidator);
     }
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="/sec/sign_up", method = RequestMethod.GET)
     public ModelAndView showSignUpPage(HttpServletRequest request, HttpServletResponse response, @ModelAttribute UserSignUpForm userSignUpForm) throws IOException {
 		Map<String, Object> model = new HashMap<String, Object>();
 		//request.setAttribute("userSignUpForm", new UserSignUpForm());
         return new ModelAndView(WebConstants.Views.SIGN_UP, "model", model);
     }
 	
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value="/sec/sign_up", method = RequestMethod.POST)
     public String doSignup(HttpServletRequest request, HttpServletResponse response,
     		@Valid @ModelAttribute UserSignUpForm userSignUpForm, BindingResult result) throws IOException {
 		boolean hasError = result.hasErrors();

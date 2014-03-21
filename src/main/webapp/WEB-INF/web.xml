@@ -48,4 +48,8 @@
 	<welcome-file-list>
 		<welcome-file>u/jobs/1/list.jv</welcome-file>
 	</welcome-file-list>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/errors.jv</location>
+	</error-page>
 </web-app>
