@@ -1,0 +1,6 @@
+/*
+ * Fix bug when display [daterangepicker] on model dialog
+ */
+.daterangepicker {
+	z-index: 3000;
+} 
