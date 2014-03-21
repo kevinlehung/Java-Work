@@ -15,8 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import vn.jv.persist.domain.City;
+import vn.jv.persist.domain.Country;
 import vn.jv.persist.domain.Job;
 import vn.jv.persist.domain.JobSkill;
+import vn.jv.persist.domain.Skill;
+import vn.jv.persist.domain.User;
+import vn.jv.persist.domain.WorkCategory;
 import vn.jv.persist.repositories.JobRepo;
 import vn.jv.persist.repositories.JobSkillRepo;
 import vn.jv.persist.repositories.WorkCategoryRepo;
@@ -38,6 +43,9 @@ public class JobService implements IJobService {
 	
 	@Autowired
 	private JobRepo jobRepo;
+	
+	@Autowired
+	private ILocationService locationService;
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Job postJob(PostJobForm postJobForm, int createUserId) {
@@ -65,18 +73,30 @@ public class JobService implements IJobService {
 	}
 	
 	private JobViewBean buildJobViewBean(Job job) {
-		// TODO Auto-generated method stub
+		JobViewBean jobViewBean = new JobViewBean();
+		
+		int cityId = job.getCity().getCityId();
+		City city = locationService.findCityById(cityId);
+		
+		int countryId = job.getCountry().getCountryId();
+		Country country = locationService.findCountryById(countryId);
+		
+		jobViewBean.setCity(city);
 		return null;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	private List<JobSkill> insertJobSkillEntities(PostJobForm postJobForm, int jobId) {
-		List<JobSkill> jobSkills = new ArrayList<JobSkill>();
 		List<Integer> requiredSkillIds = postJobForm.getRequiredSkillIds();
+		if (requiredSkillIds == null) {
+			return new ArrayList<JobSkill>();
+		}
+		
+		List<JobSkill> jobSkills = new ArrayList<JobSkill>();
 		for (Integer skillId : requiredSkillIds) {
 			JobSkill jobSkill = new JobSkill();
-			jobSkill.setJobId(jobId);
-			jobSkill.setSkillId(skillId);
+			jobSkill.setJob(new Job(jobId));
+			jobSkill.setSkill(new Skill(skillId));
 
 			jobSkillRepo.save(jobSkill);
 			
@@ -90,7 +110,7 @@ public class JobService implements IJobService {
 	private Job insertJobEntity(PostJobForm postJobForm, int createUserId) {
 		Job job = new Job();
 		
-		job.setCreateUserId(createUserId);
+		job.setCreateUser(new User(createUserId));
 		job.setCreatedDate(new Date());
 		job.setCustomRequiredSkill(postJobForm.getCustomRequiredSkill());
 		job.setDescription(postJobForm.getDescription());
@@ -100,7 +120,7 @@ public class JobService implements IJobService {
 		job.setSalaryType(postJobForm.getSalaryType());
 		job.setStatus(Job.Status.OPENING);
 		job.setTitle(postJobForm.getTitle());
-		job.setWorkCategoryId(postJobForm.getWorkCategoryId());
+		job.setWorkCategory(new WorkCategory(postJobForm.getWorkCategoryId()));
 		
 		jobRepo.save(job);
 		

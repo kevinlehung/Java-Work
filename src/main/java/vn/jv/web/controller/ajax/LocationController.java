@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import vn.jv.persist.domain.City;
 import vn.jv.service.ILocationService;
+import vn.jv.web.bean.CityBean;
 import vn.jv.web.controller.BaseController;
 
 /**
@@ -27,8 +28,8 @@ public class LocationController extends BaseController {
 	private ILocationService locationService;
 	
 	@RequestMapping(value="/country/{countryId}/cities", method=RequestMethod.GET)
-	public @ResponseBody List<City> loadCities(@PathVariable(value="countryId") int countryId, HttpServletResponse response) {
-		List<City> cities = locationService.findByCountryId(countryId);
+	public @ResponseBody List<CityBean> loadCities(@PathVariable(value="countryId") int countryId, HttpServletResponse response) {
+		List<CityBean> cities = locationService.findByCountryId(countryId);
 		return cities;
 	}
 }

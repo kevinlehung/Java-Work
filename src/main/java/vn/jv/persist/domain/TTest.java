@@ -1,14 +1,9 @@
 package vn.jv.persist.domain;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.sql.Timestamp;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
 
 
 /**
@@ -17,84 +12,52 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="t_test")
+@NamedQuery(name="TTest.findAll", query="SELECT t FROM TTest t")
 public class TTest implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="TEST_ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int testId;
-	
-	@Column(name="TITLE")
-	private String title;
-	
-	@Column(name="DESCRIPTION")
-	private String description;
-	
-	@Column(name="TOTAL_QUESTION")
-	private int totalQuestion;
-	
-	@Column(name="TOTAL_TIME")
-	private int totalTime;
-	
+
 	@Column(name="DATE_CREATED")
 	private Timestamp dateCreated;
-	
+
 	@Column(name="DATE_UPDATED")
 	private Timestamp dateUpdated;
-	
-	@Column(name="WORK_CATEGORY_ID")
-	private int workCategoryId;
-	
-	@Column(name="CREATED_USER_ID")
-	private int createdUserId;
+
+	private String description;
+
+	private String title;
+
+	@Column(name="TOTAL_QUESTION")
+	private int totalQuestion;
+
+	@Column(name="TOTAL_TIME")
+	private int totalTime;
+
+	//bi-directional many-to-one association to TTestQuestion
+	@OneToMany(mappedBy="tTest")
+	private List<TTestQuestion> tTestQuestions;
+
+	//bi-directional many-to-one association to TUserTest
+	@OneToMany(mappedBy="tTest")
+	private List<TUserTest> tUserTests;
 
 	public TTest() {
-		
 	}
-	
+
 	public int getTestId() {
-		return testId;
+		return this.testId;
 	}
 
 	public void setTestId(int testId) {
 		this.testId = testId;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public int getTotalQuestion() {
-		return totalQuestion;
-	}
-
-	public void setTotalQuestion(int totalQuestion) {
-		this.totalQuestion = totalQuestion;
-	}
-
-	public int getTotalTime() {
-		return totalTime;
-	}
-
-	public void setTotalTime(int totalTime) {
-		this.totalTime = totalTime;
-	}
-
 	public Timestamp getDateCreated() {
-		return dateCreated;
+		return this.dateCreated;
 	}
 
 	public void setDateCreated(Timestamp dateCreated) {
@@ -102,26 +65,87 @@ public class TTest implements Serializable {
 	}
 
 	public Timestamp getDateUpdated() {
-		return dateUpdated;
+		return this.dateUpdated;
 	}
 
 	public void setDateUpdated(Timestamp dateUpdated) {
 		this.dateUpdated = dateUpdated;
 	}
 
-	public int getWorkCategoryId() {
-		return workCategoryId;
+	public String getDescription() {
+		return this.description;
 	}
 
-	public void setWorkCategoryId(int workCategoryId) {
-		this.workCategoryId = workCategoryId;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public int getCreatedUserId() {
-		return createdUserId;
+	public String getTitle() {
+		return this.title;
 	}
 
-	public void setCreatedUserId(int createdUserId) {
-		this.createdUserId = createdUserId;
+	public void setTitle(String title) {
+		this.title = title;
 	}
+
+	public int getTotalQuestion() {
+		return this.totalQuestion;
+	}
+
+	public void setTotalQuestion(int totalQuestion) {
+		this.totalQuestion = totalQuestion;
+	}
+
+	public int getTotalTime() {
+		return this.totalTime;
+	}
+
+	public void setTotalTime(int totalTime) {
+		this.totalTime = totalTime;
+	}
+
+	public List<TTestQuestion> getTTestQuestions() {
+		return this.tTestQuestions;
+	}
+
+	public void setTTestQuestions(List<TTestQuestion> TTestQuestions) {
+		this.tTestQuestions = TTestQuestions;
+	}
+
+	public TTestQuestion addTTestQuestion(TTestQuestion TTestQuestion) {
+		getTTestQuestions().add(TTestQuestion);
+		TTestQuestion.setTTest(this);
+
+		return TTestQuestion;
+	}
+
+	public TTestQuestion removeTTestQuestion(TTestQuestion TTestQuestion) {
+		getTTestQuestions().remove(TTestQuestion);
+		TTestQuestion.setTTest(null);
+
+		return TTestQuestion;
+	}
+
+	public List<TUserTest> getTUserTests() {
+		return this.tUserTests;
+	}
+
+	public void setTUserTests(List<TUserTest> TUserTests) {
+		this.tUserTests = TUserTests;
+	}
+
+	public TUserTest addTUserTest(TUserTest TUserTest) {
+		getTUserTests().add(TUserTest);
+		TUserTest.setTTest(this);
+
+		return TUserTest;
+	}
+
+	public TUserTest removeTUserTest(TUserTest TUserTest) {
+		getTUserTests().remove(TUserTest);
+		TUserTest.setTTest(null);
+
+		return TUserTest;
+	}
+
 }

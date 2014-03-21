@@ -1,13 +1,9 @@
 package vn.jv.persist.domain;
 
 import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  * The persistent class for the t_question database table.
@@ -15,68 +11,133 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="t_question")
+@NamedQuery(name="TQuestion.findAll", query="SELECT t FROM TQuestion t")
 public class TQuestion implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="QUESTION_ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int questionId;
-	
-	@Column(name="STEM")
-	private String stem;
-	
-	@Column(name="IS_MULTIPLE_CHOICE")
-	private Boolean isMultipleChoice;
-	
-	@Column(name="DURATION")
+
 	private int duration;
-	
-	@Column(name="TEST_ID")
-	private int testId;
-	
+
+	@Column(name="IS_MULTIPLE_CHOICE")
+	private byte isMultipleChoice;
+
+	private String stem;
+
+	//bi-directional many-to-one association to TOption
+	@OneToMany(mappedBy="tQuestion")
+	private List<TOption> tOptions;
+
+	//bi-directional many-to-one association to WorkCategory
+	@ManyToOne
+	@JoinColumn(name="WORK_CATEGORY_ID")
+	private WorkCategory workCategory;
+
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="CREATED_USER_ID")
+	private User user;
+
+	//bi-directional many-to-one association to TTestQuestion
+	@OneToMany(mappedBy="tQuestion")
+	private List<TTestQuestion> TTestQuestions;
+
 	public TQuestion() {
-		
 	}
 
 	public int getQuestionId() {
-		return questionId;
+		return this.questionId;
 	}
 
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
 
-	public String getStem() {
-		return stem;
-	}
-
-	public void setStem(String stem) {
-		this.stem = stem;
-	}
-
-	public Boolean getIsMultipleChoice() {
-		return isMultipleChoice;
-	}
-
-	public void setIsMultipleChoice(Boolean isMultipleChoice) {
-		this.isMultipleChoice = isMultipleChoice;
-	}
-
 	public int getDuration() {
-		return duration;
+		return this.duration;
 	}
 
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 
-	public int getTestId() {
-		return testId;
+	public byte getIsMultipleChoice() {
+		return this.isMultipleChoice;
 	}
 
-	public void setTestId(int testId) {
-		this.testId = testId;
+	public void setIsMultipleChoice(byte isMultipleChoice) {
+		this.isMultipleChoice = isMultipleChoice;
 	}
-	
+
+	public String getStem() {
+		return this.stem;
+	}
+
+	public void setStem(String stem) {
+		this.stem = stem;
+	}
+
+	public List<TOption> getTOptions() {
+		return this.tOptions;
+	}
+
+	public void setTOptions(List<TOption> TOptions) {
+		this.tOptions = TOptions;
+	}
+
+	public TOption addTOption(TOption TOption) {
+		getTOptions().add(TOption);
+		TOption.setTQuestion(this);
+
+		return TOption;
+	}
+
+	public TOption removeTOption(TOption TOption) {
+		getTOptions().remove(TOption);
+		TOption.setTQuestion(null);
+
+		return TOption;
+	}
+
+	public WorkCategory getWorkCategory() {
+		return this.workCategory;
+	}
+
+	public void setWorkCategory(WorkCategory workCategory) {
+		this.workCategory = workCategory;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<TTestQuestion> getTTestQuestions() {
+		return this.TTestQuestions;
+	}
+
+	public void setTTestQuestions(List<TTestQuestion> TTestQuestions) {
+		this.TTestQuestions = TTestQuestions;
+	}
+
+	public TTestQuestion addTTestQuestion(TTestQuestion TTestQuestion) {
+		getTTestQuestions().add(TTestQuestion);
+		TTestQuestion.setTQuestion(this);
+
+		return TTestQuestion;
+	}
+
+	public TTestQuestion removeTTestQuestion(TTestQuestion TTestQuestion) {
+		getTTestQuestions().remove(TTestQuestion);
+		TTestQuestion.setTQuestion(null);
+
+		return TTestQuestion;
+	}
+
 }

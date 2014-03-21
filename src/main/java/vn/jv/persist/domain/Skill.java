@@ -1,10 +1,8 @@
 package vn.jv.persist.domain;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
-import org.hibernate.annotations.AccessType;
+import java.util.List;
 
 
 /**
@@ -17,18 +15,30 @@ public class Skill implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="SKILL_ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@AccessType("property")
 	private int skillId;
 
 	private String description;
 
 	private String name;
 
+	//bi-directional many-to-one association to JobSkill
+	@OneToMany(mappedBy="skill")
+	private List<JobSkill> jobSkills;
+
+	//bi-directional many-to-one association to Domain
+	@ManyToOne
+	@JoinColumn(name="DOMAIN_ID")
+	private Domain domain;
+
 	public Skill() {
 	}
 
+	public Skill(int skillId) {
+		this.skillId = skillId;
+	}
+	
 	public int getSkillId() {
 		return this.skillId;
 	}
@@ -51,6 +61,36 @@ public class Skill implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<JobSkill> getJobSkills() {
+		return this.jobSkills;
+	}
+
+	public void setJobSkills(List<JobSkill> jobSkills) {
+		this.jobSkills = jobSkills;
+	}
+
+	public JobSkill addJobSkill(JobSkill jobSkill) {
+		getJobSkills().add(jobSkill);
+		jobSkill.setSkill(this);
+
+		return jobSkill;
+	}
+
+	public JobSkill removeJobSkill(JobSkill jobSkill) {
+		getJobSkills().remove(jobSkill);
+		jobSkill.setSkill(null);
+
+		return jobSkill;
+	}
+
+	public Domain getDomain() {
+		return this.domain;
+	}
+
+	public void setDomain(Domain domain) {
+		this.domain = domain;
 	}
 
 }

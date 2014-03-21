@@ -1,12 +1,9 @@
 package vn.jv.persist.domain;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
-import org.hibernate.annotations.AccessType;
-
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -19,9 +16,8 @@ public class File implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="FILE_ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@AccessType("property")
 	private int fileId;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -34,6 +30,10 @@ public class File implements Serializable {
 	private String fileName;
 
 	private String path;
+
+	//bi-directional many-to-one association to Profile
+	@OneToMany(mappedBy="file")
+	private List<Profile> profiles;
 
 	public File() {
 	}
@@ -76,6 +76,28 @@ public class File implements Serializable {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public List<Profile> getProfiles() {
+		return this.profiles;
+	}
+
+	public void setProfiles(List<Profile> profiles) {
+		this.profiles = profiles;
+	}
+
+	public Profile addProfile(Profile profile) {
+		getProfiles().add(profile);
+		profile.setFile(this);
+
+		return profile;
+	}
+
+	public Profile removeProfile(Profile profile) {
+		getProfiles().remove(profile);
+		profile.setFile(null);
+
+		return profile;
 	}
 
 }

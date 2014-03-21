@@ -49,7 +49,7 @@ public class UserService extends BaseService implements IUserService {
 		user.setAccountLocked(false);
 		user.setFailedLoginAttempts(0);
 		user.setPasswordExpired(false);
-		user.setUserActive(true);
+		user.setActive(true);
 		
 	}
 

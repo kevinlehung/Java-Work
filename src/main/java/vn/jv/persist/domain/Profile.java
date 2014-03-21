@@ -1,10 +1,8 @@
 package vn.jv.persist.domain;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
-import org.hibernate.annotations.AccessType;
+import java.util.List;
 
 
 /**
@@ -17,9 +15,8 @@ public class Profile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="PROFILE_ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@AccessType("property")
 	private int profileId;
 
 	private String experience;
@@ -29,10 +26,16 @@ public class Profile implements Serializable {
 
 	private String overview;
 
-	@Column(name="PHOTO_ATTACH_FILE_ID")
-	private int photoAttachFileId;
-
 	private String tagline;
+
+	//bi-directional many-to-one association to File
+	@ManyToOne
+	@JoinColumn(name="PHOTO_ATTACH_FILE_ID")
+	private File file;
+
+	//bi-directional many-to-one association to User
+	@OneToMany(mappedBy="profile")
+	private List<User> users;
 
 	public Profile() {
 	}
@@ -69,20 +72,42 @@ public class Profile implements Serializable {
 		this.overview = overview;
 	}
 
-	public int getPhotoAttachFileId() {
-		return this.photoAttachFileId;
-	}
-
-	public void setPhotoAttachFileId(int photoAttachFileId) {
-		this.photoAttachFileId = photoAttachFileId;
-	}
-
 	public String getTagline() {
 		return this.tagline;
 	}
 
 	public void setTagline(String tagline) {
 		this.tagline = tagline;
+	}
+
+	public File getFile() {
+		return this.file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public List<User> getUsers() {
+		return this.users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
+	public User addUser(User user) {
+		getUsers().add(user);
+		user.setProfile(this);
+
+		return user;
+	}
+
+	public User removeUser(User user) {
+		getUsers().remove(user);
+		user.setProfile(null);
+
+		return user;
 	}
 
 }

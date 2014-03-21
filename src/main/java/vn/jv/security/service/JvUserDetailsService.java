@@ -21,12 +21,12 @@ public class JvUserDetailsService implements UserDetailsService {
 	
 	public UserDetails loadUserByUsername(String userEmail)
 			throws UsernameNotFoundException {
-		User user = null;
-		try {
-			user = userRepo.findByUserEmail(userEmail);
-		} catch (Exception e) {
-			e.printStackTrace();
+		User user = userRepo.findByUserEmail(userEmail);
+		UserDetails userDetails = null;
+		if (user == null) {
+			throw new UsernameNotFoundException(String.format("Cannot find user by userEmail [%s]", userEmail));
 		}
+		
 		String password = user.getUserPassword();
 		boolean enabled = true;
 		boolean accountNonExpired = true;
@@ -34,7 +34,7 @@ public class JvUserDetailsService implements UserDetailsService {
 		boolean accountNonLocked = true;
 		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("USER"));
-		UserDetails userDetails = new JvUserDetails(userEmail, password, enabled,
+		userDetails = new JvUserDetails(userEmail, password, enabled,
 				accountNonExpired, credentialsNonExpired,
 				accountNonLocked,
 				authorities, user);

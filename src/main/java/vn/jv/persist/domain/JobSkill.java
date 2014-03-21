@@ -1,16 +1,7 @@
 package vn.jv.persist.domain;
 
 import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.AccessType;
+import javax.persistence.*;
 
 
 /**
@@ -24,16 +15,19 @@ public class JobSkill implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="JOB_SKILL_ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@AccessType("property")
 	private int jobSkillId;
 
-	@Column(name="JOB_ID")
-	private int jobId;
+	//bi-directional many-to-one association to Skill
+	@ManyToOne
+	@JoinColumn(name="SKILL_ID")
+	private Skill skill;
 
-	@Column(name="SKILL_ID")
-	private int skillId;
+	//bi-directional many-to-one association to Job
+	@ManyToOne
+	@JoinColumn(name="JOB_ID")
+	private Job job;
 
 	public JobSkill() {
 	}
@@ -46,20 +40,20 @@ public class JobSkill implements Serializable {
 		this.jobSkillId = jobSkillId;
 	}
 
-	public int getJobId() {
-		return this.jobId;
+	public Skill getSkill() {
+		return this.skill;
 	}
 
-	public void setJobId(int jobId) {
-		this.jobId = jobId;
+	public void setSkill(Skill skill) {
+		this.skill = skill;
 	}
 
-	public int getSkillId() {
-		return this.skillId;
+	public Job getJob() {
+		return this.job;
 	}
 
-	public void setSkillId(int skillId) {
-		this.skillId = skillId;
+	public void setJob(Job job) {
+		this.job = job;
 	}
 
 }

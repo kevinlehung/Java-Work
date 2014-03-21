@@ -1,48 +1,38 @@
 package vn.jv.persist.domain;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.hibernate.annotations.AccessType;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * The persistent class for the user database table.
  * 
  */
-@Cacheable(true)
-//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
-@Table(name="user")
+@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	public interface PURPOSE {
 		public String WORK = "WORK";
 		public String HIRE = "HIRE";
 	}
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="USER_ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@AccessType("property")
 	private int userId;
 
 	@Column(name="ACCOUNT_LOCKED")
-	private Boolean accountLocked;
+	private boolean accountLocked;
+
+	private boolean active;
+
+	@Column(name="API_LOGIN")
+	private boolean apiLogin;
 
 	@Column(name="DATE_CREATED")
 	private Timestamp dateCreated;
@@ -52,7 +42,7 @@ public class User implements Serializable {
 
 	@Column(name="FAILED_LOGIN_ATTEMPTS")
 	private int failedLoginAttempts;
-	
+
 	@Column(name="FIRST_NAME")
 	private String firstName;
 
@@ -61,15 +51,24 @@ public class User implements Serializable {
 
 	@Column(name="LAST_LOGIN_DATE")
 	private Timestamp lastLoginDate;
-	
+
 	@Column(name="LAST_NAME")
 	private String lastName;
 
 	@Column(name="PASSWORD_EXPIRED")
-	private Boolean passwordExpired;
-	
+	private boolean passwordExpired;
+
+	@Column(name="PASSWORD_HASH")
+	private String passwordHash;
+
+	@Column(name="PASSWORD_HASH_DATE")
+	private Timestamp passwordHashDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="PASSWORD_LAST_CHANGED_DATE")
 	private Date passwordLastChangedDate;
+
+	private String purpose;
 
 	@Column(name="USER_EMAIL")
 	private String userEmail;
@@ -79,84 +78,65 @@ public class User implements Serializable {
 
 	@Column(name="USER_PASSWORD")
 	private String userPassword;
-	@Column(name="ACTIVE")
-	private Boolean userActive;
-	
-	@Column(name="API_LOGIN")
-	private Boolean apiLogin = Boolean.FALSE;
-	
-	@Column(name="PASSWORD_HASH")
-	private String passwordHash;
-	
-	@Column(name="PASSWORD_HASH_DATE")
-	private Date passwordHashDate;
 
-	@Column(name="PURPOSE")
-	private String purpose;
-	
-	@Transient
-	private Integer vendor;
-	@Transient 
-	private String[] lstRoles;
-	@Transient
-	private String status;
-	@Transient 
-	private String vendorName;
-	@Transient 
-	private String lstRolesAssigned;
-	//bi-directional many-to-one association to AcRoleUser
+	//bi-directional many-to-one association to Job
+	@OneToMany(mappedBy="createUser")
+	private List<Job> jobs;
+
+	//bi-directional many-to-one association to JobApply
+	@OneToMany(mappedBy="appyUser")
+	private List<JobApply> jobApplies;
+
+	//bi-directional many-to-one association to TQuestion
 	@OneToMany(mappedBy="user")
-	private List<AcRoleUser> acRoleUsers;
+	private List<TQuestion> tQuestions;
 
-	//bi-directional many-to-one association to UserLogin
+	//bi-directional many-to-one association to TUserTest
 	@OneToMany(mappedBy="user")
-	private List<UserLogin> userLogins;
-	
-    public Boolean getAccountLocked() {
-		return accountLocked;
-	}
+	private List<TUserTest> tUserTests;
 
-	public void setAccountLocked(Boolean accountLocked) {
-		this.accountLocked = accountLocked;
-	}
-
-	public int getFailedLoginAttempts() {
-		return failedLoginAttempts;
-	}
-
-	public void setFailedLoginAttempts(int failedLoginAttempts) {
-		this.failedLoginAttempts = failedLoginAttempts;
-	}
-
-	public Timestamp getLastFailedLoginDate() {
-		return lastFailedLoginDate;
-	}
-
-	public void setLastFailedLoginDate(Timestamp lastFailedLoginDate) {
-		this.lastFailedLoginDate = lastFailedLoginDate;
-	}
-
-	public Timestamp getLastLoginDate() {
-		return lastLoginDate;
-	}
-
-	public void setLastLoginDate(Timestamp lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
-	}
+	//bi-directional many-to-one association to Profile
+	@ManyToOne
+	@JoinColumn(name="PROFILE_ID")
+	private Profile profile;
 
 	public User() {
-    }
-
-	public User(int userId) {
-		setUserId(userId);
 	}
 
+	public User(int userId) {
+		this.userId = userId;
+	}
+	
 	public int getUserId() {
 		return this.userId;
 	}
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public boolean getAccountLocked() {
+		return this.accountLocked;
+	}
+
+	public void setAccountLocked(boolean accountLocked) {
+		this.accountLocked = accountLocked;
+	}
+
+	public boolean getActive() {
+		return this.active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public boolean getApiLogin() {
+		return this.apiLogin;
+	}
+
+	public void setApiLogin(boolean apiLogin) {
+		this.apiLogin = apiLogin;
 	}
 
 	public Timestamp getDateCreated() {
@@ -175,12 +155,36 @@ public class User implements Serializable {
 		this.dateUpdated = dateUpdated;
 	}
 
+	public int getFailedLoginAttempts() {
+		return this.failedLoginAttempts;
+	}
+
+	public void setFailedLoginAttempts(int failedLoginAttempts) {
+		this.failedLoginAttempts = failedLoginAttempts;
+	}
+
 	public String getFirstName() {
 		return this.firstName;
 	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	public Timestamp getLastFailedLoginDate() {
+		return this.lastFailedLoginDate;
+	}
+
+	public void setLastFailedLoginDate(Timestamp lastFailedLoginDate) {
+		this.lastFailedLoginDate = lastFailedLoginDate;
+	}
+
+	public Timestamp getLastLoginDate() {
+		return this.lastLoginDate;
+	}
+
+	public void setLastLoginDate(Timestamp lastLoginDate) {
+		this.lastLoginDate = lastLoginDate;
 	}
 
 	public String getLastName() {
@@ -191,20 +195,44 @@ public class User implements Serializable {
 		this.lastName = lastName;
 	}
 
+	public boolean getPasswordExpired() {
+		return this.passwordExpired;
+	}
+
+	public void setPasswordExpired(boolean passwordExpired) {
+		this.passwordExpired = passwordExpired;
+	}
+
+	public String getPasswordHash() {
+		return this.passwordHash;
+	}
+
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
+	public Timestamp getPasswordHashDate() {
+		return this.passwordHashDate;
+	}
+
+	public void setPasswordHashDate(Timestamp passwordHashDate) {
+		this.passwordHashDate = passwordHashDate;
+	}
+
 	public Date getPasswordLastChangedDate() {
-		return passwordLastChangedDate;
+		return this.passwordLastChangedDate;
 	}
 
 	public void setPasswordLastChangedDate(Date passwordLastChangedDate) {
 		this.passwordLastChangedDate = passwordLastChangedDate;
 	}
 
-	public Boolean getPasswordExpired() {
-		return passwordExpired;
+	public String getPurpose() {
+		return this.purpose;
 	}
 
-	public void setPasswordExpired(Boolean passwordExpired) {
-		this.passwordExpired = passwordExpired;
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
 	}
 
 	public String getUserEmail() {
@@ -231,101 +259,100 @@ public class User implements Serializable {
 		this.userPassword = userPassword;
 	}
 
-	public List<AcRoleUser> getAcRoleUsers() {
-		return this.acRoleUsers;
+	public List<Job> getJobs() {
+		return this.jobs;
 	}
 
-	public void setAcRoleUsers(List<AcRoleUser> acRoleUsers) {
-		this.acRoleUsers = acRoleUsers;
+	public void setJobs(List<Job> jobs) {
+		this.jobs = jobs;
 	}
 
-	public void setUserLogins(List<UserLogin> userLogins) {
-		this.userLogins = userLogins;
+	public Job addJob(Job job) {
+		getJobs().add(job);
+		job.setCreateUser(this);
+
+		return job;
 	}
 
-	public List<UserLogin> getUserLogins() {
-		return userLogins;
+	public Job removeJob(Job job) {
+		getJobs().remove(job);
+		job.setCreateUser(null);
+
+		return job;
 	}
 
-	public  void setVendor(Integer vendor) {
-		this.vendor = vendor;
+	public List<JobApply> getJobApplies() {
+		return this.jobApplies;
 	}
 
-	public Integer getVendor() {
-		return vendor;
+	public void setJobApplies(List<JobApply> jobApplies) {
+		this.jobApplies = jobApplies;
 	}
 
-	public void setLstRoles(String[] lstRoles) {
-		this.lstRoles = lstRoles;
+	public JobApply addJobApply(JobApply jobApply) {
+		getJobApplies().add(jobApply);
+		jobApply.setApplyUser(this);
+
+		return jobApply;
 	}
 
-	public String[] getLstRoles() {
-		return lstRoles;
+	public JobApply removeJobApply(JobApply jobApply) {
+		getJobApplies().remove(jobApply);
+		jobApply.setApplyUser(null);
+
+		return jobApply;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public List<TQuestion> getTQuestions() {
+		return this.tQuestions;
 	}
 
-	public String getStatus() {
-		return status;
+	public void setTQuestions(List<TQuestion> TQuestions) {
+		this.tQuestions = TQuestions;
 	}
 
-	public void setUserActive(Boolean userActive) {
-		this.userActive = userActive;
+	public TQuestion addTQuestion(TQuestion TQuestion) {
+		getTQuestions().add(TQuestion);
+		TQuestion.setUser(this);
+
+		return TQuestion;
 	}
 
-	public Boolean getUserActive() {
-		return userActive;
+	public TQuestion removeTQuestion(TQuestion TQuestion) {
+		getTQuestions().remove(TQuestion);
+		TQuestion.setUser(null);
+
+		return TQuestion;
 	}
 
-	public void setVendorName(String vendorName) {
-		this.vendorName = vendorName;
+	public List<TUserTest> getTUserTests() {
+		return this.tUserTests;
 	}
 
-	public String getVendorName() {
-		return vendorName;
+	public void setTUserTests(List<TUserTest> TUserTests) {
+		this.tUserTests = TUserTests;
 	}
 
-	public void setLstRolesAssigned(String lstRolesAssigned) {
-		this.lstRolesAssigned = lstRolesAssigned;
+	public TUserTest addTUserTest(TUserTest TUserTest) {
+		getTUserTests().add(TUserTest);
+		TUserTest.setUser(this);
+
+		return TUserTest;
 	}
 
-	public String getLstRolesAssigned() {
-		return lstRolesAssigned;
+	public TUserTest removeTUserTest(TUserTest TUserTest) {
+		getTUserTests().remove(TUserTest);
+		TUserTest.setUser(null);
+
+		return TUserTest;
 	}
 
-	public Boolean getApiLogin() {
-		return apiLogin;
+	public Profile getProfile() {
+		return this.profile;
 	}
 
-	public void setApiLogin(Boolean apiLogin) {
-		this.apiLogin = apiLogin;
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 
-	public String getPasswordHash() {
-		return passwordHash;
-	}
-
-	public void setPasswordHash(String passwordHash) {
-		this.passwordHash = passwordHash;
-	}
-
-	public Date getPasswordHashDate() {
-		return passwordHashDate;
-	}
-
-	public void setPasswordHashDate(Date passwordHashDate) {
-		this.passwordHashDate = passwordHashDate;
-	}
-
-	public String getPurpose() {
-		return purpose;
-	}
-
-	public void setPurpose(String purpose) {
-		this.purpose = purpose;
-	}
-	
-	
 }

@@ -1,11 +1,7 @@
 package vn.jv.persist.domain;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
-import org.hibernate.annotations.AccessType;
-
 import java.util.Date;
 
 
@@ -20,27 +16,30 @@ public class JobApply implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="JOB_APPLY_ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@AccessType("property")	
 	private int jobApplyId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="APPLY_DATE")
 	private Date applyDate;
 
-	@Column(name="APPLY_USER_ID")
-	private int applyUserId;
-
 	@Column(name="BID_VALUE")
 	private int bidValue;
-
-	@Column(name="JOB_ID")
-	private int jobId;
 
 	private String proposal;
 
 	private String status;
+
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="APPLY_USER_ID")
+	private User appyUser;
+
+	//bi-directional many-to-one association to Job
+	@ManyToOne
+	@JoinColumn(name="JOB_ID")
+	private Job job;
 
 	public JobApply() {
 	}
@@ -61,28 +60,12 @@ public class JobApply implements Serializable {
 		this.applyDate = applyDate;
 	}
 
-	public int getApplyUserId() {
-		return this.applyUserId;
-	}
-
-	public void setApplyUserId(int applyUserId) {
-		this.applyUserId = applyUserId;
-	}
-
 	public int getBidValue() {
 		return this.bidValue;
 	}
 
 	public void setBidValue(int bidValue) {
 		this.bidValue = bidValue;
-	}
-
-	public int getJobId() {
-		return this.jobId;
-	}
-
-	public void setJobId(int jobId) {
-		this.jobId = jobId;
 	}
 
 	public String getProposal() {
@@ -99,6 +82,22 @@ public class JobApply implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public User getApplyUser() {
+		return this.appyUser;
+	}
+
+	public void setApplyUser(User applyUser) {
+		this.appyUser = applyUser;
+	}
+
+	public Job getJob() {
+		return this.job;
+	}
+
+	public void setJob(Job job) {
+		this.job = job;
 	}
 
 }

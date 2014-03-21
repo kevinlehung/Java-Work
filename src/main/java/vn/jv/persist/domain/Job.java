@@ -1,14 +1,22 @@
 package vn.jv.persist.domain;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import org.hibernate.annotations.AccessType;
-
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -19,7 +27,7 @@ import java.util.Map;
 @NamedQuery(name="Job.findAll", query="SELECT j FROM Job j")
 public class Job implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	public interface Status {
 		public static final String OPENING = "OPENING";
 		public static final String CLOSED = "CLOSED";
@@ -45,29 +53,28 @@ public class Job implements Serializable {
 	}
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="JOB_ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@AccessType("property")
 	private int jobId;
-
-	@Column(name="CREATE_USER_ID")
-	private int createUserId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_DATE")
 	private Date createdDate;
 
-	private String description;
-
 	@Column(name="CUSTOM_REQUIRED_SKILL")
 	private String customRequiredSkill;
 
+	private String description;
+
+	@Column(name="OTHER_OPTION")
+	private String otherOption;
+
 	@Column(name="SALARY_FROM_AMOUNT")
-	private long salaryFromAmount;
+	private double salaryFromAmount;
 
 	@Column(name="SALARY_TO_AMOUNT")
-	private long salaryToAmount;
-	
+	private double salaryToAmount;
+
 	@Column(name="SALARY_TYPE")
 	private String salaryType;
 
@@ -75,33 +82,51 @@ public class Job implements Serializable {
 
 	private String title;
 
-	@Column(name="OTHER_OPTION")
-	private String otherOption;
-	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="UPDATED_DATE")
 	private Date updatedDate;
 
-	@Column(name="WORK_CATEGORY_ID")
-	private int workCategoryId;
+	//bi-directional many-to-one association to WorkCategory
+	@ManyToOne
+	@JoinColumn(name="WORK_CATEGORY_ID")
+	private WorkCategory workCategory;
+
+	//bi-directional many-to-one association to City
+	@ManyToOne
+	@JoinColumn(name="CITY_ID")
+	private City city;
+
+	//bi-directional many-to-one association to Country
+	@ManyToOne
+	@JoinColumn(name="COUNTRY_ID")
+	private Country country;
+
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="CREATE_USER_ID")
+	private User createUser;
+
+	//bi-directional many-to-one association to JobApply
+	@OneToMany(mappedBy="job")
+	private List<JobApply> jobApplies;
+
+	//bi-directional many-to-one association to JobSkill
+	@OneToMany(mappedBy="job")
+	private List<JobSkill> jobSkills;
 
 	public Job() {
 	}
-
+	
+	public Job(int jobId) {
+		this.jobId = jobId;
+	}
+	
 	public int getJobId() {
 		return this.jobId;
 	}
 
 	public void setJobId(int jobId) {
 		this.jobId = jobId;
-	}
-
-	public int getCreateUserId() {
-		return this.createUserId;
-	}
-
-	public void setCreateUserId(int createUserId) {
-		this.createUserId = createUserId;
 	}
 
 	public Date getCreatedDate() {
@@ -112,14 +137,6 @@ public class Job implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public String getCustomRequiredSkill() {
 		return this.customRequiredSkill;
 	}
@@ -128,22 +145,38 @@ public class Job implements Serializable {
 		this.customRequiredSkill = customRequiredSkill;
 	}
 
-	public long getSalaryFromAmount() {
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getOtherOption() {
+		return this.otherOption;
+	}
+
+	public void setOtherOption(String otherOption) {
+		this.otherOption = otherOption;
+	}
+
+	public double getSalaryFromAmount() {
 		return this.salaryFromAmount;
 	}
 
-	public void setSalaryFromAmount(long salaryFromAmount) {
+	public void setSalaryFromAmount(double salaryFromAmount) {
 		this.salaryFromAmount = salaryFromAmount;
 	}
 
-	public long getSalaryToAmount() {
+	public double getSalaryToAmount() {
 		return this.salaryToAmount;
 	}
 
-	public void setSalaryToAmount(long salaryToAmount) {
+	public void setSalaryToAmount(double salaryToAmount) {
 		this.salaryToAmount = salaryToAmount;
 	}
-	
+
 	public String getSalaryType() {
 		return this.salaryType;
 	}
@@ -168,14 +201,6 @@ public class Job implements Serializable {
 		this.title = title;
 	}
 
-	public String getOtherOption() {
-		return otherOption;
-	}
-
-	public void setOtherOption(String otherOption) {
-		this.otherOption = otherOption;
-	}
-
 	public Date getUpdatedDate() {
 		return this.updatedDate;
 	}
@@ -184,12 +209,80 @@ public class Job implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
-	public int getWorkCategoryId() {
-		return this.workCategoryId;
+	public WorkCategory getWorkCategory() {
+		return this.workCategory;
 	}
 
-	public void setWorkCategoryId(int workCategoryId) {
-		this.workCategoryId = workCategoryId;
+	public void setWorkCategory(WorkCategory workCategory) {
+		this.workCategory = workCategory;
+	}
+
+	public City getCity() {
+		return this.city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+	public Country getCountry() {
+		return this.country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
+	}
+	
+	public User getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(User createUser) {
+		this.createUser = createUser;
+	}
+
+	public List<JobApply> getJobApplies() {
+		return this.jobApplies;
+	}
+
+	public void setJobApplies(List<JobApply> jobApplies) {
+		this.jobApplies = jobApplies;
+	}
+
+	public JobApply addJobApply(JobApply jobApply) {
+		getJobApplies().add(jobApply);
+		jobApply.setJob(this);
+
+		return jobApply;
+	}
+
+	public JobApply removeJobApply(JobApply jobApply) {
+		getJobApplies().remove(jobApply);
+		jobApply.setJob(null);
+
+		return jobApply;
+	}
+
+	public List<JobSkill> getJobSkills() {
+		return this.jobSkills;
+	}
+
+	public void setJobSkills(List<JobSkill> jobSkills) {
+		this.jobSkills = jobSkills;
+	}
+
+	public JobSkill addJobSkill(JobSkill jobSkill) {
+		getJobSkills().add(jobSkill);
+		jobSkill.setJob(this);
+
+		return jobSkill;
+	}
+
+	public JobSkill removeJobSkill(JobSkill jobSkill) {
+		getJobSkills().remove(jobSkill);
+		jobSkill.setJob(null);
+
+		return jobSkill;
 	}
 
 }

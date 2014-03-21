@@ -30,12 +30,12 @@ public class WebHelper {
 	public String buildocationText(int countryId, int cityId) {
 		String location = "";
 		
-		if (countryId != 0) {
+		if (countryId > 0) {
 			Country country = countryRepo.findOne(countryId);
 			location = country.getCountryName();
 		}
 		
-		if (cityId != 0) {
+		if (cityId > 0) {
 			City city = cityRepo.findOne(cityId);
 			location = location + "/" + city.getCityName();
 		}
