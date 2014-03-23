@@ -1,0 +1,75 @@
+.acc-overview li.deco {
+    border-left: 4px solid #DDDDDD;
+    padding-bottom: 20px;
+    position: relative;
+}
+.acc-overview li.deco .date {
+    background-color: #FF0000;
+    color: #FFFFFF;
+    font-family: Montserrat;
+    height: 40px;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 40px;
+}
+.acc-overview li.deco:first-child:before, .acc-overview li.deco:last-child:before {
+    background-color: #DDDDDD;
+    content: "";
+    display: block;
+    height: 10px;
+    left: -7px;
+    position: absolute;
+    top: 0;
+    width: 10px;
+}
+.acc-overview li.deco:last-child:before {
+    bottom: 0;
+    top: auto;
+}
+.acc-overview li.deco:last-child {
+    padding-bottom: 0;
+}
+.acc-overview li.deco .content {
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    margin-left: 20px;
+    margin-top: 10px;
+    padding: 10px;
+    position: relative;
+}
+.acc-overview li.deco .icon {
+    color: #FFFFFF;
+    font-size: 25px;
+    height: 40px;
+    left: 20px;
+    line-height: 40px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    vertical-align: middle;
+    width: 40px;
+}
+.acc-overview li.deco .icon:before {
+    background-color: #DDDDDD;
+    content: "";
+    height: 4px;
+    left: -20px;
+    margin-top: -2px;
+    position: absolute;
+    top: 50%;
+    vertical-align: middle;
+    width: 20px;
+}
+.acc-overview li.deco .title {
+    font-family: Montserrat;
+    font-size: 16px;
+    margin-left: 70px;
+    padding: 2px 0;
+}
+.acc-overview li.deco .title small {
+    display: block;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 10px;
+}
