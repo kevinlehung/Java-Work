@@ -18,7 +18,7 @@
 		<div class='span12 box'>
 			<div class='box-content'>
 				<h4>
-					<a href="job_detail.jsp" class="text-contrast">Front End Website Coding</a>
+					<a href="${contextPath}/u/jobs/1/view.jv" class="text-contrast">Front End Website Coding</a>
 				</h4>
 				<div class="row-fluid">
 					<ul class="inline">
@@ -49,7 +49,7 @@
 		<div class='span12 box'>
 			<div class='box-content'>
 				<h4>
-					<a href="job_detail.jsp" class="text-contrast">Technical Content Writer</a>
+					<a href="${contextPath}/u/jobs/1/view.jv" class="text-contrast">Technical Content Writer</a>
 				</h4>
 				<div class="row-fluid">
 					<ul class="inline">
@@ -81,7 +81,7 @@
 		<div class='span12 box'>
 			<div class='box-content'>
 				<h4>
-					<a href="job_detail.jsp" class="text-contrast">J2EE developer</a>
+					<a href="${contextPath}/u/jobs/1/view.jv" class="text-contrast">J2EE developer</a>
 				</h4>
 				<div class="row-fluid">
 					<ul class="inline">

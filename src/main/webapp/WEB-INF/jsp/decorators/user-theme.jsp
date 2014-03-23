@@ -302,7 +302,7 @@
 			</div>
 			<ul class='nav nav-stacked'>
 			<li class=''>
-			    <a href='index.html'>
+			    <a href='${contextPath}/u/jobs/1/list.jv'>
 			        <i class=' icon-search'></i>
 			        <span>Search Jobs</span>
 			    </a>
@@ -314,7 +314,7 @@
 			    </a>
 			</li>
 			<li class=''>
-			    <a href='${contextPath}/u/skill_test.jv'>
+			    <a href='${contextPath}/u/skills/list.jv'>
 			        <i class=' icon-tasks'></i>
 			        <span>Take a Skill Test</span>
 			    </a>
@@ -326,38 +326,38 @@
 			        <i class='icon-angle-down angle-down'></i>
 			    </a>
 			    <ul class='nav nav-stacked' style='display:none'>
-			        <li class=''>
-			            <a href='profile.jsp'>
+			        <li>
+			            <a href='${contextPath}/u/dashboard.jv'>
 			                <i class=' icon-dashboard'></i>
 			                <span>Overview</span>
 			            </a>
 			        </li>
 			        <li class=''>
-			            <a href='setting.jsp'>
+			            <a href='${contextPath}/u/job/history.jv'>
 			                <i class=' icon-mail-reply'></i>
 			                <span>Jobs History</span>
 			            </a>
 			        </li>
-			        <li class=''>
-			            <a href='setting.jsp'>
+			        <li>
+			            <a href='javascript:;'>
 			                <i class='icon-lightbulb'></i>
-			                <span>Porfolio</span>
+			                <span>Portfolio</span>
 			            </a>
 			        </li>
-			        <li class=''>
-			            <a href='setting.jsp'>
+			        <li>
+			            <a href='${contextPath}/u/skills.jv'>
 			                <i class=' icon-ok'></i>
 			                <span>My Skills</span>
 			            </a>
 			        </li>
-			        <li class=''>
-			            <a href='setting.jsp'>
+			        <li>
+			            <a href='javascript:;'>
 			                <i class='icon-file'></i>
 			                <span>Create Printable Resume/CV</span>
 			            </a>
 			        </li>
 			        <li class=''>
-			            <a href='setting.jsp'>
+			            <a href='javascript:;'>
 			                <i class=' icon-envelope'></i>
 			                <span>Contact Info</span>
 			            </a>
@@ -371,7 +371,7 @@
 			    </ul>
 			</li>
 			<li class=''>
-			    <a href='faq.jsp'>
+			    <a href='javascript:;'>
 			        <i class='icon-question'></i>
 			        <span>FAQ</span>
 			    </a>

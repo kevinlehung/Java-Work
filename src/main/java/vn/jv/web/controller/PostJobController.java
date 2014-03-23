@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import vn.jv.constant.WebConstants;
-import vn.jv.persist.domain.City;
 import vn.jv.persist.domain.Country;
 import vn.jv.persist.domain.Skill;
 import vn.jv.persist.domain.User;
