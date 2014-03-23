@@ -110,18 +110,22 @@ public interface WebConstants {
         public static final String JOBS_LIST = "jobs_list";
         public static final String JOB_DETAIL = "job_detail";
         public static final String SKILL_SET = "skill_set";
+        
         public static final String USER_PROFILE_OVERVIEW = "user_profile_overview";
         public static final String USER_JOBS_HISTORY = "user_jobs_history";
         public static final String USER_SKILLS = "user_skills";
+        
         public static final String SKILL_TEST = "skill_test";
         public static final String SKILL_TEST_PRACTICE = "skill_test_practice";
+        public static final String SKILL_TEST_PRACTICE_COMPLETE = "skill_test_practice_complete";
+        public static final String SKILL_TEST_PRACTICE_OUT_OF_TIME = "skill_test_practice_out_of_time";
         
-        
-        
+        public static final String SKILL_TEST_QUESTION = "skill_test_question";
+        public static final String SKILL_TEST_QUESTION_COMPLETE = "skill_test_question_complete";
+        public static final String SKILL_TEST_QUESTION_TIMEOUT = "skill_test_question_timeout";
         
         public static final String RESET_PASSWORD = "security/resetPassword";
         public static final String ACCESS_DENIED = "security/AccessDenied";
-        
     }
     
     public interface Pages {

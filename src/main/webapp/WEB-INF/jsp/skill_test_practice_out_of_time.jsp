@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Post Java Job - Preview</title>
+    <title>Skill Test: SOFTWARE ENGINEERING CONCEPTS</title>
 </head>
 <body class='contrast-sea-blue'>
 <div class='span12'>
@@ -56,20 +56,21 @@
             	<a class="btn btn-primary btn-large" href="${contextPath}/u/skill/1/test/question.jv">
                         Begin Test <i class="icon-arrow-right"></i>
                 </a>
-            	<h4 class="title text-primary">What is the decimal value of the hexadecimal number "FF"?</h4>
+            	<h3 class="title text-red">Sorry, you ran out of time!</h3>
+                <h4 class="title text-primary">What is the decimal value of the hexadecimal number "FF"?</h4>
                 <div class="box-content box-statistic choice">
                     <h4 class="muted">1024</h4>
                 </div>
-                <div class="box-content box-statistic green-background">
-                    <h4 class="title">255</h4><div class="text-success icon-ok align-right"></div>
+                <div class="box-content box-statistic choice-correct">
+                    <h4 class="muted text-success">255</h4><div class="text-success icon-ok align-right"></div>
+                </div>
+                
+                <div class="box-content box-statistic choice">
+                    <h4 class="muted">256</h4>
                 </div>
                 <div class="box-content box-statistic choice">
                     <h4 class="muted">0</h4>
                 </div>
-                <div class="box-content box-statistic choice red-background">
-                    <h4 class="title">256</h4><div class="text-success icon-remove align-right"></div>
-                </div>
-                
             </div>
         </div>
     

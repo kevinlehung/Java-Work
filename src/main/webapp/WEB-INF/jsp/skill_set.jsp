@@ -5,7 +5,6 @@
 <html>
 <head>
     <title>Take a Skill Test</title>
-    <script src='${contextPath}/assets/javascripts/account.js' type='text/javascript'></script>
 </head>
 <body class='contrast-sea-blue'>
 <div class='row-fluid'>
@@ -112,10 +111,10 @@
 							                    	<div class="text-contrast box-content">
 								                        <i class="icon-exclamation-sign"></i>
 								                        Spring Web MVC framework
-								                        <div class="btn btn-primary pull-right">
+								                        <a class="btn btn-primary pull-right" href="${contextPath}/u/skill/1/test.jv">
 								                            <i class="icon-check"></i>
 								                            Take this test
-								                        </div>
+								                        </a>
 								                        <div class="clearfix"></div>
 							                    	</div>
 							                    </div>
@@ -123,11 +122,11 @@
 							                    <div class="text-contrast box-content">
 							                        <i class="icon-exclamation-sign"></i>
 							                        Hibernate ORM
-							                        <div class="btn btn-primary pull-right clearfix">
+							                        <a class="btn btn-primary pull-right clearfix" href="${contextPath}/u/skill/1/test.jv">
 								                            <i class="icon-check"></i>
 								                            Take this test
-								                        </div>
-								                        <div class="clearfix"></div>
+							                        </a>
+							                        <div class="clearfix"></div>
 							                    	</div>
 							                    </div>
 							            	</div>
@@ -139,23 +138,23 @@
 							                    <div class="box">
 							                    	<div class="text-contrast box-content">
 								                        <i class="icon-exclamation-sign"></i>
-								                        Spring Web MVC framework
-								                        <div class="btn btn-primary pull-right">
+								                        Joomla
+								                        <a class="btn btn-primary pull-right" href="${contextPath}/u/skill/1/test.jv">
 								                            <i class="icon-check"></i>
 								                            Take this test
-								                        </div>
+								                        </a>
 								                        <div class="clearfix"></div>
 							                    	</div>
 							                    </div>
 							                    <div class="box">
 							                    <div class="text-contrast box-content">
 							                        <i class="icon-exclamation-sign"></i>
-							                        Hibernate ORM
-							                        <div class="btn btn-primary pull-right clearfix">
-								                            <i class="icon-check"></i>
-								                            Take this test
-								                        </div>
-								                        <div class="clearfix"></div>
+							                        Drupal
+							                        <a class="btn btn-primary pull-right clearfix" href="${contextPath}/u/skill/1/test.jv">
+							                            <i class="icon-check"></i>
+							                            Take this test
+							                        </a>
+							                        <div class="clearfix"></div>
 							                    	</div>
 							                    </div>
 							            	</div>
@@ -165,22 +164,22 @@
 							                    <div class="box">
 							                    	<div class="text-contrast box-content">
 								                        <i class="icon-exclamation-sign"></i>
-								                        Spring Web MVC framework
-								                        <div class="btn btn-primary pull-right">
+								                        Ruby Programming Language
+								                        <a class="btn btn-primary pull-right" href="${contextPath}/u/skill/1/test.jv">
 								                            <i class="icon-check"></i>
 								                            Take this test
-								                        </div>
+								                        </a>
 								                        <div class="clearfix"></div>
 							                    	</div>
 							                    </div>
 							                    <div class="box">
-							                    <div class="text-contrast box-content">
-							                        <i class="icon-exclamation-sign"></i>
-							                        Hibernate ORM
-							                        <div class="btn btn-primary pull-right clearfix">
+								                    <div class="text-contrast box-content">
+								                        <i class="icon-exclamation-sign"></i>
+								                        Ruby on Rail
+								                        <a class="btn btn-primary pull-right clearfix" href="${contextPath}/u/skill/1/test.jv">
 								                            <i class="icon-check"></i>
 								                            Take this test
-								                        </div>
+								                        </a>
 								                        <div class="clearfix"></div>
 							                    	</div>
 							                    </div>

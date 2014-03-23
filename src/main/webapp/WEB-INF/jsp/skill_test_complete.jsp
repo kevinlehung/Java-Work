@@ -5,7 +5,6 @@
 <html>
 <head>
     <title>Post Java Job - Preview</title>
-    <script src='${contextPath}/assets/javascripts/account.js' type='text/javascript'></script>
 </head>
 <body class='contrast-sea-blue'>
 <header>

@@ -5,7 +5,6 @@
 <html>
 <head>
 	<title>Java Skill Tests</title>
-	<script src='${contextPath}/assets/javascripts/account.js' type='text/javascript'></script>
 </head>
 <body class='contrast-sea-blue'>
 <div class='span12'>

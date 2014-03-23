@@ -85,10 +85,10 @@
 			</div>
 			<div class='row-fluid'>
 				<div class="span12">
-                    <div class="btn btn-primary pull-right">
+                    <a class="btn btn-primary pull-right"  href='${contextPath}/u/skills/list.jv'>
                         <i class="icon-check"></i>
                         Take more test
-                    </div>
+                    </a>
 				</div>
 			</div>
 		</div>

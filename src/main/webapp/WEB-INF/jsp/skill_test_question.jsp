@@ -4,7 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Post Java Job - Preview</title>
+    <title>Skill Test: SOFTWARE ENGINEERING CONCEPTS</title>
+     <link href='${contextPath}/assets/stylesheets/skill.css' media='all' rel='stylesheet' type='text/css' />
+     <script src='${contextPath}/assets/javascripts/skill.js' type='text/javascript'></script>
 </head>
 <body class='contrast-sea-blue'>
 <div class='span12'>
@@ -38,38 +40,22 @@
 </div>
 <div class='row-fluid'>
 		<div><h3>SOFTWARE ENGINEERING CONCEPTS</h3></div>
-        <div class='row-fluid'>
-           	<div class="span12">
-                   <div class="alert alert-warning">
-                       <h4>
-                           <i class="icon-exclamation-sign"></i>
-                           Try a practice question.
-                       </h4>
-                       <p>
-                       This is a practice question. Click <b>"Begin Test"</b> to take actual test. 
-                       </p>
-                   </div>
-			</div>
-		</div>
-        <div class="row-fluid test-disable">
-            <div class="span12 box">
-            	<a class="btn btn-primary btn-large" href="${contextPath}/u/skill/1/test/question.jv">
-                        Begin Test <i class="icon-arrow-right"></i>
-                </a>
-            	<h4 class="title text-primary">What is the decimal value of the hexadecimal number "FF"?</h4>
+        <div class="row-fluid test-enable">
+            <div class="span12 box" id="question">
+            	<h3 class="title text-red">Remaining Time: <strong>00:59</strong></h3>(Don't rush. There's no bonus for finishing early!)
+                <h4 class="title text-primary">What is the decimal value of the hexadecimal number "FF"?</h4>
                 <div class="box-content box-statistic choice">
                     <h4 class="muted">1024</h4>
                 </div>
-                <div class="box-content box-statistic green-background">
-                    <h4 class="title">255</h4><div class="text-success icon-ok align-right"></div>
+                <div class="box-content box-statistic choice">
+                    <h4 class="muted">255</h4>
+                </div>
+                <div class="box-content box-statistic choice">
+                    <h4 class="muted">256</h4>
                 </div>
                 <div class="box-content box-statistic choice">
                     <h4 class="muted">0</h4>
                 </div>
-                <div class="box-content box-statistic choice red-background">
-                    <h4 class="title">256</h4><div class="text-success icon-remove align-right"></div>
-                </div>
-                
             </div>
         </div>
     

@@ -6,6 +6,7 @@
 <head>
     <title>Try a Practice Question</title>
      <link href='${contextPath}/assets/stylesheets/skill.css' media='all' rel='stylesheet' type='text/css' />
+     <script src='${contextPath}/assets/javascripts/skill.js' type='text/javascript'></script>
 </head>
 <body class='contrast-sea-blue'>
 <div class='span12'>
@@ -53,7 +54,7 @@
 			</div>
 		</div>
         <div class="row-fluid test-enable">
-            <div class="span12 box">
+            <div class="span12 box" id="practice_question">
             	<h3 class="title text-red">Remaining Time: <strong>00:59</strong></h3>(Don't rush. There's no bonus for finishing early!)
                 <h4 class="title text-primary">What is the decimal value of the hexadecimal number "FF"?</h4>
                 <div class="box-content box-statistic choice">

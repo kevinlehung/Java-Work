@@ -31,4 +31,24 @@ public class SkillTestController  extends BaseController {
 			HttpServletResponse response, @PathVariable("workCategoryId") int workCategoryId, Model model) throws IOException {
 		return WebConstants.Views.SKILL_TEST_PRACTICE;
 	}
+	
+	@RequestMapping("/u/skill/{workCategoryId}/test/practice/complete")
+	public String completePracticeQuestion(HttpServletRequest request,
+			HttpServletResponse response, @PathVariable("workCategoryId") int workCategoryId, Model model) throws IOException {
+		return WebConstants.Views.SKILL_TEST_PRACTICE_OUT_OF_TIME;
+		//return WebConstants.Views.SKILL_TEST_PRACTICE_COMPLETE;
+	}
+	
+	@RequestMapping("/u/skill/{workCategoryId}/test/question")
+	public String requestQuestion(HttpServletRequest request,
+			HttpServletResponse response, @PathVariable("workCategoryId") int workCategoryId, Model model) throws IOException {
+		return WebConstants.Views.SKILL_TEST_QUESTION;
+	}
+	
+	@RequestMapping("/u/skill/{workCategoryId}/test/question/complete")
+	public String completeQuestion(HttpServletRequest request,
+			HttpServletResponse response, @PathVariable("workCategoryId") int workCategoryId, Model model) throws IOException {
+		//return WebConstants.Views.SKILL_TEST_QUESTION_COMPLETE;
+		return WebConstants.Views.SKILL_TEST_QUESTION_TIMEOUT;
+	}
 }
