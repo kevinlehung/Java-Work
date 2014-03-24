@@ -95,11 +95,28 @@ public class User implements Serializable {
 	@OneToMany(mappedBy="user")
 	private List<TUserTest> tUserTests;
 
+	//bi-directional one-to-many association to UCertification
+	@OneToMany(mappedBy = "user")
+	private List<UCertification> uCertifications;
+	
+	//bi-directional one-to-many association to UEducation
+	@OneToMany(mappedBy = "user")
+	private List<UEducation> uEducations;
+	
+	//bi-directional one-to-many association to UEmployment
+	@OneToMany(mappedBy = "user")
+	private List<UEmployment> uEmployments;
+
+	//bi-directional one-to-many association to ULicense
+	@OneToMany(mappedBy = "user")
+	private List<ULicense> uLicenses;
+	
 	//bi-directional many-to-one association to Profile
 	@ManyToOne
 	@JoinColumn(name="PROFILE_ID")
 	private Profile profile;
 
+	
 	public User() {
 	}
 
@@ -347,6 +364,94 @@ public class User implements Serializable {
 		return TUserTest;
 	}
 
+	public List<UCertification> getUCertifications() {
+		return uCertifications;
+	}
+
+	public void setUCertifications(List<UCertification> uCertifications) {
+		this.uCertifications = uCertifications;
+	}
+	
+	public UCertification addUCertification(UCertification uCertification) {
+		getUCertifications().add(uCertification);
+		uCertification.setUser(this);
+		
+		return uCertification;
+	}
+	
+	public UCertification removeUCertification(UCertification uCertification) {
+		getUCertifications().remove(uCertification);
+		uCertification.setUser(null);
+		
+		return uCertification;
+	}
+
+	public List<UEducation> getUEducations() {
+		return uEducations;
+	}
+
+	public void setUEducations(List<UEducation> uEducations) {
+		this.uEducations = uEducations;
+	}
+	
+	public UEducation addUEducation(UEducation uEducation) {
+		getUEducations().add(uEducation);
+		uEducation.setUser(this);
+		
+		return uEducation;
+	}
+	
+	public UEducation removeUEducation(UEducation uEducation) {
+		getUEducations().remove(uEducation);
+		uEducation.setUser(null);
+		
+		return uEducation;
+	}
+
+	public List<UEmployment> getUEmployments() {
+		return uEmployments;
+	}
+
+	public void setUEmployments(List<UEmployment> uEmployments) {
+		this.uEmployments = uEmployments;
+	}
+
+	public UEmployment addUEmployment(UEmployment uEmployment) {
+		getUEmployments().add(uEmployment);
+		uEmployment.setUser(this);
+		
+		return uEmployment;
+	}
+	
+	public UEmployment removeUEmployment(UEmployment uEmployment) {
+		getUEmployments().remove(uEmployment);
+		uEmployment.setUser(null);
+		
+		return uEmployment;
+	}
+	
+	public List<ULicense> getULicenses() {
+		return uLicenses;
+	}
+
+	public void setULicenses(List<ULicense> uLicenses) {
+		this.uLicenses = uLicenses;
+	}
+	
+	public ULicense addUEmployment(ULicense uLicense) {
+		getULicenses().add(uLicense);
+		uLicense.setUser(this);
+		
+		return uLicense;
+	}
+	
+	public ULicense removeULicense(ULicense uLicense) {
+		getULicenses().remove(uLicense);
+		uLicense.setUser(null);
+		
+		return uLicense;
+	}
+	
 	public Profile getProfile() {
 		return this.profile;
 	}
