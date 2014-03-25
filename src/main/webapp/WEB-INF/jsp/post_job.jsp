@@ -90,7 +90,7 @@
 								<label for="inputSelect" class="control-label">Select
 									the category of work</label>
 								<div class="controls">
-									<form:select id="inputSelect" path="workCategoryId" items="${workCategories}" itemLabel="domain" itemValue="workCategoryId">
+									<form:select id="inputSelect" path="workCategoryId" items="${workCategories}" itemLabel="workCategoryName" itemValue="workCategoryId">
 									</form:select>
 								</div>
 								<form:errors path="workCategoryId"  cssClass="help-block error"/>

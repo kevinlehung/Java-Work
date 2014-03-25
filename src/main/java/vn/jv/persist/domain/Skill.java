@@ -29,8 +29,8 @@ public class Skill implements Serializable {
 
 	//bi-directional many-to-one association to Domain
 	@ManyToOne
-	@JoinColumn(name="DOMAIN_ID")
-	private Domain domain;
+	@JoinColumn(name="WORK_CATEGORY_ID")
+	private WorkCategory workCategory;
 
 	public Skill() {
 	}
@@ -85,12 +85,13 @@ public class Skill implements Serializable {
 		return jobSkill;
 	}
 
-	public Domain getDomain() {
-		return this.domain;
+	public WorkCategory getWorkCategory() {
+		return workCategory;
 	}
 
-	public void setDomain(Domain domain) {
-		this.domain = domain;
+	public void setWorkCategory(WorkCategory workCategory) {
+		this.workCategory = workCategory;
 	}
+
 
 }
