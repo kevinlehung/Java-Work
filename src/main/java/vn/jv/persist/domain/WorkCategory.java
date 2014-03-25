@@ -29,10 +29,6 @@ public class WorkCategory implements Serializable {
 	@OneToMany(mappedBy="workCategory")
 	private List<Job> jobs;
 
-	//bi-directional many-to-one association to TQuestion
-	@OneToMany(mappedBy="workCategory")
-	private List<TQuestion> tQuestions;
-
 	//bi-directional many-to-one association to WorkCategory
 	@ManyToOne
 	@JoinColumn(name="PARENT_WORK_CATEGORY_ID")
@@ -87,28 +83,6 @@ public class WorkCategory implements Serializable {
 		job.setWorkCategory(null);
 
 		return job;
-	}
-
-	public List<TQuestion> getTQuestions() {
-		return this.tQuestions;
-	}
-
-	public void setTQuestions(List<TQuestion> TQuestions) {
-		this.tQuestions = TQuestions;
-	}
-
-	public TQuestion addTQuestion(TQuestion TQuestion) {
-		getTQuestions().add(TQuestion);
-		TQuestion.setWorkCategory(this);
-
-		return TQuestion;
-	}
-
-	public TQuestion removeTQuestion(TQuestion TQuestion) {
-		getTQuestions().remove(TQuestion);
-		TQuestion.setWorkCategory(null);
-
-		return TQuestion;
 	}
 
 	public WorkCategory getWorkCategory() {

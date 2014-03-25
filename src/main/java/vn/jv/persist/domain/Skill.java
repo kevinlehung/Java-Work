@@ -18,19 +18,25 @@ public class Skill implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="SKILL_ID")
 	private int skillId;
-
+	
+	@Column(name="DESCRIPTION")
 	private String description;
 
+	@Column(name="NAME")
 	private String name;
 
 	//bi-directional many-to-one association to JobSkill
 	@OneToMany(mappedBy="skill")
 	private List<JobSkill> jobSkills;
 
-	//bi-directional many-to-one association to Domain
+	//bi-directional many-to-one association to WorkCategory
 	@ManyToOne
 	@JoinColumn(name="WORK_CATEGORY_ID")
 	private WorkCategory workCategory;
+	
+	//bi-directional many-to-one association to TQuestion
+	@OneToMany(mappedBy = "skill")
+	private List<TQuestion> TQuestions;
 
 	public Skill() {
 	}
@@ -93,5 +99,25 @@ public class Skill implements Serializable {
 		this.workCategory = workCategory;
 	}
 
+	public List<TQuestion> getTQuestions() {
+		return TQuestions;
+	}
 
+	public void setTQuestions(List<TQuestion> tQuestions) {
+		TQuestions = tQuestions;
+	}
+	
+	public TQuestion addTQuestion(TQuestion tQuestion) {
+		getTQuestions().add(tQuestion);
+		tQuestion.setSkill(this);
+		
+		return tQuestion;
+	}
+	
+	public TQuestion removeTQuestion(TQuestion tQuestion) {
+		getTQuestions().remove(tQuestion);
+		tQuestion.setSkill(null);
+		
+		return tQuestion;
+	}
 }

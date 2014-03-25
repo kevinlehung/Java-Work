@@ -31,10 +31,10 @@ public class TQuestion implements Serializable {
 	@OneToMany(mappedBy="tQuestion")
 	private List<TOption> tOptions;
 
-	//bi-directional many-to-one association to WorkCategory
+	//bi-directional many-to-one association to Skill
 	@ManyToOne
-	@JoinColumn(name="WORK_CATEGORY_ID")
-	private WorkCategory workCategory;
+	@JoinColumn(name = "SKILL_ID")
+	private Skill skill;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
@@ -102,14 +102,6 @@ public class TQuestion implements Serializable {
 		return TOption;
 	}
 
-	public WorkCategory getWorkCategory() {
-		return this.workCategory;
-	}
-
-	public void setWorkCategory(WorkCategory workCategory) {
-		this.workCategory = workCategory;
-	}
-
 	public User getUser() {
 		return this.user;
 	}
@@ -138,6 +130,14 @@ public class TQuestion implements Serializable {
 		TTestQuestion.setTQuestion(null);
 
 		return TTestQuestion;
+	}
+
+	public Skill getSkill() {
+		return skill;
+	}
+
+	public void setSkill(Skill skill) {
+		this.skill = skill;
 	}
 
 }
