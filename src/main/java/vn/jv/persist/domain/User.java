@@ -111,10 +111,9 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user")
 	private List<ULicense> uLicenses;
 	
-	//bi-directional many-to-one association to Profile
-	@ManyToOne
-	@JoinColumn(name="PROFILE_ID")
-	private Profile profile;
+	//bi-directional one-to-many association to Profile
+	@OneToMany(mappedBy="user")
+	private List<Profile> profiles;
 
 	public User() {
 	}
@@ -450,13 +449,27 @@ public class User implements Serializable {
 		
 		return uLicense;
 	}
+
+	public List<Profile> getProfiles() {
+		return profiles;
+	}
+
+	public void setProfiles(List<Profile> profiles) {
+		this.profiles = profiles;
+	}
 	
-	public Profile getProfile() {
-		return this.profile;
+
+	public Profile addProfile(Profile profile) {
+		getProfiles().add(profile);
+		profile.setUser(this);
+
+		return profile;
 	}
 
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-	}
+	public Profile removeProfile(Profile profile) {
+		getProfiles().remove(profile);
+		profile.setUser(null);
 
+		return profile;
+	}
 }
