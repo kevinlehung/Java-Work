@@ -196,11 +196,11 @@ CREATE TABLE `t_question` (
   `IS_MULTIPLE_CHOICE` tinyint(1) NOT NULL DEFAULT '0',
   `DURATION` int(11) NOT NULL,
   `CREATED_USER_ID` int(11) DEFAULT NULL,
-  `WORK_CATEGORY_ID` int(11) NOT NULL,
+  `SKILL_ID` int(11) NOT NULL,
   PRIMARY KEY (`QUESTION_ID`),
   KEY `FK_t_question_user_user_id` (`CREATED_USER_ID`),
-  KEY `FK_t_question_work_category_work_category_id` (`WORK_CATEGORY_ID`),
-  CONSTRAINT `FK_t_question_work_category_work_category_id` FOREIGN KEY (`WORK_CATEGORY_ID`) REFERENCES `work_category` (`WORK_CATEGORY_ID`),
+  KEY `FK_t_question_work_category_work_category_id` (`SKILL_ID`),
+  CONSTRAINT `FK_t_question_skill_skill_id` FOREIGN KEY (`SKILL_ID`) REFERENCES `skill` (`SKILL_ID`),
   CONSTRAINT `FK_t_question_user_user_id` FOREIGN KEY (`CREATED_USER_ID`) REFERENCES `user` (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
