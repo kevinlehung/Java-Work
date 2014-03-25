@@ -24,9 +24,14 @@ public class Profile implements Serializable {
 	@Column(name="HOURLY_RATE")
 	private int hourlyRate;
 
+	@Column(name="OVERVIEW")
 	private String overview;
 
+	@Column(name="TAGLINE")
 	private String tagline;
+	
+	@Column(name="SERVICE_DESCRIPTION")
+	private String serviceDescription;
 
 	//bi-directional many-to-one association to File
 	@ManyToOne
@@ -34,8 +39,9 @@ public class Profile implements Serializable {
 	private File file;
 
 	//bi-directional many-to-one association to User
-	@OneToMany(mappedBy="profile")
-	private List<User> users;
+	@ManyToOne
+	@JoinColumn(name="USER_ID")
+	private User user;
 
 	public Profile() {
 	}
@@ -88,26 +94,20 @@ public class Profile implements Serializable {
 		this.file = file;
 	}
 
-	public List<User> getUsers() {
-		return this.users;
+	public User getUser() {
+		return this.user;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public User addUser(User user) {
-		getUsers().add(user);
-		user.setProfile(this);
-
-		return user;
+	public String getServiceDescription() {
+		return serviceDescription;
 	}
 
-	public User removeUser(User user) {
-		getUsers().remove(user);
-		user.setProfile(null);
-
-		return user;
+	public void setServiceDescription(String serviceDescription) {
+		this.serviceDescription = serviceDescription;
 	}
 
 }

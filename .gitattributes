@@ -10,6 +10,7 @@
 *.jsp text
 *.md text
 *.xml text
+*.sql text
 
 # Declare files that will always have CRLF line endings on checkout.
 text eol=crlf
