@@ -96,7 +96,46 @@
 			                        
                                 </div>
                                 <div class='content editable editable-empty'>
-                                    Empty
+									<c:choose>
+										<c:when test="${(empty uCertifications) && (fn:length(uCertifications) == 0)}">
+ 											Empty
+ 										</c:when>
+ 										<c:otherwise>
+											<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<c:forEach items="#{uCertifications}" var="uCertification" varStatus="count">
+												<c:if test="${uCertification.conferringOrganization!=null && uCertification.conferringOrganization!=''}">
+												<tr>
+													<td><h5><c:out value="${uCertification.conferringOrganization}"/></h5></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uCertification.professionalCertificate!=null && uCertification.professionalCertificate!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uCertification.professionalCertificate}"/></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uCertification.dateAwarded!=null && uCertification.dateAwarded!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uCertification.dateAwarded}"/></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uCertification.certificateNumber!=null && uCertification.certificateNumber!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uCertification.certificateNumber}"/></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uCertification.description!=null && uCertification.description!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uCertification.description}"/></td>
+												</tr>
+												</c:if>
+											</c:forEach>
+											</table>
+										</c:otherwise>
+									</c:choose>
                                 </div>
                                 <div class='modal hide fade' id='add-certifications-dialog' role='dialog' tabindex='-1'>
 					                <div class='modal-header'>
@@ -166,7 +205,46 @@
 			                        </a>
                                 </div>
                                 <div class='content editable editable-empty'>
-                                    Empty
+                                   <c:choose>
+										<c:when test="${(empty uLicenses) && (fn:length(uLicenses) == 0)}">
+ 											Empty
+ 										</c:when>
+ 										<c:otherwise>
+											<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<c:forEach items="#{uLicenses}" var="uLicense" varStatus="count">
+												<c:if test="${uLicense.conferringOrganization!=null && uLicense.conferringOrganization!=''}">
+												<tr>
+													<td><h5><c:out value="${uLicense.conferringOrganization}"/></h5></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uLicense.professionalLicense!=null && uLicense.professionalLicense!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uLicense.professionalLicense}"/></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uLicense.dateIssued!=null && uLicense.dateIssued!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uLicense.dateIssued}"/></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uLicense.licenseNumber!=null && uLicense.licenseNumber!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uLicense.licenseNumber}"/></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uLicense.description!=null && uLicense.description!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uLicense.description}"/></td>
+												</tr>
+												</c:if>
+											</c:forEach>
+											</table>
+										</c:otherwise>
+									</c:choose>
                                 </div>
                                 <div class='modal hide fade' id='add-licenses-dialog' role='dialog' tabindex='-1'>
 					                <div class='modal-header'>
@@ -236,7 +314,46 @@
 			                        </a>
                                 </div>
                                 <div class='content editable editable-empty'>
-                                    Empty
+                                    <c:choose>
+										<c:when test="${(empty uEducations) && (fn:length(uEducations) == 0)}">
+ 											Empty
+ 										</c:when>
+ 										<c:otherwise>
+											<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<c:forEach items="#{uEducations}" var="uEducation" varStatus="count">
+												<c:if test="${uEducation.institutionName!=null && uCertification.institutionName!=''}">
+												<tr>
+													<td><h5><c:out value="${uEducation.institutionName}"/></h5></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uEducation.degreeType!=null && uEducation.degreeType!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uEducation.degreeType}"/></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uEducation.graduationStartDate!=null && uEducation.graduationStartDate!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uEducation.graduationStartDate}"/></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uEducation.graduationEndDate!=null && uEducation.graduationEndDate!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uEducation.graduationEndDate}"/></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uEducation.description!=null && uEducation.description!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uEducation.description}"/></td>
+												</tr>
+												</c:if>
+											</c:forEach>
+											</table>
+										</c:otherwise>
+									</c:choose>
                                 </div>
                                 <div class='modal hide fade' id='add-educations-dialog' role='dialog' tabindex='-1'>
 					                <div class='modal-header'>
@@ -300,7 +417,46 @@
 			                        </a>
                                 </div>
                                 <div class='content editable editable-empty'>
-                                    Empty
+                                     <c:choose>
+										<c:when test="${(empty uEmployments) && (fn:length(uEmployments) == 0)}">
+ 											Empty
+ 										</c:when>
+ 										<c:otherwise>
+											<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<c:forEach items="#{uEmployments}" var="uEmployment" varStatus="count">
+												<c:if test="${uEmployment.clientName!=null && uEmployment.clientName!=''}">
+												<tr>
+													<td><h5><c:out value="${uEmployment.clientName}"/></h5></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uEmployment.positionHeld!=null && uEmployment.positionHeld!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uEmployment.positionHeld}"/></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uEmployment.startDate!=null && uEmployment.startDate!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uEmployment.startDate}"/></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uEmployment.endDate!=null && uEmployment.endDate!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uEmployment.endDate}"/></td>
+												</tr>
+												</c:if>
+												
+												<c:if test="${uEmployment.description!=null && uEmployment.description!=''}">
+												<tr>
+													<td>&nbsp;<c:out value="${uEmployment.description}"/></td>
+												</tr>
+												</c:if>
+											</c:forEach>
+											</table>
+										</c:otherwise>
+									</c:choose>
                                 </div>
                                 <div class='modal hide fade' id='add-employments-dialog' role='dialog' tabindex='-1'>
 					                <div class='modal-header'>
