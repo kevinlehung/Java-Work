@@ -8,6 +8,11 @@ import org.springframework.data.repository.query.Param;
 import vn.jv.persist.BaseRepo;
 import vn.jv.persist.domain.TQuestion;
 
+/**
+*
+* @author vodinh90@gmail.com
+*
+*/
 public interface TQuestionRepo extends BaseRepo<TQuestion, Integer>, TQuestionCustomRepo {
 	
 	@Query(value = "SELECT * FROM T_QUESTION WHERE SKILL_ID = :skillId AND QUESTION_ID NOT IN (:listIds) ORDER BY RAND() LIMIT :numOfQuestion", nativeQuery = true)

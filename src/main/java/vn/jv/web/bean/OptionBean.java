@@ -1,5 +1,10 @@
 package vn.jv.web.bean;
 
+/**
+*
+* @author vodinh90@gmail.com
+*
+*/
 public class OptionBean {
 	private Integer optionId;
 	private String description;

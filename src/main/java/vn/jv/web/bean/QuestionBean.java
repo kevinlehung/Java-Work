@@ -2,6 +2,11 @@ package vn.jv.web.bean;
 
 import java.util.List;
 
+/**
+*
+* @author vodinh90@gmail.com
+*
+*/
 public class QuestionBean {
 	private Integer questionId;
 	private String stem;

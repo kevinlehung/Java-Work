@@ -8,6 +8,11 @@ import org.springframework.data.repository.query.Param;
 import vn.jv.persist.BaseRepo;
 import vn.jv.persist.domain.TOption;
 
+/**
+*
+* @author vodinh90@gmail.com
+*
+*/
 public interface TOptionRepo extends BaseRepo<TOption, Integer>, TOptionCustomRepo {
 	
 	@Query("FROM TOption to WHERE to.tQuestion.questionId = :questionId")
