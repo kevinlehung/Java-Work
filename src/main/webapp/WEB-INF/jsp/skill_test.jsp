@@ -13,7 +13,7 @@
         <div class='page-header'>
             <h1 class='pull-left'>
                 <i class='icon-list'></i>
-                <span>Java Skill Tests</span>
+                <span>${skill.name}</span>
             </h1>
             <div class='pull-right'>
                 <ul class='breadcrumb'>
@@ -36,6 +36,11 @@
         </div>
     </div>
 </div>
+<c:if test="${not empty errorMsg}">
+	<div>
+		<font color="red">${errorMsg}</font>
+	</div>
+</c:if>
 <div class='row-fluid'>
     <div class='span8 box bordered-box blue-border'>
     	
@@ -54,7 +59,7 @@
                         <p>
                         This practice question will <b>not count</b> toward your score. After the practice question, you start earning points for your answers!
                         </p>
-                        <a class="btn btn-warning" href="${contextPath}/u/skill/1/test/practice.jv">
+                        <a class="btn btn-warning" href="${contextPath}/u/skill/${skill.skillId}/test/practice.jv">
                             <i class="icon-check"></i>
                             Try a Practice Question
                         </a>

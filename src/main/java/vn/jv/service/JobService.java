@@ -97,7 +97,7 @@ public class JobService implements IJobService {
 			JobSkill jobSkill = new JobSkill();
 			jobSkill.setJob(new Job(jobId));
 			jobSkill.setSkill(new Skill(skillId));
-
+			
 			jobSkillRepo.save(jobSkill);
 			
 			jobSkills.add(jobSkill);
@@ -121,6 +121,8 @@ public class JobService implements IJobService {
 		job.setStatus(Job.Status.OPENING);
 		job.setTitle(postJobForm.getTitle());
 		job.setWorkCategory(new WorkCategory(postJobForm.getWorkCategoryId()));
+		job.setCountry(new Country(postJobForm.getCountryId()));
+		job.setCity(new City(postJobForm.getCityId()));
 		
 		jobRepo.save(job);
 		

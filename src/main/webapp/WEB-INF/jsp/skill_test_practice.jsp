@@ -15,7 +15,7 @@
         <div class='page-header'>
             <h1 class='pull-left'>
                 <i class='icon-list'></i>
-                <span>Java Skill Tests</span>
+                <span>${skill.name}</span>
             </h1>
             <div class='pull-right'>
                 <ul class='breadcrumb'>
@@ -53,25 +53,26 @@
                    </div>
 			</div>
 		</div>
-        <div class="row-fluid test-enable">
-            <div class="span12 box" id="practice_question">
-            	<h3 class="title text-red">Remaining Time: <strong>00:59</strong></h3>(Don't rush. There's no bonus for finishing early!)
-                <h4 class="title text-primary">What is the decimal value of the hexadecimal number "FF"?</h4>
-                <div class="box-content box-statistic choice">
-                    <h4 class="muted">1024</h4>
-                </div>
-                <div class="box-content box-statistic choice">
-                    <h4 class="muted">255</h4>
-                </div>
-                <div class="box-content box-statistic choice">
-                    <h4 class="muted">256</h4>
-                </div>
-                <div class="box-content box-statistic choice">
-                    <h4 class="muted">0</h4>
-                </div>
-            </div>
-        </div>
-    
+		<form id="questionForm" action="${contextPath}/u/skill/${skill.skillId}/test/practice/complete.jv" method="post">
+	        <div class="row-fluid test-enable">
+	            <div class="span12 box" id="practice_question">
+	            	<h3 class="title text-red">Remaining Time: <strong id="timeRemain"></strong></h3>(Don't rush. There's no bonus for finishing early!)
+	                <h4 class="title text-primary" id="question${question.questionId}">${question.stem}</h4>
+	                <c:forEach var="option" items="${question.options}">
+	                	<div class="box-content box-statistic choice" id="${option.optionId}">
+	                    	<h4 class="muted">${option.description}</h4>
+	                	</div>
+	                </c:forEach>
+	            </div>
+	            <input id="btn_finish" type="submit" class="btn btn-primary btn-large" value="Finish"/>
+	        </div>
+	        
+	    	<input type="hidden" id="timeout" value="${timeout}" />
+	    	<input type="hidden" id="isMultipleChoice" value="${question.isMultipleChoice}" />
+	    	<input type="hidden" id="choice" name="choice"/>
+			<input type="hidden" name="questionId" value="${question.questionId}" />
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	    </form>
 </div>
 </div>
 </body>

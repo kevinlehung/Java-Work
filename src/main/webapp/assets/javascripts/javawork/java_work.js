@@ -17,3 +17,23 @@ function loadCities(countryId, callback) {
 		});
 	}
 }
+
+function loadSkills(workCategoryId, callback) {
+	key = "skills:" + workCategoryId;
+	/**
+	 * Get value from client cache first
+	 */
+	cachedSkills = $("body").data(key);
+	if (cachedSkills) {
+		callback(cachedSkills);
+	} else {
+		$.getJSON(contextPath + "/ski/workCategory/" + workCategoryId + "/skills.jv", {
+		}, function(skills) {
+			/**
+			 * Put to cache for using later.
+			 */
+			$("body").data(key, skills);
+			callback(skills);
+		});
+	}
+}

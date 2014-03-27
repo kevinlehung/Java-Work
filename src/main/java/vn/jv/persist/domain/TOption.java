@@ -18,11 +18,12 @@ public class TOption implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="T_OPTION_ID")
 	private int tOptionId;
-
+	
+	@Column(name="DESCRIPTION")
 	private String description;
 
 	@Column(name="IS_KEY")
-	private byte isKey;
+	private boolean isKey;
 
 	//bi-directional many-to-one association to TQuestion
 	@ManyToOne
@@ -48,11 +49,11 @@ public class TOption implements Serializable {
 		this.description = description;
 	}
 
-	public byte getIsKey() {
+	public boolean getIsKey() {
 		return this.isKey;
 	}
 
-	public void setIsKey(byte isKey) {
+	public void setIsKey(boolean isKey) {
 		this.isKey = isKey;
 	}
 
@@ -60,8 +61,8 @@ public class TOption implements Serializable {
 		return this.tQuestion;
 	}
 
-	public void setTQuestion(TQuestion TQuestion) {
-		this.tQuestion = TQuestion;
+	public void setTQuestion(TQuestion tQuestion) {
+		this.tQuestion = tQuestion;
 	}
 
 }

@@ -23,7 +23,7 @@ public class TQuestion implements Serializable {
 	private int duration;
 
 	@Column(name="IS_MULTIPLE_CHOICE")
-	private byte isMultipleChoice;
+	private boolean isMultipleChoice;
 
 	private String stem;
 
@@ -43,7 +43,7 @@ public class TQuestion implements Serializable {
 
 	//bi-directional many-to-one association to TTestQuestion
 	@OneToMany(mappedBy="tQuestion")
-	private List<TTestQuestion> TTestQuestions;
+	private List<TTestQuestion> tTestQuestions;
 
 	public TQuestion() {
 	}
@@ -64,11 +64,11 @@ public class TQuestion implements Serializable {
 		this.duration = duration;
 	}
 
-	public byte getIsMultipleChoice() {
+	public boolean getIsMultipleChoice() {
 		return this.isMultipleChoice;
 	}
 
-	public void setIsMultipleChoice(byte isMultipleChoice) {
+	public void setIsMultipleChoice(boolean isMultipleChoice) {
 		this.isMultipleChoice = isMultipleChoice;
 	}
 
@@ -84,22 +84,22 @@ public class TQuestion implements Serializable {
 		return this.tOptions;
 	}
 
-	public void setTOptions(List<TOption> TOptions) {
-		this.tOptions = TOptions;
+	public void setTOptions(List<TOption> tOptions) {
+		this.tOptions = tOptions;
 	}
 
-	public TOption addTOption(TOption TOption) {
-		getTOptions().add(TOption);
-		TOption.setTQuestion(this);
+	public TOption addTOption(TOption tOptions) {
+		getTOptions().add(tOptions);
+		tOptions.setTQuestion(this);
 
-		return TOption;
+		return tOptions;
 	}
 
-	public TOption removeTOption(TOption TOption) {
-		getTOptions().remove(TOption);
-		TOption.setTQuestion(null);
+	public TOption removeTOption(TOption tOptions) {
+		getTOptions().remove(tOptions);
+		tOptions.setTQuestion(null);
 
-		return TOption;
+		return tOptions;
 	}
 
 	public User getUser() {
@@ -111,25 +111,25 @@ public class TQuestion implements Serializable {
 	}
 
 	public List<TTestQuestion> getTTestQuestions() {
-		return this.TTestQuestions;
+		return tTestQuestions;
 	}
 
-	public void setTTestQuestions(List<TTestQuestion> TTestQuestions) {
-		this.TTestQuestions = TTestQuestions;
+	public void setTTestQuestions(List<TTestQuestion> tTestQuestions) {
+		this.tTestQuestions = tTestQuestions;
 	}
 
-	public TTestQuestion addTTestQuestion(TTestQuestion TTestQuestion) {
-		getTTestQuestions().add(TTestQuestion);
-		TTestQuestion.setTQuestion(this);
+	public TTestQuestion addTTestQuestion(TTestQuestion tTestQuestion) {
+		getTTestQuestions().add(tTestQuestion);
+		tTestQuestion.setTQuestion(this);
 
-		return TTestQuestion;
+		return tTestQuestion;
 	}
 
-	public TTestQuestion removeTTestQuestion(TTestQuestion TTestQuestion) {
-		getTTestQuestions().remove(TTestQuestion);
-		TTestQuestion.setTQuestion(null);
+	public TTestQuestion removeTTestQuestion(TTestQuestion tTestQuestion) {
+		getTTestQuestions().remove(tTestQuestion);
+		tTestQuestion.setTQuestion(null);
 
-		return TTestQuestion;
+		return tTestQuestion;
 	}
 
 	public Skill getSkill() {
