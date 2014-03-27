@@ -39,7 +39,7 @@
 							<li data-target='#step2'><span class='step'>Preview</span></li>
 							<li data-target='#step3'><span class='step'>Done</span></li>
 						</ul>
-						<div class='actions'>
+						<div class='actions' style='display:none;'>
 							<button class='btn btn-mini btn-prev'>
 								<i class='icon-arrow-left'></i>Prev
 							</button>
