@@ -31,6 +31,10 @@ public class City implements Serializable {
 	@OneToMany(mappedBy="city")
 	private List<Job> jobs;
 
+	public City(int cityId) {
+		this.cityId = cityId;
+	}
+	
 	public City(int cityId, String cityName) {
 		this.cityId = cityId;
 		this.cityName = cityName;
