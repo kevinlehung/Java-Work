@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import vn.jv.persist.domain.City;
+import vn.jv.persist.domain.Country;
 import vn.jv.persist.domain.Skill;
 import vn.jv.persist.domain.TOption;
 import vn.jv.persist.domain.TQuestion;
@@ -131,4 +133,5 @@ public class SkillService extends BaseService implements ISkillService {
 		}
 		return optionBeans;
 	}
+
 }

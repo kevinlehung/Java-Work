@@ -24,4 +24,5 @@ public interface ISkillService extends IBaseService {
 	public List<QuestionBean> findQuestionBySkillIdAndDifferFormTestedQuestions(int skillId, User currentUser, int numOfQuestion, Integer practiceQuestionId);
 	
 	public QuestionBean getRandomPracticeQuestion(int skillId, User currentUser);
+
 }
