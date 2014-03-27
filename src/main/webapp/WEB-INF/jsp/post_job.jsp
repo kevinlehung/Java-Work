@@ -120,9 +120,9 @@
 							<div class="control-group">
 								<label class='control-label' for='inputText'>Location</label>
 								<div class="controls">
-									<form:select path="countryId" items="${countries }" itemLabel="countryName" itemValue="countryId" cssClass="span2" id="countries">
+									<form:select path="countryId" items="${countries}" itemLabel="countryName" itemValue="countryId" cssClass="span2" id="countries">
 									</form:select>
-									<form:select path="cityId" items="${cities }" itemLabel="cityName" itemValue="cityId" cssClass="span2" id="cities" title="Select">
+									<form:select path="cityId" items="${cities}" itemLabel="cityName" itemValue="cityId" cssClass="span2" id="cities" title="Select">
 									</form:select>
 								</div>
 							</div>
