@@ -5,6 +5,8 @@
 <html>
 <head>
     <title>Take a Skill Test</title>
+     <link href='${contextPath}/assets/stylesheets/skill.css' media='all' rel='stylesheet' type='text/css' />
+    <script src='${contextPath}/assets/javascripts/javawork/skill_set.js' type='text/javascript'></script>
 </head>
 <body class='contrast-sea-blue'>
 <div class='row-fluid'>
@@ -87,104 +89,27 @@
 			        <div class="box-content">
 			            <div class="row-fluid">
 			                    <div class="tabbable tabs-left">
-			                        <ul class="nav nav-tabs">
-			                            <li class="">
-			                                <a href="#lA" data-toggle="tab" class="contrast">
-			                                    1. Java
+			                        <ul class="nav nav-tabs" id="workCategory">
+			                        	<c:forEach var = "workCategory" items="${workCategories}">
+			                            <li id="${workCategory.workCategoryId}">
+			                                <a id="${workCategory.workCategoryId}" href="#lA" data-toggle="tab" class="contrast">
+			                                   ${workCategory.workCategoryName} 
 			                                </a>
 			                            </li>
-			                            <li class="">
-			                                <a href="#lB" data-toggle="tab" class="contrast">
-			                                    2. PHP
-			                                </a>
-			                            </li>
-			                            <li class="active">
-			                                <a href="#lC" data-toggle="tab" class="contrast">
-			                                    <b>3. Ruby</b>
-			                                </a>
-			                            </li>
+			                            </c:forEach>
 			                        </ul>
 			                        <div class="tab-content">
 			                            <div id="lA" class="tab-pane">
 			                                <div class='row-fluid'>
+							                    
 							                    <div class="box">
-							                    	<div class="text-contrast box-content">
-								                        <i class="icon-exclamation-sign"></i>
-								                        Spring Web MVC framework
-								                        <a class="btn btn-primary pull-right" href="${contextPath}/u/skill/1/test.jv">
-								                            <i class="icon-check"></i>
-								                            Take this test
-								                        </a>
-								                        <div class="clearfix"></div>
-							                    	</div>
-							                    </div>
-							                    <div class="box">
-							                    <div class="text-contrast box-content">
-							                        <i class="icon-exclamation-sign"></i>
-							                        Hibernate ORM
-							                        <a class="btn btn-primary pull-right clearfix" href="${contextPath}/u/skill/1/test.jv">
-								                            <i class="icon-check"></i>
-								                            Take this test
-							                        </a>
-							                        <div class="clearfix"></div>
-							                    	</div>
+							                   
 							                    </div>
 							            	</div>
 			                                
 			                                
 			                            </div>
-			                            <div id="lB" class="tab-pane">
-			                                <div class='row-fluid'>
-							                    <div class="box">
-							                    	<div class="text-contrast box-content">
-								                        <i class="icon-exclamation-sign"></i>
-								                        Joomla
-								                        <a class="btn btn-primary pull-right" href="${contextPath}/u/skill/1/test.jv">
-								                            <i class="icon-check"></i>
-								                            Take this test
-								                        </a>
-								                        <div class="clearfix"></div>
-							                    	</div>
-							                    </div>
-							                    <div class="box">
-							                    <div class="text-contrast box-content">
-							                        <i class="icon-exclamation-sign"></i>
-							                        Drupal
-							                        <a class="btn btn-primary pull-right clearfix" href="${contextPath}/u/skill/1/test.jv">
-							                            <i class="icon-check"></i>
-							                            Take this test
-							                        </a>
-							                        <div class="clearfix"></div>
-							                    	</div>
-							                    </div>
-							            	</div>
-			                            </div>
-			                            <div id="lC" class="tab-pane active">
-			                                <div class='row-fluid'>
-							                    <div class="box">
-							                    	<div class="text-contrast box-content">
-								                        <i class="icon-exclamation-sign"></i>
-								                        Ruby Programming Language
-								                        <a class="btn btn-primary pull-right" href="${contextPath}/u/skill/1/test.jv">
-								                            <i class="icon-check"></i>
-								                            Take this test
-								                        </a>
-								                        <div class="clearfix"></div>
-							                    	</div>
-							                    </div>
-							                    <div class="box">
-								                    <div class="text-contrast box-content">
-								                        <i class="icon-exclamation-sign"></i>
-								                        Ruby on Rail
-								                        <a class="btn btn-primary pull-right clearfix" href="${contextPath}/u/skill/1/test.jv">
-								                            <i class="icon-check"></i>
-								                            Take this test
-								                        </a>
-								                        <div class="clearfix"></div>
-							                    	</div>
-							                    </div>
-							            	</div>
-			                            </div>
+			                          
 			                        </div>
 			                    </div>
 			            </div>
