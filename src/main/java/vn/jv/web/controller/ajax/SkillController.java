@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import vn.jv.persist.domain.City;
-import vn.jv.service.ILocationService;
 import vn.jv.service.ISkillService;
-import vn.jv.web.bean.CityBean;
 import vn.jv.web.bean.SkillBean;
 import vn.jv.web.controller.BaseController;
 
@@ -24,7 +21,7 @@ import vn.jv.web.controller.BaseController;
  *
  */
 @Controller
-@RequestMapping("/ski")
+@RequestMapping("/skill")
 public class SkillController extends BaseController {
 	@Autowired
 	private ISkillService skillService;
@@ -32,7 +29,7 @@ public class SkillController extends BaseController {
 	
 	@RequestMapping(value="/workCategory/{workCategoryId}/skills", method=RequestMethod.GET)
 	public @ResponseBody List<SkillBean> loadSkills(@PathVariable(value="workCategoryId") int workCategoryId, HttpServletResponse response) {
-		List<SkillBean> skillBean = skillService.findByWorkCategoryId(workCategoryId);
-		return skillBean;
+		List<SkillBean> skillsBean = skillService.findByWorkCategoryId(workCategoryId);
+		return skillsBean;
 	}
 }

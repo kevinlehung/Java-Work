@@ -8,7 +8,7 @@ $(document).ready(
 			
 			var selectedCityId = $(this).val();
 			loadCities(selectedCityId, populateCitiesDropdow);
-	    });
+		});
 		
 		$('#inputSelect').change(function(event) {
 			$_skills = $("#inputSelectMulti");

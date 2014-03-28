@@ -27,7 +27,7 @@ function loadSkills(workCategoryId, callback) {
 	if (cachedSkills) {
 		callback(cachedSkills);
 	} else {
-		$.getJSON(contextPath + "/ski/workCategory/" + workCategoryId + "/skills.jv", {
+		$.getJSON(contextPath + "/skill/workCategory/" + workCategoryId + "/skills.jv", {
 		}, function(skills) {
 			/**
 			 * Put to cache for using later.
