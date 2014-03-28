@@ -1,2 +1,3 @@
-cd D:\PR-JavaProjects\Java-Work
+cd D:\projects\workspace\Java-Work
+D:
 mvn clean package
