@@ -1,14 +1,13 @@
 package vn.jv.web;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
 import javax.servlet.ServletContext;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultHandler;
 
 import vn.jv.BaseTester;
 
@@ -25,19 +24,12 @@ public class SignupControllerTester extends BaseTester {
 			
 			public MockHttpServletRequest buildRequest(ServletContext servletContext) {
 				MockHttpServletRequest request = new MockHttpServletRequest(servletContext, "GET", "/sec/sign_up.jv");
+				request.addHeader("Accept", "text/html");
 				return request;
 			}
 		};
 		try {
-			ResultActions resultAction = mockMVC.perform(requestBuilder);
-			ResultHandler handler = new ResultHandler() {
-				
-				public void handle(MvcResult result) throws Exception {
-					System.out.println(result.getModelAndView());
-				}
-			};
-			MvcResult result = resultAction.andDo(handler).andReturn();
-			Assert.assertEquals("Failed", "security/sign_up", result.getModelAndView().getViewName());
+			ResultActions resultAction = mockMVC.perform(requestBuilder).andDo(print());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
