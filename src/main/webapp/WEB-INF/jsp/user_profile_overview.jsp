@@ -7,7 +7,9 @@
     <title>Post Java Job - Preview</title>
     <link href='${contextPath}/assets/stylesheets/account.css' media='all' rel='stylesheet' type='text/css' />
     <script src='${contextPath}/assets/javascripts/account.js' type='text/javascript'></script>
+    <script src='${contextPath}/assets/javascripts/javawork/user_profile_overview.js' type='text/javascript'></script>
 </head>
+
 <body class='contrast-sea-blue'>
             <div class='span12'>
                 <div class='row-fluid'>
@@ -78,6 +80,7 @@
 			                            [Edit]
 			                            
 			                        </a>
+			                        <a href="#" data-target="#my_modal" data-toggle="modal" data-id="my_id_value">Open Modal</a>
                                 </div>
                                 <div class='content' id="inplaceediting-service-content"  data-type="wysihtml5" data-original-title="Service Description" data-toggle="manual">
                                     
@@ -105,31 +108,35 @@
 											<c:forEach items="#{uCertifications}" var="uCertification" varStatus="count">
 												<c:if test="${uCertification.conferringOrganization!=null && uCertification.conferringOrganization!=''}">
 												<tr>
-													<td><h5><c:out value="${uCertification.conferringOrganization}"/></h5></td>
+													<td>
+														<a id="item-conferringOrganization-${uCertification.certificationId}" href='#update-certifications-dialog' data-toggle='modal' role='button' onclick="bindCurrentCertification(${uCertification.certificationId});return false;">
+															<h5><c:out value="${uCertification.conferringOrganization}"/></h5>
+														</a>  
+													</td>
 												</tr>
 												</c:if>
 												
 												<c:if test="${uCertification.professionalCertificate!=null && uCertification.professionalCertificate!=''}">
 												<tr>
-													<td>&nbsp;<c:out value="${uCertification.professionalCertificate}"/></td>
+													<td id="item-professionalCertificate-${uCertification.certificationId}"><c:out value="${uCertification.professionalCertificate}"/></td>
 												</tr>
 												</c:if>
 												
 												<c:if test="${uCertification.dateAwarded!=null && uCertification.dateAwarded!=''}">
 												<tr>
-													<td>&nbsp;<c:out value="${uCertification.dateAwarded}"/></td>
+													<td id="item-dateAwarded-${uCertification.certificationId}"><c:out value="${uCertification.dateAwarded}"/></td>
 												</tr>
 												</c:if>
 												
 												<c:if test="${uCertification.certificateNumber!=null && uCertification.certificateNumber!=''}">
 												<tr>
-													<td>&nbsp;<c:out value="${uCertification.certificateNumber}"/></td>
+													<td id="item-certificateNumber-${uCertification.certificationId}"><c:out value="${uCertification.certificateNumber}"/></td>
 												</tr>
 												</c:if>
 												
 												<c:if test="${uCertification.description!=null && uCertification.description!=''}">
 												<tr>
-													<td>&nbsp;<c:out value="${uCertification.description}"/></td>
+													<td id="item-description-${uCertification.certificationId}" ><c:out value="${uCertification.description}"/></td>
 												</tr>
 												</c:if>
 											</c:forEach>
@@ -143,26 +150,28 @@
 					                    <h3>Certification</h3>
 					                    Demonstrate your expertise by listing your certifications.
 					                </div>
-					                <div class='modal-body'>
-					                    <form class='form' style='margin-bottom: 0;' />
+					                
+					                <form:form accept-charset="UTF-8" action="${contextPath}/u/dashboard/createUCertification.jv" method="post" commandName = "uCertificationForm">
+					                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					                	<div class='modal-body'> 
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Conferring Organization</strong></label>
 					                            <div class='controls'>
-					                                <input class='span12' type='text' placeholder='Conferring Organization'/>
+					                                <form:input class="span12" id="conferringOrganization" placeholder="Conferring Organization" path="conferringOrganization"/>
 					                                <p class='help-block' />
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
-					                            <label class='control-label'><strong>Professional certificate</strong></label>
+					                            <label class='control-label'><strong>Professional Certificate</strong></label>
 					                            <div class='controls'>
-					                                <input class='span12' placeholder='Professional certificate' type='text' />
+					                                <form:input class='span12' type='text' placeholder='Professional certificate' value='' path='professionalCertificate'/>
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Date Awarded/Received</strong></label>
 					                            <div class='controls'>
 					                                <div id="datepicker" class="datepicker input-append">
-								                        <input type="text" placeholder="Select datepicker" data-format="yyyy-MM-dd" class="input-medium">
+								                        <form:input type="text" placeholder="Select datepicker" data-format="MM/dd/yyyy" class="input-medium" path='dateAwarded'/>
 											            <span class="add-on">
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
@@ -173,25 +182,84 @@
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Certificate Number</strong> (optional)</label>
 					                            <div class='controls'>
-					                                <input class='span12' placeholder='Certificate Number' type='text' />
+					                                <form:input class='span12' placeholder='Certificate Number' type='text' value='' path='certificateNumber'/>
 					                                <p class='help-block' />
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Description </strong>(optional)</label>
 					                            <div class='controls'>
-					                                <textarea class='span12' placeholder='Description'></textarea>
+					                                <form:textarea class='span12' placeholder='Description' path="description"/>
 					                                <p class='help-block' />
 					                            </div>
 					                        </div>
-					                        
-					                    </form>
-					                </div>
-					                <div class='modal-footer'>
-					                    <button class='btn' data-dismiss='modal'>Close</button>
-					                    <button class='btn btn-primary'>Save changes</button>
-					                </div>
+					                	</div>
+					                	<div class='modal-footer'>
+					                    	<button class='btn' data-dismiss='modal'>Close</button>
+					                    	<button class='btn btn-primary' type="submit">Save changes</button>
+					                	</div>
+					            	</form:form>
+					            
 					            </div>
+					            
+					            <div class='modal hide fade' id='update-certifications-dialog' role='dialog' tabindex='-1'>
+					                <div class='modal-header'>
+					                    <button class='close' data-dismiss='modal' type='button'>&times;</button>
+					                    <h3>Update Certification</h3>
+					                    Demonstrate your expertise by listing your certifications.
+					                </div>
+									<form:form id='UpdateUCertification' accept-charset="UTF-8" action="${contextPath}/u/dashboard/updateUCertification.jv" method="post" commandName = "uCertificationForm">
+					                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					                	<input type='hidden' id='uCertificationId' value=''/>
+					                	<div class='modal-body'> 
+					                        <div class='control-group'>
+					                            <label class='control-label'><strong>Conferring Organization</strong></label>
+					                            <div class='controls'>
+					                                <form:input class="span12" id="uConferringOrganization" placeholder="Conferring Organization" path="conferringOrganization"/>
+					                                <p class='help-block' />
+					                            </div>
+					                        </div>
+					                        <div class='control-group'>
+					                            <label class='control-label'><strong>Professional Certificate</strong></label>
+					                            <div class='controls'>
+					                                <form:input class='span12' id="uProfessionalOrganization" type='text' placeholder='Professional certificate' value='' path='professionalCertificate'/>
+					                            </div>
+					                        </div>
+					                        <div class='control-group'>
+					                            <label class='control-label'><strong>Date Awarded/Received</strong></label>
+					                            <div class='controls'>
+					                                <div id="datepicker" class="datepicker input-append">
+								                        <form:input id="uDateAwarded" type="text" placeholder="Select datepicker" data-format="MM/dd/yyyy" class="input-medium" path='dateAwarded'/>
+											            <span class="add-on">
+											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
+											            </span>
+								                    </div>
+					                                <p class='help-block' />
+					                            </div>
+					                        </div>
+					                        <div class='control-group'>
+					                            <label class='control-label'><strong>Certificate Number</strong> (optional)</label>
+					                            <div class='controls'>
+					                                <form:input class='span12' id='uCertificateNumber' placeholder='Certificate Number' type='text' value='' path='certificateNumber'/>
+					                                <p class='help-block' />
+					                            </div>
+					                        </div>
+					                        <div class='control-group'>
+					                            <label class='control-label'><strong>Description </strong>(optional)</label>
+					                            <div class='controls'>
+					                                <form:textarea class='span12' id='uDescription' placeholder='Description' path="description"/>
+					                                <p class='help-block' />
+					                            </div>
+					                        </div>
+					                	</div>
+					                	<div class='modal-footer'>
+					                    	<button class='btn' data-dismiss='modal'>Close</button>
+					                    	<button class='btn btn-primary' type="button" onclick='updateUCertification();return false;'>Save changes</button>
+					                    	<button class='btn btn-danger' type="button" onclick='deleteUCertification();return false;'>Delete</button>
+					                	</div>
+					            	</form:form>
+					            </div>
+					            
                             </li>
                             <li class="deco">
                                 <div class='icon sea-blue-background'>
@@ -271,7 +339,7 @@
 					                            <label class='control-label'><strong>Date Issued</strong></label>
 					                            <div class='controls'>
 					                                <div id="datepicker" class="datepicker input-append">
-								                        <input type="text" placeholder="Select datepicker" data-format="yyyy-MM-dd" class="input-medium">
+								                        <input type="text" placeholder="Select datepicker" data-format="MM/dd/yyyy" class="input-medium">
 											            <span class="add-on">
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
