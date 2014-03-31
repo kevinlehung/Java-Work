@@ -1,14 +1,19 @@
 package vn.jv.persist.domain;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the u_certification table.
@@ -35,6 +40,7 @@ public class UCertification implements java.io.Serializable {
 	private String professionalCertificate;
 
 	@Column(name = "DATE_AWARDED")
+	@DateTimeFormat(pattern = vn.jv.constant.WebConstants.FixValue.DEFAULT_DATE_FORMAT)
 	private Date dateAwarded;
 
 	@Column(name = "CERTIFICATE_NUMBER")

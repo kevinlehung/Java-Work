@@ -1,12 +1,15 @@
 package vn.jv.persist.domain;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the u_education table.
@@ -32,9 +35,11 @@ public class UEducation implements java.io.Serializable {
 	private String degreeType;
 
 	@Column(name = "GRADUATION_START_DATE")
+	@DateTimeFormat(pattern = vn.jv.constant.WebConstants.FixValue.DEFAULT_DATE_FORMAT)
 	private Date graduationStartDate;
 
 	@Column(name = "GRADUATION_END_DATE")
+	@DateTimeFormat(pattern = vn.jv.constant.WebConstants.FixValue.DEFAULT_DATE_FORMAT)
 	private Date graduationEndDate;
 
 	@Column(name = "DESCRIPTION")

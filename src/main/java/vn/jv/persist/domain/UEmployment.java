@@ -1,14 +1,19 @@
 package vn.jv.persist.domain;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the u_employment table.
@@ -35,9 +40,11 @@ public class UEmployment implements java.io.Serializable {
 	private String positionHeld;
 
 	@Column(name = "START_DATE")
+	@DateTimeFormat(pattern = vn.jv.constant.WebConstants.FixValue.DEFAULT_DATE_FORMAT)
 	private Date startDate;
 
 	@Column(name = "END_DATE")
+	@DateTimeFormat(pattern = vn.jv.constant.WebConstants.FixValue.DEFAULT_DATE_FORMAT)
 	private Date endDate;
 
 	@Column(name = "DESCRIPTION")
