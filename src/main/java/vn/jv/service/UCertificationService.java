@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import vn.jv.persist.domain.UCertification;
 import vn.jv.persist.domain.User;
@@ -22,14 +24,15 @@ import vn.jv.persist.repositories.UCertificationRepo;
 public class UCertificationService extends BaseService implements IUCertificationService {
 
 	@Autowired
-	UCertificationRepo uCertificationRepo;
+	private UCertificationRepo uCertificationRepo;
 	
 	//@Cacheable(value = "UCertificationService.findByUserId", key="#userId")
 	public List<UCertification> findByUserId(int userId) {
-		return uCertificationRepo.findByUser(new User(userId));
+		return this.uCertificationRepo.findByUser(new User(userId));
 	}
 	
 	@CacheEvict(value = "UCertificationService.findByUserId", key="#userId")
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void create(User user, String conferringOrganization, String professionalCertificate,
 			Date dateAwarded, String certificateNumber, String description) {
 		
@@ -41,10 +44,10 @@ public class UCertificationService extends BaseService implements IUCertificatio
 		uCertification.setCertificateNumber(certificateNumber);
 		uCertification.setDescription(description);
 		
-		uCertificationRepo.save(uCertification);	
+		this.uCertificationRepo.save(uCertification);	
 	}
 		
-	
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void update(int uCertificationId, String conferringOrganization, String professionalCertificate,
 						Date dateAwarded, String certificateNumber, String description) {
 		UCertification uCertification = uCertificationRepo.findOne(uCertificationId);
@@ -55,9 +58,10 @@ public class UCertificationService extends BaseService implements IUCertificatio
 		uCertification.setCertificateNumber(certificateNumber);
 		uCertification.setDescription(description);
 		
-		uCertificationRepo.save(uCertification);
+		this.uCertificationRepo.save(uCertification);
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(int uCertificationId) {
 		uCertificationRepo.delete(uCertificationId);
 	}
