@@ -39,6 +39,11 @@ public class TTest implements Serializable {
 	// bi-directional many-to-one association to TUserTest
 	@OneToMany(mappedBy = "tTest")
 	private List<TUserTest> tUserTests;
+	
+	// bi-directional many-to-one association to Skill
+	@ManyToOne()
+	@JoinColumn(name="SKILL_ID")
+	private Skill skill;
 
 	public TTest() {
 	}
@@ -125,6 +130,14 @@ public class TTest implements Serializable {
 		TUserTest.setTTest(null);
 
 		return TUserTest;
+	}
+
+	public Skill getSkill() {
+		return skill;
+	}
+
+	public void setSkill(Skill skill) {
+		this.skill = skill;
 	}
 
 }

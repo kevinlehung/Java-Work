@@ -37,6 +37,10 @@ public class Skill implements Serializable {
 	//bi-directional many-to-one association to TQuestion
 	@OneToMany(mappedBy = "skill")
 	private List<TQuestion> TQuestions;
+	
+	//bi-directional many-to-one association to TTest
+	@OneToMany(mappedBy = "skill")
+	private List<TTest> tTests;
 
 	public Skill() {
 	}
@@ -119,5 +123,27 @@ public class Skill implements Serializable {
 		tQuestion.setSkill(null);
 		
 		return tQuestion;
+	}
+
+	public List<TTest> getTTests() {
+		return tTests;
+	}
+
+	public void setTTests(List<TTest> tTests) {
+		this.tTests = tTests;
+	}
+	
+	public TTest addTTest(TTest tTest) {
+		getTTests().add(tTest);
+		tTest.setSkill(this);
+		
+		return tTest;
+	}
+	
+	public TTest removeTTest(TTest tTest) {
+		getTTests().remove(tTest);
+		tTest.setSkill(null);
+		
+		return tTest;
 	}
 }
