@@ -3,6 +3,7 @@ package vn.jv.persist.repositories;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +37,7 @@ public class RepoConfig {
     @Resource  
     private Environment env;
       
-    /*@Bean  
+    @Bean  
     public DataSource dataSource() {  
         DriverManagerDataSource dataSource = new DriverManagerDataSource();  
 
@@ -44,16 +45,16 @@ public class RepoConfig {
         dataSource.setUrl(env.getRequiredProperty(PROPERTY_NAME_DATABASE_URL));  
         dataSource.setUsername(env.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));  
         dataSource.setPassword(env.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));  
-
         return dataSource;  
-    }*/
+    }
     
     @Bean()
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {  
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean(); 
         entityManagerFactoryBean.setPersistenceUnitName(PERSISTENCE_UNIT_NAME);
-        //entityManagerFactoryBean.setDataSource(dataSource());
+        entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setPackagesToScan("vn.jv.persist.domain");
+        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistence.class);
         return entityManagerFactoryBean;  
     }  
       
@@ -61,7 +62,6 @@ public class RepoConfig {
     public JpaTransactionManager transactionManager() {  
         JpaTransactionManager transactionManager = new JpaTransactionManager();  
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());  
-        //transactionManager.setNestedTransactionAllowed(true);
         return transactionManager;  
     }
 }
