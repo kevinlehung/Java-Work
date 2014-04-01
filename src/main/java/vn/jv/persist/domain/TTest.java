@@ -5,44 +5,39 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-
 /**
  * The persistent class for the t_test database table.
  * 
  */
 @Entity
-@Table(name="t_test")
-@NamedQuery(name="TTest.findAll", query="SELECT t FROM TTest t")
+@Table(name = "t_test")
+@NamedQuery(name = "TTest.findAll", query = "SELECT t FROM TTest t")
 public class TTest implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="TEST_ID")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "TEST_ID")
 	private int testId;
 
-	@Column(name="DATE_CREATED")
+	@Column(name = "DATE_CREATED")
 	private Timestamp dateCreated;
 
-	@Column(name="DATE_UPDATED")
+	@Column(name = "DATE_UPDATED")
 	private Timestamp dateUpdated;
 
-	private String description;
-
-	private String title;
-
-	@Column(name="TOTAL_QUESTION")
+	@Column(name = "TOTAL_QUESTION")
 	private int totalQuestion;
 
-	@Column(name="TOTAL_TIME")
+	@Column(name = "TOTAL_TIME")
 	private int totalTime;
 
-	//bi-directional many-to-one association to TTestQuestion
-	@OneToMany(mappedBy="tTest")
+	// bi-directional many-to-one association to TTestQuestion
+	@OneToMany(mappedBy = "tTest")
 	private List<TTestQuestion> tTestQuestions;
 
-	//bi-directional many-to-one association to TUserTest
-	@OneToMany(mappedBy="tTest")
+	// bi-directional many-to-one association to TUserTest
+	@OneToMany(mappedBy = "tTest")
 	private List<TUserTest> tUserTests;
 
 	public TTest() {
@@ -70,22 +65,6 @@ public class TTest implements Serializable {
 
 	public void setDateUpdated(Timestamp dateUpdated) {
 		this.dateUpdated = dateUpdated;
-	}
-
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getTitle() {
-		return this.title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public int getTotalQuestion() {
