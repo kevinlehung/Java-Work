@@ -10,7 +10,7 @@ public interface CacheConstants {
 	public final static String SAVE = "SAVE";
 	public final static String SAVE_OR_UPDATE = "SAVE_OR_UPDATE";
 	public final static String UPDATE = "UPDATE";
-	public final static String DELETE = "DELETE";
+	public final static String DELETE = "DELETE" ;
 	
 	/**
 	 * SiteGlobal cache is used for the whole site whose items are for separate purposes like:
