@@ -30,10 +30,20 @@ public class ViewJobController extends BaseController {
 	@Autowired
 	private JobRepo jobRepo;
 	
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @param pageIndex this value is started from ONE. 
+	 * 		  While [jobService.findJobs] is ZERO BASE, it is minus 1 before pass to that method.
+	 * @param model
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping("/u/jobs/{pageIndex}/list")
 	public String jobsList(HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("pageIndex") int pageIndex, Model model) throws IOException {
-		List<JobViewBean> jobs = jobService.findJobs(pageIndex);
+		List<JobViewBean> jobs = jobService.findJobs(pageIndex - 1);
 		
 		model.addAttribute("jobs", jobs);
 		

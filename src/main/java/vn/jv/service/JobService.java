@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,8 +25,10 @@ import vn.jv.persist.domain.User;
 import vn.jv.persist.domain.WorkCategory;
 import vn.jv.persist.repositories.JobRepo;
 import vn.jv.persist.repositories.JobSkillRepo;
+import vn.jv.persist.repositories.SkillRepo;
 import vn.jv.persist.repositories.WorkCategoryRepo;
 import vn.jv.web.bean.JobViewBean;
+import vn.jv.web.common.util.WebHelper;
 import vn.jv.web.form.PostJobForm;
 
 /**
@@ -45,7 +48,13 @@ public class JobService implements IJobService {
 	private JobRepo jobRepo;
 	
 	@Autowired
+	private SkillRepo skillRepo;
+	
+	@Autowired
 	private ILocationService locationService;
+	
+	@Autowired
+	private WebHelper webHelper;
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Job postJob(PostJobForm postJobForm, int createUserId) {
@@ -54,6 +63,9 @@ public class JobService implements IJobService {
 		return job;
 	}
 
+	/**
+	 * pageIndex: this value is ZERO base
+	 */
 	public List<JobViewBean> findJobs(int pageIndex) {
 		List<JobViewBean> jobViewBeans = new ArrayList<JobViewBean>();
 		
@@ -65,7 +77,6 @@ public class JobService implements IJobService {
 		for (Job job : jobs) {
 			JobViewBean jobViewBean = buildJobViewBean(job);
 			
-			
 			jobViewBeans.add(jobViewBean);
 		}
 		
@@ -75,14 +86,34 @@ public class JobService implements IJobService {
 	private JobViewBean buildJobViewBean(Job job) {
 		JobViewBean jobViewBean = new JobViewBean();
 		
-		int cityId = job.getCity().getCityId();
-		City city = locationService.findCityById(cityId);
+		BeanUtils.copyProperties(job, jobViewBean);
 		
-		int countryId = job.getCountry().getCountryId();
-		Country country = locationService.findCountryById(countryId);
+		int cityId = job.getCity() != null ? job.getCity().getCityId() : 0;
 		
-		jobViewBean.setCity(city);
-		return null;
+		int countryId = job.getCountry() != null ? job.getCountry().getCountryId() : 0;
+		
+		String location = webHelper.buildocationText(countryId, cityId);
+		jobViewBean.setLocation(location);
+		
+		List<Skill> requiredSkills = new ArrayList<Skill>();
+		List<JobSkill> jobSkills = jobSkillRepo.findByJob(job);
+		if (jobSkills != null) {
+			for (JobSkill jobSkill : jobSkills) {
+				Skill skill = jobSkill.getSkill();
+				skill = skillRepo.findOne(skill.getSkillId());
+				requiredSkills.add(skill);
+			}
+		}
+		jobViewBean.setRequiredSkills(requiredSkills);
+		
+		WorkCategory workCategory = job.getWorkCategory();
+		workCategory = workCategoryRepo.findOne(workCategory.getWorkCategoryId());
+		jobViewBean.setWorkCategory(workCategory);
+		
+		String salary = webHelper.buildSalaryText((long)job.getSalaryFromAmount(), (long)job.getSalaryToAmount());
+		jobViewBean.setSalary(salary);
+		
+		return jobViewBean;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -121,8 +152,15 @@ public class JobService implements IJobService {
 		job.setStatus(Job.Status.OPENING);
 		job.setTitle(postJobForm.getTitle());
 		job.setWorkCategory(new WorkCategory(postJobForm.getWorkCategoryId()));
-		job.setCountry(new Country(postJobForm.getCountryId()));
-		job.setCity(new City(postJobForm.getCityId()));
+		
+		int countryId = postJobForm.getCountryId();
+		if (countryId > 0)
+		job.setCountry(new Country(countryId));
+		
+		int cityId = postJobForm.getCityId();
+		if (cityId > 0) {
+			job.setCity(new City(cityId));
+		}
 		
 		jobRepo.save(job);
 		
