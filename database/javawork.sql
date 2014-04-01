@@ -2,7 +2,7 @@
 SQLyog Ultimate v9.20 
 MySQL - 5.1.68-community-log : Database - javawork
 *********************************************************************
-*/
+*/
 
 /*!40101 SET NAMES utf8 */;
 
