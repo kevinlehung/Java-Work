@@ -10,5 +10,7 @@ import vn.jv.persist.domain.TUserTest;
  */
 public interface TUserTestRepo  extends BaseRepo<TUserTest, Integer> , TUserTestCustomRepo {
 	
+	public void RickTestCommit();
+	
 
 }
