@@ -9,33 +9,33 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * Model Attribute for updating Education actions
+ * Model attribute for updating ULicense actions
  *
  * @author tthieucdl@gmail.com
  *
  */
-public class UCertificationForm {
+public class ULicenseForm {
 	
 	@NotBlank(message = "Conferring Organization is required")
 	@Size(min = 2, max = 512, message = "Length of Conferring Organization must be from 2 to 512 characters")
 	private String conferringOrganization;
 	
-	@NotBlank(message = "Professional Certificate is required")
-	@Size(min = 2, max = 512, message = "Length of Professinal Certificate must be from 2 to 512 characters")
-	private String professionalCertificate;
+	@NotBlank(message = "Professional License is required")
+	@Size(min = 2, max = 512, message = "Length of Professional License must be from 2 to 512 characters")
+	private String professionalLicense;
 	
-	@NotNull(message = "Date Awarded is required")
+	@NotNull(message = "Date Issued is required")
 	@DateTimeFormat(pattern = "MM/dd/yyyy")
-	private Date dateAwarded;
+	private Date dateIssued;
 	
-	@Size(max = 128,  message = "Length of Certificate Number must be less than 128")
-	private String certificateNumber;
+	@Size(max = 128,  message = "Length of License Number must be less than 128")
+	private String licenseNumber;
 	
 	@Size(max = 1024,  message = "Length of Description must be less than 1024")
 	private String description;
 	
 	private int userId;
-	
+
 	public String getConferringOrganization() {
 		return conferringOrganization;
 	}
@@ -44,28 +44,28 @@ public class UCertificationForm {
 		this.conferringOrganization = conferringOrganization;
 	}
 
-	public String getProfessionalCertificate() {
-		return professionalCertificate;
+	public String getProfessionalLicense() {
+		return professionalLicense;
 	}
 
-	public void setProfessionalCertificate(String professionalCertificate) {
-		this.professionalCertificate = professionalCertificate;
+	public void setProfessionalLicense(String professionalLicense) {
+		this.professionalLicense = professionalLicense;
 	}
 
-	public Date getDateAwarded() {
-		return dateAwarded;
+	public Date getDateIssued() {
+		return dateIssued;
 	}
 
-	public void setDateAwarded(Date dateAwarded) {
-		this.dateAwarded = dateAwarded;
+	public void setDateIssued(Date dateIssued) {
+		this.dateIssued = dateIssued;
 	}
 
-	public String getCertificateNumber() {
-		return certificateNumber;
+	public String getLicenseNumber() {
+		return licenseNumber;
 	}
 
-	public void setCertificateNumber(String certificateNumber) {
-		this.certificateNumber = certificateNumber;
+	public void setLicenseNumber(String licenseNumber) {
+		this.licenseNumber = licenseNumber;
 	}
 
 	public String getDescription() {
@@ -83,5 +83,4 @@ public class UCertificationForm {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-
 }
