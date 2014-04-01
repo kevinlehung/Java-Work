@@ -384,6 +384,8 @@ CREATE TABLE `work_category` (
 
 /*Data for the table `work_category` */
 
+
+
 insert  into `work_category`(`WORK_CATEGORY_ID`,`WORK_CATEGORY_NAME`,`PARENT_WORK_CATEGORY_ID`) values (1,'Graphic Designer',NULL),(2,'Front End Developer',NULL),(3,'Java Developer',NULL),(4,'PHP Developer',NULL),(5,'Ruby Developer',NULL),(6,'.NET Developer',NULL),(7,'Database Administrator',NULL),(8,'IT Administrator',NULL),(9,'Mobile Developer',NULL),(10,'C/C++ Developer',NULL),(13,'Embedded System',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
