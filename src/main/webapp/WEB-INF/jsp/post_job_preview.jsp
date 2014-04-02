@@ -68,7 +68,7 @@
 									<i class="icon-time"></i> Posted: ${createdDate} <br /> 
 									<i class="icon-group"></i> Client Info: ${clientInfo} <br /> 
 									<i class="icon-location-arrow"></i> Location: ${location}<br /> 
-									<!-- <i class="icon-adjust"></i> Job: Fulltime <br /> --> 
+									<i class="icon-adjust"></i> Job: ${postJobForm.jobType} <br /> 
 									<i class="icon-money"></i> ${salaryType}: ${salary} <br /> 
 									<i class="icon-smile"></i> Applied: ${appliedCount}
 								</div>

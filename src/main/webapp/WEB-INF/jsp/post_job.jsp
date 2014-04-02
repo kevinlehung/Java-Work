@@ -87,6 +87,16 @@
 								<form:errors path="description"  cssClass="help-block error"/>
 							</div>
 							<div class="control-group">
+								<label for="jobTypeSelect" class="control-label">Job type</label>
+								<div class="controls">
+									<form:select id="jobTypeSelect" path="jobType">
+										<form:option value="Full time">Full time</form:option>
+										<form:option value="Part time">Part time</form:option>
+									</form:select>
+								</div>
+								<form:errors path="workCategoryId"  cssClass="help-block error"/>
+							</div>
+							<div class="control-group">
 								<label for="inputSelect" class="control-label">Select
 									the category of work</label>
 								<div class="controls">
