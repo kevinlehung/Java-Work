@@ -40,6 +40,10 @@ public class JobViewBean {
 	private String location;
 	
 	private Date createdDate;
+	
+	private int appliedCount;
+	
+	private String jobType;
 
 	public int getJobId() {
 		return jobId;
@@ -144,6 +148,21 @@ public class JobViewBean {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	
-	
+
+	public int getAppliedCount() {
+		return appliedCount;
+	}
+
+	public void setAppliedCount(int appliedCount) {
+		this.appliedCount = appliedCount;
+	}
+
+	public String getJobType() {
+		return jobType;
+	}
+
+	public void setJobType(String jobType) {
+		this.jobType = jobType;
+	}
+
 }

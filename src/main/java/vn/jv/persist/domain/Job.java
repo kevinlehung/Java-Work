@@ -113,6 +113,12 @@ public class Job implements Serializable {
 	//bi-directional many-to-one association to JobSkill
 	@OneToMany(mappedBy="job")
 	private List<JobSkill> jobSkills;
+	
+	@Column(name="APPLIED_COUNT")
+	private int appliedCount;
+	
+	@Column(name="JOB_TYPE")
+	private String jobType;
 
 	public Job() {
 	}
@@ -283,6 +289,22 @@ public class Job implements Serializable {
 		jobSkill.setJob(null);
 
 		return jobSkill;
+	}
+
+	public int getAppliedCount() {
+		return appliedCount;
+	}
+
+	public void setAppliedCount(int appliedCount) {
+		this.appliedCount = appliedCount;
+	}
+
+	public String getJobType() {
+		return jobType;
+	}
+
+	public void setJobType(String jobType) {
+		this.jobType = jobType;
 	}
 
 }

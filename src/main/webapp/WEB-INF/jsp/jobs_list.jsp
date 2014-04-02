@@ -25,13 +25,13 @@
 					<ul class="inline">
 						<li><small>Salary: ${job.salary}</small></li>
 						<li><small>|</small></li>
-						<li><small>Job: Fulltime</small></li>
+						<li><small>Job: ${job.jobType}</small></li>
 						<li><small>|</small></li>
 						<li><small>Posted: ${job.createdDate}</small></li>
 						<li><small>|</small></li>
 						<li><small>Location: ${job.location}</small></li>
 						<li><small>|</small></li>
-						<li><small>Applied: 6</small></li>
+						<li><small>Applied: ${job.appliedCount}</small></li>
 					</ul>
 				</div>
 				<p>${job.description}</p>
@@ -41,15 +41,35 @@
 	</c:forEach>
 	<div class='pagination pagination-centered'>
 		<ul>
-			<li><a href='#'> <i class='icon-chevron-left'></i>
-			</a></li>
-			<li><a href='#'>1</a></li>
-			<li class='active'><a href='#'>2</a></li>
-			<li><a href='#'>3</a></li>
-			<li><a href='#'>4</a></li>
-			<li><a href='#'>5</a></li>
-			<li><a href='#'> <i class='icon-chevron-right'></i>
-			</a></li>
+		<c:url var="prevUrl" value="/u/jobs/${currentIndex - 1}/list.jv" />
+		<c:url var="nextUrl" value="/u/jobs/${currentIndex + 1}/list.jv" />
+			<c:choose>
+				<c:when test="${currentIndex == 1}">
+					<li class="disabled"><a href="#"><i class='icon-chevron-left'></i></a></li>
+				</c:when>
+				<c:otherwise>
+					<li><a href="${prevUrl}"><i class='icon-chevron-left'></i></a></li>
+				</c:otherwise>
+			</c:choose>
+			<c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
+				<c:url var="pageUrl" value="/u/jobs/${i}/list.jv" />
+				<c:choose>
+					<c:when test="${i == currentIndex}">
+						<li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="${pageUrl}"><c:out value="${i}" /></a></li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<c:choose>
+				<c:when test="${currentIndex == page.totalPages}">
+					<li class="disabled"><a href="#"><i class='icon-chevron-right'></i></a></li>
+				</c:when>
+				<c:otherwise>
+					<li><a href="${nextUrl}"><i class='icon-chevron-right'></i></a></li>
+				</c:otherwise>
+			</c:choose>
 		</ul>
 	</div>
 </body>
