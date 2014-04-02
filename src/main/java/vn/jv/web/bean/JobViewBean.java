@@ -15,6 +15,8 @@ import vn.jv.persist.domain.WorkCategory;
  *
  */
 public class JobViewBean {
+	private int jobId;
+	
 	private String title;
 	
 	private String description;
@@ -29,15 +31,27 @@ public class JobViewBean {
 
 	private String salaryType;
 	
+	private String salary;
+	
 	private String otherOption;
 	
 	private WorkCategory workCategory;
 
-	private City city;
-	
-	private Country country;
+	private String location;
 	
 	private Date createdDate;
+	
+	private int appliedCount;
+	
+	private String jobType;
+
+	public int getJobId() {
+		return jobId;
+	}
+
+	public void setJobId(int jobId) {
+		this.jobId = jobId;
+	}
 
 	public String getTitle() {
 		return title;
@@ -111,22 +125,6 @@ public class JobViewBean {
 		this.workCategory = workCategory;
 	}
 
-	public City getCity() {
-		return city;
-	}
-
-	public void setCity(City city) {
-		this.city = city;
-	}
-
-	public Country getCountry() {
-		return country;
-	}
-
-	public void setCountry(Country country) {
-		this.country = country;
-	}
-
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -134,6 +132,37 @@ public class JobViewBean {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	
-	
+
+	public String getSalary() {
+		return salary;
+	}
+
+	public void setSalary(String salary) {
+		this.salary = salary;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public int getAppliedCount() {
+		return appliedCount;
+	}
+
+	public void setAppliedCount(int appliedCount) {
+		this.appliedCount = appliedCount;
+	}
+
+	public String getJobType() {
+		return jobType;
+	}
+
+	public void setJobType(String jobType) {
+		this.jobType = jobType;
+	}
+
 }

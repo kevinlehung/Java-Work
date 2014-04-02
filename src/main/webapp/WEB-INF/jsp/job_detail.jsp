@@ -37,7 +37,7 @@
 						<div class='box'>
 							<div class="box-header">
 								<div class="title">
-									<h2>Front End Website Coding</h2>
+									<h2>${title}</h2>
 								</div>
 								<div class="actions">
 									<a class="btn box-collapse btn-mini btn-link" href="#"><i></i>
@@ -47,12 +47,12 @@
 							<div class="box-content">
 								<div class="row-fluid">
 									<div class="pull-left">
-										<i class="icon-time"></i> Posted: Dec 16, 2013 <br /> <i
-											class="icon-group"></i> Company: Global <br /> <i
-											class="icon-location-arrow"></i> Location: HCM<br /> <i
-											class="icon-adjust"></i> Job: Fulltime <br /> <i
-											class="icon-money"></i> Salary: 1000 US$/Month <br /> <i
-											class="icon-smile"></i> Applied: 6
+										<i class="icon-time"></i> Posted: ${createdDate} <br /> 
+									<i class="icon-group"></i> Company: ${company} <br /> 
+									<i class="icon-location-arrow"></i> Location: ${location}<br /> 
+									<i class="icon-adjust"></i> Job: ${jobType} <br /> 
+									<i class="icon-money"></i> ${salaryType}: ${salary} <br /> 
+									<i class="icon-smile"></i> Applied: ${appliedCount}
 									</div>
 									<div class="pull-right">
 										<button class="btn btn-primary btn-large">
@@ -71,28 +71,7 @@
 								</div>
 							</div>
 							<div class="box-content">
-								<div class="row-fluid">we are looking for a project
-									tracking soft with screenshot making option PLUS the redmine
-									connection. I would even call it a no download, browser app,
-									with user management interface to check the activities,
-									screens, total time, projects, users etc Something like the
-									hubstaff.com version with some worksnaps.net elements, but
-									limited to these main features: >> Automated Time Tracking with
-									Windows, Mac, and Linux support >> Screenshots: desktop screens
-									made each 5 mins, stored on our servers via SSL /encrypted
-									connection >> Activities: tracked activities of the desktop,
-									keyboard, mouse - just the activity, no data. Just in case of 5
-									min inactivity to send a message if idle or working, in this
-									way if to count the time or not >> Remote Team Dashboard - a
-									non complicated remote team progress at a glance - to check who
-									works/worked, date, total time + some other data >> Timesheets
-									& Reporting - easy ones >> Redmine connection - currently we
-									use redmine.org as a ticket system >> Desktop popup window to
-									switch to an appropriate project, ticket etc from the redmine u
-									can say, there are many softs like this one, and it is cheaper
-									to pay 5$ per license .... but the only target we have is to
-									make our own secure soft and do not deliver any data, serving
-									it on our servers abc</div>
+								<div class="row-fluid">${description}</div>
 							</div>
 						</div>
 						<div class='box'>
@@ -105,8 +84,13 @@
 							</div>
 							<div class="box-content">
 								<div class="row-fluid">
-									<a href="javascript:;">Java</a>, <a href="javascript:;">PHP</a>,
-									<a href="javascript:;">Html/Css</a>
+									<c:set var="skillCount" value="${fn:length(requiredSkills)}"/>
+									<c:forEach items="${requiredSkills}" var="skill" varStatus="status" >
+										<a href="javascript:;">${skill.name}</a><c:if test="${status.index <  skillCount - 1}">, </c:if>
+									</c:forEach>
+								</div>
+								<div class="row-fluid">
+									${customRequiredSkill}
 								</div>
 							</div>
 						</div>

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -107,12 +108,18 @@ public class Job implements Serializable {
 	private User createUser;
 
 	//bi-directional many-to-one association to JobApply
-	@OneToMany(mappedBy="job")
+	@OneToMany(mappedBy="job", fetch = FetchType.EAGER)
 	private List<JobApply> jobApplies;
 
 	//bi-directional many-to-one association to JobSkill
 	@OneToMany(mappedBy="job")
 	private List<JobSkill> jobSkills;
+	
+	@Column(name="APPLIED_COUNT")
+	private int appliedCount;
+	
+	@Column(name="JOB_TYPE")
+	private String jobType;
 
 	public Job() {
 	}
@@ -283,6 +290,22 @@ public class Job implements Serializable {
 		jobSkill.setJob(null);
 
 		return jobSkill;
+	}
+
+	public int getAppliedCount() {
+		return appliedCount;
+	}
+
+	public void setAppliedCount(int appliedCount) {
+		this.appliedCount = appliedCount;
+	}
+
+	public String getJobType() {
+		return jobType;
+	}
+
+	public void setJobType(String jobType) {
+		this.jobType = jobType;
 	}
 
 }
