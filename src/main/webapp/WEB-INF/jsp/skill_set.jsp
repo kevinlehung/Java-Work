@@ -45,41 +45,25 @@
 	                Your archivements
 	            </div>
 	        </div>
-            <div class='row-fluid'>
-            	<div class="span12">
-                    <div class="alert alert-success">
-                        <h4>
-                            <i class="icon-ok-sign"></i>
-                            Java SE - Core Technologies
-                        </h4>
-                        Score: 600 (Proficience)
-                        <div class="clearfix"></div>
-                        <a class="btn btn-success" href="${contextPath}/u/skill/1/test.jv">
-                            <i class="icon-check"></i>
-                            Re-test
-                        </a>
-                        
-                    </div>
+            <c:forEach var = "scoreUserBean" items = "${scoreUserBeans}" >
+	        <div class='row-fluid'>
+           		<div class="span12">
+                   <div class="alert alert-success">
+                       <h4>
+                           <i class="icon-ok-sign"></i>
+                           ${scoreUserBean.name}
+                       </h4>
+                       Score: ${scoreUserBean.maxScore } (Proficience)
+                       <div class="clearfix"></div>
+                       <a class="btn btn-success" href="${contextPath}/u/skill/${scoreUserBean.skillId}/test.jv">
+                           <i class="icon-check"></i>
+                           Re-test
+                       </a>
+                       
+                   </div>
 				</div>
 			</div>
-		
-            <div class='row-fluid'>
-            	<div class="span12">
-                    <div class="alert alert-success">
-                        <h4>
-                            <i class="icon-ok-sign"></i>
-                            Html/CSS/Javascript
-                        </h4>
-                        Score: 800 (Expert)
-                        <div class="clearfix"></div>
-                        <a class="btn btn-success" href="${contextPath}/u/skill/1/test.jv">
-                            <i class="icon-check"></i>
-                            Re-test
-                        </a>
-                        
-                    </div>
-				</div>
-			</div>
+			</c:forEach>
             
             <div class="row-fluid">
 			    <div class="span12 box">
