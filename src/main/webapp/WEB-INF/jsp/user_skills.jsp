@@ -49,17 +49,16 @@
         			
         		</div>
         	</div>
-			<c:forEach var = "scoreUserBean" items = "${scoreUserBeans}" >
-	        <div class='row-fluid'>
+           	<div class='row-fluid'>
            		<div class="span12">
                    <div class="alert alert-success">
                        <h4>
                            <i class="icon-ok-sign"></i>
-                           ${scoreUserBean.name}
+                           Java SE - Core Technologies
                        </h4>
-                       Score: ${scoreUserBean.maxScore } (Proficience)
+                       Score: 600 (Proficience)
                        <div class="clearfix"></div>
-                       <a class="btn btn-success" href="${contextPath}/u/skill/${scoreUserBean.skillId}/test.jv">
+                       <a class="btn btn-success" href="${contextPath}/u/skill/1/test.jv">
                            <i class="icon-check"></i>
                            Re-test
                        </a>
@@ -67,7 +66,23 @@
                    </div>
 				</div>
 			</div>
-			</c:forEach>
+	
+            <div class='row-fluid'>
+				<div class="span12">
+                   <div class="alert alert-success">
+                       <h4>
+                           <i class="icon-ok-sign"></i>
+                           Html/CSS/Javascript
+                       </h4>
+                       Score: 800 (Expert)
+                       <div class="clearfix"></div>
+                       <a class="btn btn-success" href="${contextPath}/u/skill/1/test.jv">
+                           <i class="icon-check"></i>
+                           Re-test
+                       </a>
+                   </div>
+				</div>
+			</div>
 			<div class='row-fluid'>
 				<div class="span12">
                     <a class="btn btn-primary pull-right"  href='${contextPath}/u/skills/list.jv'>

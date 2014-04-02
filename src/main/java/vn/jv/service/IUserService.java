@@ -1,9 +1,6 @@
 package vn.jv.service;
 
-import java.util.List;
-
 import vn.jv.persist.domain.User;
-import vn.jv.web.bean.ScoreUserBean;
 
 public interface IUserService extends IBaseService {
 	/**
@@ -26,12 +23,4 @@ public interface IUserService extends IBaseService {
 	 * @return
 	 */
 	public boolean emailIsRegisteredBefore(String email);
-	/**
-	 * Find test max score each skill of user..
-	 * 
-	 * @param currentUser
-	 * @return
-	 */
-	public List<ScoreUserBean> findMaxScoreByUser(User currentUser);
-	
 }
