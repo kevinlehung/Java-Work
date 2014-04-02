@@ -108,7 +108,7 @@ public class Job implements Serializable {
 	private User createUser;
 
 	//bi-directional many-to-one association to JobApply
-	@OneToMany(mappedBy="job", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="job")
 	private List<JobApply> jobApplies;
 
 	//bi-directional many-to-one association to JobSkill
