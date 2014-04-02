@@ -47,6 +47,8 @@ public class PostJobForm {
 	
 	private int countryId;
 	
+	private String jobType;
+	
 	public String getDescription() {
 		return description;
 	}
@@ -134,6 +136,13 @@ public class PostJobForm {
 	public void setCountryId(int countryId) {
 		this.countryId = countryId;
 	}
-	
+
+	public String getJobType() {
+		return jobType;
+	}
+
+	public void setJobType(String jobType) {
+		this.jobType = jobType;
+	}
 	
 }

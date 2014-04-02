@@ -2,6 +2,8 @@ package vn.jv.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import vn.jv.persist.domain.Job;
 import vn.jv.web.bean.JobViewBean;
 import vn.jv.web.form.PostJobForm;
@@ -29,4 +31,21 @@ public interface IJobService extends IBaseService {
 	 * @return
 	 */
 	List<JobViewBean> findJobs(int pageIndex);
+	
+	/**
+	 * Find jobs with pageIndex criteria
+	 *  
+	 * @param pageIndex
+	 * @return
+	 */
+	Page<Job> getJobPageInfo(int pageIndex);
+	
+	/**
+	 * Find jobs with pageIndex criteria
+	 *  
+	 * @param pageIndex
+	 * @param jobs
+	 * @return
+	 */
+	List<JobViewBean> findJobsViewBean(int pageIndex, Page<Job> jobs);
 }
