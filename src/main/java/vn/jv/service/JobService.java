@@ -63,18 +63,37 @@ public class JobService implements IJobService {
 		return job;
 	}
 
+	final int PAGE_SIZE = 5;
+	/**
+	 * pageIndex: this value is ZERO base
+	 */
+	public Page<Job> getJobPageInfo(int pageIndex) {
+		
+		Sort sort = new Sort(new Order(Direction.DESC, "createdDate"));
+		Pageable pageable = new PageRequest(pageIndex, PAGE_SIZE, sort);
+		Page<Job> page = jobRepo.findAll(pageable);
+		
+		return page;
+	}
+	
+	public List<JobViewBean> findJobsViewBean(int pageIndex, Page<Job> page) {
+		List<JobViewBean> jobViewBeans = new ArrayList<JobViewBean>();
+		
+		for (Job job : page) {
+			JobViewBean jobViewBean = buildJobViewBean(job);
+			jobViewBeans.add(jobViewBean);
+		}
+		
+		return jobViewBeans;
+	}
+	
 	/**
 	 * pageIndex: this value is ZERO base
 	 */
 	public List<JobViewBean> findJobs(int pageIndex) {
 		List<JobViewBean> jobViewBeans = new ArrayList<JobViewBean>();
 		
-		final int PAGE_SIZE = 20;
-		Sort sort = new Sort(new Order(Direction.DESC, "createdDate"));
-		Pageable pageable = new PageRequest(pageIndex, PAGE_SIZE, sort);
-		Page<Job> jobs = jobRepo.findAll(pageable);
-		
-		for (Job job : jobs) {
+		for (Job job : getJobPageInfo(pageIndex)) {
 			JobViewBean jobViewBean = buildJobViewBean(job);
 			
 			jobViewBeans.add(jobViewBean);
@@ -152,6 +171,7 @@ public class JobService implements IJobService {
 		job.setStatus(Job.Status.OPENING);
 		job.setTitle(postJobForm.getTitle());
 		job.setWorkCategory(new WorkCategory(postJobForm.getWorkCategoryId()));
+		job.setJobType(postJobForm.getJobType());
 		
 		int countryId = postJobForm.getCountryId();
 		if (countryId > 0)
