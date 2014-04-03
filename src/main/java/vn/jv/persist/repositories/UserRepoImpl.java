@@ -1,11 +1,13 @@
 package vn.jv.persist.repositories;
 
+import vn.jv.persist.BaseRepoImpl;
+
 
 /**
  * 
  * @author hunglevn@outlook.com
  *
  */
-public class UserRepoImpl implements UserCustomRepo {
+public class UserRepoImpl extends BaseRepoImpl implements UserCustomRepo {
 
 }
