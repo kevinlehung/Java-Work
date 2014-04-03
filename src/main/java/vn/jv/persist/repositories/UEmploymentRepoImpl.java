@@ -1,7 +1,8 @@
 package vn.jv.persist.repositories;
 
+import vn.jv.persist.BaseRepoImpl;
 import vn.jv.persist.domain.UEmployment;
 
-public class UEmploymentRepoImpl implements UEmploymentCustomRepo<UEmployment, Integer> {
+public class UEmploymentRepoImpl extends BaseRepoImpl implements UEmploymentCustomRepo<UEmployment, Integer> {
 
 }
