@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Java Skill Tests</title>
+	<title>${skill.name}</title>
 </head>
 <body class='contrast-sea-blue'>
 <div class='span12'>
@@ -52,6 +52,8 @@
             <div class='row-fluid'>
             	<div class="span12">
                     <div class="alert alert-warning">
+                    	<h4><i class="con-exclamation-sign"></i>Instructions</h4>
+                    	<p>In this test you will have 10 questions. After you read a question, read the choices and choose the best answer to the question you have read.</p>
                         <h4>
                             <i class="con-exclamation-sign"></i>
                             Try a practice question first.

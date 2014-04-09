@@ -1,8 +1,11 @@
 package vn.jv.persist.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,7 +50,15 @@ public class TTest implements Serializable {
 
 	public TTest() {
 	}
-
+	
+	public TTest(int totalQuestion, int totalTime, Skill skill) {
+		this.totalQuestion = totalQuestion;
+		this.totalTime = totalTime;
+		this.skill = skill;
+		this.tTestQuestions = new ArrayList<TTestQuestion>();
+		this.tUserTests = new ArrayList<TUserTest>();
+	}
+	
 	public int getTestId() {
 		return this.testId;
 	}

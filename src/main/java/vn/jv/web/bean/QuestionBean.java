@@ -10,7 +10,10 @@ import java.util.List;
 public class QuestionBean {
 	private Integer questionId;
 	private String stem;
+	private Integer duration;
 	private boolean isMultipleChoice;
+	private int sequence;
+	
 	private List<OptionBean> options;
 	
 	public Integer getQuestionId() {
@@ -37,4 +40,17 @@ public class QuestionBean {
 	public void setMultipleChoice(boolean isMultipleChoice) {
 		this.isMultipleChoice = isMultipleChoice;
 	}
+	public Integer getDuration() {
+		return duration;
+	}
+	public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
+	public int getSequence() {
+		return sequence;
+	}
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
+	
 }

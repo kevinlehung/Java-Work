@@ -8,17 +8,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import vn.jv.persist.domain.City;
-import vn.jv.persist.domain.Country;
 import vn.jv.persist.domain.Skill;
 import vn.jv.persist.domain.TOption;
 import vn.jv.persist.domain.TQuestion;
+import vn.jv.persist.domain.TTest;
+import vn.jv.persist.domain.TTestQuestion;
+import vn.jv.persist.domain.TUserTest;
 import vn.jv.persist.domain.User;
 import vn.jv.persist.domain.WorkCategory;
 import vn.jv.persist.repositories.SkillRepo;
 import vn.jv.persist.repositories.TOptionRepo;
 import vn.jv.persist.repositories.TQuestionRepo;
+import vn.jv.persist.repositories.TTestRepo;
 import vn.jv.web.bean.OptionBean;
 import vn.jv.web.bean.QuestionBean;
 import vn.jv.web.bean.SkillBean;
@@ -41,6 +45,18 @@ public class SkillService extends BaseService implements ISkillService {
 	
 	@Autowired
 	TOptionRepo tOptionRepo;
+	
+	@Autowired
+	TTestRepo tTestRepo;
+	
+	@Autowired
+	ITTestService tTestService;
+	
+	@Autowired
+	ITTestQuestionService tTestQuestionService;
+	
+	@Autowired
+	ITUserTestService tUserTestService;
 	
 	@Cacheable("SkillService.findAll")
 	public List<Skill> findAll() {
@@ -73,50 +89,105 @@ public class SkillService extends BaseService implements ISkillService {
 		return skillBeans;
 	}
 	
-	public List<QuestionBean> findQuestionBySkillIdAndDifferFormTestedQuestions(int skillId, User currentUser, int numOfQuestion, Integer practiceQuestionId) {
-		List<QuestionBean> questionBeans = null;
+	private List<TQuestion> findQuestionBySkillIdAndDifferFormTestedQuestions(int skillId, User currentUser, int numOfQuestion, Integer practiceQuestionId) {
 		List<TQuestion> randomQuestions = null;
 		//get list of tested question ids of current user
 		List<Integer> testedQuestionIds = tQuestionRepo.getTestedQuestionIdsBySkillIdAndUserId(skillId, currentUser.getUserId());
-		if ((testedQuestionIds == null || testedQuestionIds.isEmpty()) && practiceQuestionId == null) {
+		List<Integer> excludeQuestionIds = new ArrayList<Integer>();
+		if (practiceQuestionId != null) {
+			excludeQuestionIds.add(practiceQuestionId);
+		}
+		if (testedQuestionIds != null && !testedQuestionIds.isEmpty()) {
+			excludeQuestionIds.addAll(testedQuestionIds);
+		}
+		if (excludeQuestionIds.isEmpty()) {
 			randomQuestions = tQuestionRepo.getRandomTQuestionBySkillIdAndDifferFromTestedQuestionByNativeQuery(skillId, numOfQuestion);
 		} else {
-			if (testedQuestionIds != null && !testedQuestionIds.contains(practiceQuestionId)) {
-				testedQuestionIds.add(practiceQuestionId);
-			} else {
-				testedQuestionIds = new ArrayList<Integer>();
-				testedQuestionIds.add(practiceQuestionId);
+			randomQuestions = tQuestionRepo.getRandomTQuestionBySkillIdAndDifferFromTestedQuestionByNativeQuery(skillId, numOfQuestion, excludeQuestionIds);
+		}
+		if (randomQuestions == null || randomQuestions.isEmpty() || randomQuestions.size() < numOfQuestion) {
+			return null;
+		}
+		return randomQuestions;
+	}
+	
+	public List<TQuestion> getTestQuestions(int skillId, User currentUser, int numOfQuestion, Integer practiceQuestionId) {
+		List<TQuestion> tQuestions = findQuestionBySkillIdAndDifferFormTestedQuestions(skillId, currentUser, numOfQuestion, practiceQuestionId);
+		return tQuestions;
+	}
+	
+	/**
+	 * save test information and set sequence value to questionBeans
+	 * @param skillId
+	 * @param randomQuestions
+	 * @param user
+	 * @param questionBeans
+	 * @return TTest
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public TTest saveTestInforOfUser(int skillId, List<TQuestion> tQuestions, User user, List<QuestionBean> questionBeans) {
+		try {
+			// calculate total time of a test
+			int totalTime = 0;
+			for (TQuestion tQuestion : tQuestions) {
+				totalTime += tQuestion.getDuration();
 			}
-			randomQuestions = tQuestionRepo.getRandomTQuestionBySkillIdAndDifferFromTestedQuestionByNativeQuery(skillId, numOfQuestion, testedQuestionIds);
+			Skill skill = findById(skillId);
+			int totalQuestion = tQuestions.size();
+			//create new TTest object 
+			TTest tTest = tTestService.saveTTest(totalQuestion, totalTime, skill);
+			// create new TTestQuestion mapping TTest with TQuestion
+			for (int i = 0; i < tQuestions.size(); i++) {
+				TTestQuestion tTestQuestion = tTestQuestionService.saveTTestQuestion(tQuestions.get(i), tTest, i);
+				tTest.addTTestQuestion(tTestQuestion);
+				//set sequence value to questionBeans
+				questionBeans.get(i).setSequence(i);
+			}
+			// create new TUserTest
+			TUserTest tUserTest = tUserTestService.saveTUserTest(tTest, user);
+			tTest.addTUserTest(tUserTest);
+			
+			return tTest;
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to save Test information of userId#" + user.getUserId() + "] and skillId#" + skillId, e);
 		}
-		if (randomQuestions == null || randomQuestions.isEmpty()) {
-			return questionBeans;
-		}
-		questionBeans = buildListQuestionBean(randomQuestions);
-		return questionBeans;
 	}
 	
 	public QuestionBean getRandomPracticeQuestion(int skillId, User currentUser) {
-		List<QuestionBean> questionBeans = findQuestionBySkillIdAndDifferFormTestedQuestions(skillId, currentUser, 1, null);
-		if (questionBeans == null || questionBeans.isEmpty()) {
+		int numOfQuestion = 1;
+		List<TQuestion> tQuestions = findQuestionBySkillIdAndDifferFormTestedQuestions(skillId, currentUser, numOfQuestion, null);
+		if (tQuestions == null || tQuestions.isEmpty()) {
 			return null;
 		}
+		List<QuestionBean> questionBeans = buildListQuestionBean(tQuestions);
 		return questionBeans.get(0);
 	}
 	
-	private List<QuestionBean> buildListQuestionBean(List<TQuestion> tQuestions) {
+	public QuestionBean getQuestionBeanByQuestionId(int questionId) {
+		TQuestion tQuestion = tQuestionRepo.findOne(questionId);
+		if (tQuestion == null) {
+			return null;
+		}
+		return buildQuestionBean(tQuestion);
+	}
+	
+	public List<QuestionBean> buildListQuestionBean(List<TQuestion> tQuestions) {
 		List<QuestionBean> questionBeans = new ArrayList<QuestionBean>();
-		for (TQuestion tQuestion : tQuestions) {
-			QuestionBean questionBean = new QuestionBean();
-			questionBean.setQuestionId(tQuestion.getQuestionId());
-			questionBean.setStem(tQuestion.getStem());
-			questionBean.setMultipleChoice(tQuestion.getIsMultipleChoice());
-			List<TOption> tOptions = tOptionRepo.findByTQuestionId(tQuestion.getQuestionId());
-			questionBean.setOptions(buildListOptionBean(tOptions));
-			
-			questionBeans.add(questionBean);
+		for (int i = 0; i < tQuestions.size(); i++) {
+			questionBeans.add(buildQuestionBean(tQuestions.get(i)));
 		}
 		return questionBeans;
+	}
+	
+	private QuestionBean buildQuestionBean(TQuestion tQuestion) {
+		QuestionBean questionBean = new QuestionBean();
+		questionBean.setQuestionId(tQuestion.getQuestionId());
+		questionBean.setStem(tQuestion.getStem());
+		questionBean.setDuration(tQuestion.getDuration());
+		questionBean.setMultipleChoice(tQuestion.getIsMultipleChoice());
+		List<TOption> tOptions = tOptionRepo.findByTQuestionId(tQuestion.getQuestionId());
+		questionBean.setOptions(buildListOptionBean(tOptions));
+		return questionBean;
 	}
 	
 	private List<OptionBean> buildListOptionBean(List<TOption> tOptions) {

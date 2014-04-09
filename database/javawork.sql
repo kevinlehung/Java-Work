@@ -214,8 +214,8 @@ CREATE TABLE `t_test` (
   `TEST_ID` int(11) NOT NULL AUTO_INCREMENT,
   `TOTAL_QUESTION` int(11) NOT NULL DEFAULT '0',
   `TOTAL_TIME` int(11) NOT NULL DEFAULT '0',
-  `DATE_CREATED` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `DATE_UPDATED` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `DATE_CREATED` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `DATE_UPDATED` timestamp NULL DEFAULT NULL,
   `SKILL_ID` int(11) NOT NULL,
   PRIMARY KEY (`TEST_ID`),
   KEY `FK_t_test_skill_skill_id` (`SKILL_ID`),
@@ -250,9 +250,9 @@ CREATE TABLE `t_user_test` (
   `T_USER_TEST_ID` int(11) NOT NULL AUTO_INCREMENT,
   `USER_ID` int(11) NOT NULL,
   `TEST_ID` int(11) NOT NULL,
-  `CORRECT_COUNT` int(11) NOT NULL DEFAULT '0',
-  `SCORE` int(11) NOT NULL,
-  `FINISHED_DATED` datetime NOT NULL,
+  `CORRECT_COUNT` int(11) DEFAULT '0',
+  `SCORE` int(11) DEFAULT '0',
+  `FINISHED_DATED` datetime,
   PRIMARY KEY (`T_USER_TEST_ID`),
   KEY `FK_t_user_test_user_user_id` (`USER_ID`),
   KEY `FK_t_user_test_test_test_id` (`TEST_ID`),
@@ -390,6 +390,15 @@ CREATE TABLE `work_category` (
 
 
 insert  into `work_category`(`WORK_CATEGORY_ID`,`WORK_CATEGORY_NAME`,`PARENT_WORK_CATEGORY_ID`) values (1,'Graphic Designer',NULL),(2,'Front End Developer',NULL),(3,'Java Developer',NULL),(4,'PHP Developer',NULL),(5,'Ruby Developer',NULL),(6,'.NET Developer',NULL),(7,'Database Administrator',NULL),(8,'IT Administrator',NULL),(9,'Mobile Developer',NULL),(10,'C/C++ Developer',NULL),(13,'Embedded System',NULL);
+
+/* Trigger structure for table `t_test` */
+
+DELIMITER $$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `t_test_update_date_updated` BEFORE UPDATE ON `t_test` FOR EACH ROW SET NEW.DATE_UPDATED = CURRENT_TIMESTAMP */$$
+
+
+DELIMITER ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -25,7 +25,8 @@ public class TUserTest implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "FINISHED_DATED")
 	private Date finishedDated;
-
+	
+	@Column(name = "SCORE")
 	private int score;
 
 	// bi-directional many-to-one association to TTest
@@ -40,7 +41,12 @@ public class TUserTest implements Serializable {
 
 	public TUserTest() {
 	}
-
+	
+	public TUserTest(TTest tTest, User user) {
+		this.tTest = tTest;
+		this.user = user;
+	}
+	
 	public int getTUserTestId() {
 		return this.tUserTestId;
 	}

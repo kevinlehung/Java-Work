@@ -18,7 +18,8 @@ public class TTestQuestion implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="TEST_QUESTION_ID")
 	private int testQuestionId;
-
+	
+	@Column(name="SEQUENCE")
 	private int sequence;
 
 	//bi-directional many-to-one association to TQuestion
@@ -32,6 +33,12 @@ public class TTestQuestion implements Serializable {
 	private TTest tTest;
 
 	public TTestQuestion() {
+	}
+
+	public TTestQuestion(TQuestion tQuestion, TTest tTest, int sequence) {
+		this.tQuestion = tQuestion;
+		this.tTest = tTest;
+		this.sequence = sequence;
 	}
 
 	public int getTestQuestionId() {

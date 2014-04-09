@@ -17,4 +17,7 @@ public interface TOptionRepo extends BaseRepo<TOption, Integer>, TOptionCustomRe
 	
 	@Query("FROM TOption to WHERE to.tQuestion.questionId = :questionId")
 	public List<TOption> findByTQuestionId(@Param("questionId") int questionId);
+	
+	@Query("SELECT to.tOptionId FROM TOption to WHERE to.tQuestion.questionId = :questionId AND to.isKey = true")
+	public List<Integer> findKeyOptionByQuestionId(@Param("questionId") int questionId);
 }
