@@ -69,9 +69,18 @@
 				               	</c:choose>
 			               	</c:forEach>
 			                <hr class="hr-normal">
-			                <a class="btn btn-primary btn-large pull-right" href="${contextPath}/u/skill/${skill.skillId}/test/question.jv">
-				           		Next Question <i class="icon-arrow-right"></i>
-				           	</a>
+			                <c:choose>
+			                	<c:when test="${isCompletedTest}">
+			                		<a class="btn btn-primary btn-large pull-right" href="${contextPath}/u/skills/list.jv">
+						           		Finish Test <i class="icon-arrow-right"></i>
+						           	</a>
+			                	</c:when>
+			                	<c:otherwise>
+			                		<a class="btn btn-primary btn-large pull-right" href="${contextPath}/u/skill/${skill.skillId}/test/question.jv">
+						           		Next Question <i class="icon-arrow-right"></i>
+						           	</a>
+			                	</c:otherwise>
+			                </c:choose>
 			            </div>
 			        </div>
 			    

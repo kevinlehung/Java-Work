@@ -23,15 +23,14 @@ import vn.jv.constant.WebConstants;
 import vn.jv.persist.domain.Skill;
 import vn.jv.persist.domain.TQuestion;
 import vn.jv.persist.domain.TTest;
-import vn.jv.persist.domain.TUserTest;
 import vn.jv.persist.domain.User;
-import vn.jv.security.bean.JvUserDetails;
 import vn.jv.service.ISkillService;
 import vn.jv.service.ITOptionService;
 import vn.jv.service.ITQuestionService;
 import vn.jv.service.ITUserTestService;
 import vn.jv.web.bean.OptionBean;
 import vn.jv.web.bean.QuestionBean;
+import vn.jv.web.bean.QuestionBean.Status;
 import vn.jv.web.bean.TestTrackingBean;
 import vn.jv.web.common.util.SecurityUtil;
 
@@ -129,42 +128,59 @@ public class SkillTestController  extends BaseController {
 	@RequestMapping("/u/skill/{skillId}/test/question")
 	public String requestQuestion(@ModelAttribute("skill") Skill skill, HttpServletRequest request, 
 									HttpServletResponse response, @PathVariable("skillId") int skillId, Model model) throws IOException {
+		String errorMsg = null;
 		Integer practiceQuestionId = (Integer) request.getSession().getAttribute("practiceQuestionId" + skillId);
 		if (practiceQuestionId != null) {
 			request.getSession().removeAttribute("practiceQuestionId" + skillId);
 		}
 		model.addAttribute("skill", skill);
-		User jvUser = SecurityUtil.getCurrentUser();
-		TestTrackingBean testTrackingBean = (TestTrackingBean) request.getSession().getAttribute(TEST_TRACKING + "-" + jvUser.getUserId() + "-" + skillId);
+		User currentUser = SecurityUtil.getCurrentUser();
+		TestTrackingBean testTrackingBean = (TestTrackingBean) request.getSession().getAttribute(TEST_TRACKING + "-" + currentUser.getUserId() + "-" + skillId);
 		/**
 		 *  creates new test for the first time requesting
 		 */
 		if (testTrackingBean == null) {
-			testTrackingBean = createNewTTestForUserTaking(request, model, jvUser, skillId, practiceQuestionId);
+			testTrackingBean = createNewTTestForUserTaking(request, model, currentUser, skillId, practiceQuestionId);
 			if (testTrackingBean == null) {
-				String errorMsg = "Cannot find any question";
+				errorMsg = "Cannot find any question";
 				model.addAttribute("errorMsg", errorMsg);
 				return WebConstants.Views.SKILL_TEST_QUESTION;
 			}
-			request.getSession().setAttribute(TEST_TRACKING + "-" + jvUser.getUserId() + "-" + skillId, testTrackingBean);
+			request.getSession().setAttribute(TEST_TRACKING + "-" + currentUser.getUserId() + "-" + skillId, testTrackingBean);
 		}
-		List<QuestionBean> questionBeans = testTrackingBean.getQuestionBeans();
-		QuestionBean question = null;
-		int sequence = testTrackingBean.getCurrentQuestionSequence();
-		/**
-		 * check if this is the final question
-		 */
-		if (sequence >= questionBeans.size()) {
-			//update correct count and score test
-			tUserTestService.updateScoreAndCorrectCountTest(jvUser, testTrackingBean);
-			request.getSession().removeAttribute(TEST_TRACKING + "-" + jvUser.getUserId() + "-" + skillId);
-			return "redirect:/u/skills/list" + WebConstants.PAGE_SUFFIX;
+		QuestionBean question = getEligibleQuestionBean(testTrackingBean, skill);
+		if (question == null) {
+			//give them a message
+			errorMsg = "Failed to get question";
+			model.addAttribute("errorMsg", errorMsg);
+			return WebConstants.Views.SKILL_TEST_QUESTION;
 		}
-		question = questionBeans.get(sequence);
 		model.addAttribute("question", question);
-		//set start time of tested question
-		testTrackingBean.setCurrentStartTimeQuestion(System.currentTimeMillis());
 		return WebConstants.Views.SKILL_TEST_QUESTION;
+	}
+	
+	private QuestionBean getEligibleQuestionBean(TestTrackingBean testTrackingBean, Skill skill) {
+		int currentSequence = testTrackingBean.getCurrentQuestionSequence();
+		List<QuestionBean> questionBeans = testTrackingBean.getQuestionBeans();
+		if (currentSequence >= questionBeans.size()) {
+			return null;
+		}
+		QuestionBean question = questionBeans.get(currentSequence);
+		if (question.getStatus().equalsIgnoreCase(Status.TESTING) || question.getStatus().equalsIgnoreCase(Status.TESTED)) {
+			currentSequence += 1;
+			if (currentSequence >= questionBeans.size()) {
+				return null;
+			}
+			testTrackingBean.setCurrentQuestionSequence(currentSequence);
+			question = getEligibleQuestionBean(testTrackingBean, skill);
+		}
+		//mark question is in testing status
+		question.setStatus(Status.TESTING);
+		//set start time of tested question
+		question.setStartTime(System.currentTimeMillis());
+		log.info("Skill: #" + skill.getSkillId() + ". Eligible questionBean: id#"+ question.getQuestionId() + 
+				", currentSequence#" + currentSequence + ", startTime["+ question.getStartTime() +"]");
+		return question;
 	}
 	
 	@RequestMapping(value="/u/skill/{skillId}/test/question/complete", method=RequestMethod.POST)
@@ -172,33 +188,73 @@ public class SkillTestController  extends BaseController {
 									@PathVariable("skillId") int skillId, @ModelAttribute("skill") Skill skill, 
 									@RequestParam(value="choices", required=false) List<Integer> choiceOptionIds,
 									@RequestParam(value="questionId", required=true) Integer questionId, Model model) throws IOException {
+		long finishedTime = System.currentTimeMillis();
 		User currentUser = SecurityUtil.getCurrentUser();
 		TestTrackingBean testTrackingBean = (TestTrackingBean) request.getSession().getAttribute(TEST_TRACKING + "-" + currentUser.getUserId() + "-" + skillId);
-		Long startTime = testTrackingBean.getCurrentStartTimeQuestion();
-		Long duration = (System.currentTimeMillis() - startTime) / 1000;
-		QuestionBean question = skillService.getQuestionBeanByQuestionId(questionId);
+		//find submited questionBean by id in list questionBeans of TestTrackingBean
+		QuestionBean questionBean = getQuestionBeanInListById(questionId, testTrackingBean.getQuestionBeans());
+		//change status from testing to tested 
+		questionBean.setStatus(Status.TESTED);
 		List<Integer> keys = tOptionService.findKeyOptionOfQuestion(questionId);
 		//set option key to OptionBean of QuestionBean
-		setKeyAndChoicedOptionBeanOfQuestionBean(question.getOptions(), keys, choiceOptionIds);
+		setKeyAndChoicedOptionBeanOfQuestionBean(questionBean.getOptions(), keys, choiceOptionIds);
 		model.addAttribute("skill", skill);
-		model.addAttribute("question", question);
-		int sequence = testTrackingBean.getCurrentQuestionSequence() + 1;
-		testTrackingBean.setCurrentQuestionSequence(sequence);
-		if (duration > question.getDuration()) {
+		model.addAttribute("question", questionBean);
+		Long startTime = questionBean.getStartTime();
+		Long duration = (finishedTime - startTime) / 1000;
+		//Check if there is the final question
+		int sequence = testTrackingBean.getCurrentQuestionSequence();
+		if (sequence == (testTrackingBean.getQuestionBeans().size() - 1)) {
+			/**
+			 * check if in testTrackingBean still has testing question alive, 
+			 * otherwise remove testTrackingBean from session
+			 */
+			if (!isContainsAliveTestingQuestion(testTrackingBean.getQuestionBeans())) {
+				//update correct count and score test
+				tUserTestService.updateScoreAndCorrectCountTest(currentUser, testTrackingBean);
+				request.getSession().removeAttribute(TEST_TRACKING + "-" + currentUser.getUserId() + "-" + skillId);
+			}
+			model.addAttribute("isCompletedTest", true);
+		}
+		log.info("Skill: #" + skill.getSkillId() + ". Complete QuestionBean: id#"+ questionBean.getQuestionId() + 
+				", currentSequence#" + sequence + ", startTime["+ questionBean.getStartTime() + 
+				"], finisedTime[" + finishedTime + "], duration[" + duration + "]");
+		if (duration > questionBean.getDuration()) {
 			return WebConstants.Views.SKILL_TEST_QUESTION_TIMEOUT;
 		}
+		boolean isCorrect = false;
 		if (choiceOptionIds == null || choiceOptionIds.isEmpty()) {
-			model.addAttribute("isCorrect", false);
-			return WebConstants.Views.SKILL_TEST_PRACTICE_COMPLETE;
+			model.addAttribute("isCorrect", isCorrect);
+			return WebConstants.Views.SKILL_TEST_QUESTION_COMPLETE;
 		}
-		
 		if (!CollectionUtils.isEqualCollection(choiceOptionIds, keys)) {
-			model.addAttribute("isCorrect", false);
+			model.addAttribute("isCorrect", isCorrect);
 		} else {
-			model.addAttribute("isCorrect", true);
+			isCorrect = true;
+			model.addAttribute("isCorrect", isCorrect);
 			testTrackingBean.setCorrectCount((testTrackingBean.getCorrectCount() + 1));
 		}
 		return WebConstants.Views.SKILL_TEST_QUESTION_COMPLETE;
+	}
+	
+	private boolean isContainsAliveTestingQuestion(List<QuestionBean> questionBeans) {
+		for (QuestionBean questionBean : questionBeans) {
+			Long startTime = questionBean.getStartTime();
+			Long duration = (System.currentTimeMillis() - startTime) / 1000;
+			if (questionBean.getStatus().equalsIgnoreCase(Status.TESTING) && duration <= questionBean.getDuration()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private QuestionBean getQuestionBeanInListById(Integer questionId, List<QuestionBean> questionBeans) {
+		for (int i = 0; i < questionBeans.size(); i ++) {
+			if (questionBeans.get(i).getQuestionId() == questionId) {
+				return questionBeans.get(i);
+			}
+		}
+		return null;
 	}
 	
 	private TestTrackingBean createNewTTestForUserTaking(HttpServletRequest request, Model model, User currentUser, int skillId, Integer practiceQuestionId) {

@@ -42,25 +42,34 @@
 		            <div class="span12 box">
 		            	<h3 class="title text-red">Sorry, you ran out of time!</h3>
 		            	<h4 class="title text-primary" id="question${question.questionId}">${question.stem}</h4>
-			            	<c:forEach var="option" items="${question.options}">
-			            		<c:choose>
-				            		<c:when test="${option.isKey}">
-				            			<div class="box-content box-statistic choice-correct">
-					                   		<h4 class="muted text-success">${option.description}</h4>
-					                   		<div class="text-success icon-ok align-right"></div>
-					                   	</div>
-				            		</c:when>
-				            		<c:otherwise>
-				            			<div class="box-content box-statistic choice">
-					                		<h4 class="muted">${option.description}</h4>
-					                	</div>	
-				            		</c:otherwise>
-				               	</c:choose>
-			               	</c:forEach>
-			               	<hr class="hr-normal">
-			               	<a class="btn btn-primary btn-large pull-right" href="${contextPath}/u/skill/${skill.skillId}/test/question.jv">
-			            		Next Question <i class="icon-arrow-right"></i>
-			            	</a>
+		            	<c:forEach var="option" items="${question.options}">
+		            		<c:choose>
+			            		<c:when test="${option.isKey}">
+			            			<div class="box-content box-statistic choice-correct">
+				                   		<h4 class="muted text-success">${option.description}</h4>
+				                   		<div class="text-success icon-ok align-right"></div>
+				                   	</div>
+			            		</c:when>
+			            		<c:otherwise>
+			            			<div class="box-content box-statistic choice">
+				                		<h4 class="muted">${option.description}</h4>
+				                	</div>	
+			            		</c:otherwise>
+			               	</c:choose>
+		               	</c:forEach>
+		               	<hr class="hr-normal">
+		               	<c:choose>
+		                	<c:when test="${isCompletedTest}">
+		                		<a class="btn btn-primary btn-large pull-right" href="${contextPath}/u/skills/list.jv">
+					           		Finish Test <i class="icon-arrow-right"></i>
+					           	</a>
+		                	</c:when>
+		                	<c:otherwise>
+		                		<a class="btn btn-primary btn-large pull-right" href="${contextPath}/u/skill/${skill.skillId}/test/question.jv">
+					           		Next Question <i class="icon-arrow-right"></i>
+					           	</a>
+		                	</c:otherwise>
+		                </c:choose>
 		            </div>
 		        </div>
 			</div>

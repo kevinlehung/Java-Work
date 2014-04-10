@@ -15,7 +15,6 @@ public class TestTrackingBean {
 	private List<QuestionBean> questionBeans;
 	private int correctCount;
 	private int currentQuestionSequence;
-	private long currentStartTimeQuestion;
 	
 	public TTest gettTest() {
 		return tTest;
@@ -46,11 +45,4 @@ public class TestTrackingBean {
 		this.currentQuestionSequence = currentQuestionSequence;
 	}
 
-	public long getCurrentStartTimeQuestion() {
-		return currentStartTimeQuestion;
-	}
-
-	public void setCurrentStartTimeQuestion(long currentStartTimeQuestion) {
-		this.currentStartTimeQuestion = currentStartTimeQuestion;
-	}
 }
