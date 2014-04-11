@@ -19,12 +19,14 @@ public class TQuestion implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="QUESTION_ID")
 	private int questionId;
-
+	
+	@Column(name="duration")
 	private int duration;
 
 	@Column(name="IS_MULTIPLE_CHOICE")
 	private boolean isMultipleChoice;
 
+	@Column(name="stem")
 	private String stem;
 
 	//bi-directional many-to-one association to TOption

@@ -15,9 +15,9 @@ public class QuestionBean {
 		public static final String TESTED = "TESTED";
 	}
 	
-	private Integer questionId;
+	private int questionId;
 	private String stem;
-	private Integer duration;
+	private int duration;
 	private boolean isMultipleChoice;
 	private int sequence;
 	private String status = Status.UNTESTED;
@@ -25,11 +25,11 @@ public class QuestionBean {
 
 	private List<OptionBean> options;
 
-	public Integer getQuestionId() {
+	public int getQuestionId() {
 		return questionId;
 	}
 
-	public void setQuestionId(Integer questionId) {
+	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
 
@@ -57,11 +57,11 @@ public class QuestionBean {
 		this.isMultipleChoice = isMultipleChoice;
 	}
 
-	public Integer getDuration() {
+	public int getDuration() {
 		return duration;
 	}
 
-	public void setDuration(Integer duration) {
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 

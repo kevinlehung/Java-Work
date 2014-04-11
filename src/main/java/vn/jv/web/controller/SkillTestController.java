@@ -155,6 +155,12 @@ public class SkillTestController  extends BaseController {
 			model.addAttribute("errorMsg", errorMsg);
 			return WebConstants.Views.SKILL_TEST_QUESTION;
 		}
+		//mark question is in testing status
+		question.setStatus(Status.TESTING);
+		//set start time of tested question
+		question.setStartTime(System.currentTimeMillis());
+		log.info(String.format("Skill: id#%s. Found eligible questionBean: id#%s, currentSequence #%s, startTime[%s]",
+				skill.getSkillId(), question.getQuestionId(), testTrackingBean.getCurrentQuestionSequence(),  question.getStartTime()));
 		model.addAttribute("question", question);
 		return WebConstants.Views.SKILL_TEST_QUESTION;
 	}
@@ -174,12 +180,6 @@ public class SkillTestController  extends BaseController {
 			testTrackingBean.setCurrentQuestionSequence(currentSequence);
 			question = getEligibleQuestionBean(testTrackingBean, skill);
 		}
-		//mark question is in testing status
-		question.setStatus(Status.TESTING);
-		//set start time of tested question
-		question.setStartTime(System.currentTimeMillis());
-		log.info("Skill: #" + skill.getSkillId() + ". Eligible questionBean: id#"+ question.getQuestionId() + 
-				", currentSequence#" + currentSequence + ", startTime["+ question.getStartTime() +"]");
 		return question;
 	}
 	
@@ -216,9 +216,8 @@ public class SkillTestController  extends BaseController {
 			}
 			model.addAttribute("isCompletedTest", true);
 		}
-		log.info("Skill: #" + skill.getSkillId() + ". Complete QuestionBean: id#"+ questionBean.getQuestionId() + 
-				", currentSequence#" + sequence + ", startTime["+ questionBean.getStartTime() + 
-				"], finisedTime[" + finishedTime + "], duration[" + duration + "]");
+		log.info(String.format("Skill: id#%s. Completed QuestionBean: id#%s, currentSequence #%s, startTime[%s], finishTime[%s], duration[%s]", skill.getSkillId(), 
+				questionBean.getQuestionId(), sequence, questionBean.getStartTime(), finishedTime, duration));
 		if (duration > questionBean.getDuration()) {
 			return WebConstants.Views.SKILL_TEST_QUESTION_TIMEOUT;
 		}

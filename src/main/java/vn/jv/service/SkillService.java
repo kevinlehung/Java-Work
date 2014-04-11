@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -149,7 +150,7 @@ public class SkillService extends BaseService implements ISkillService {
 			
 			return tTest;
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to save Test information of userId#" + user.getUserId() + "] and skillId#" + skillId, e);
+			throw new RuntimeException(String.format("Failed to save Test information of userId#%s and skillId#%s", user.getUserId(), skillId), e);
 		}
 	}
 	
@@ -181,10 +182,7 @@ public class SkillService extends BaseService implements ISkillService {
 	
 	private QuestionBean buildQuestionBean(TQuestion tQuestion) {
 		QuestionBean questionBean = new QuestionBean();
-		questionBean.setQuestionId(tQuestion.getQuestionId());
-		questionBean.setStem(tQuestion.getStem());
-		questionBean.setDuration(tQuestion.getDuration());
-		questionBean.setMultipleChoice(tQuestion.getIsMultipleChoice());
+		BeanUtils.copyProperties(tQuestion, questionBean);
 		List<TOption> tOptions = tOptionRepo.findByTQuestionId(tQuestion.getQuestionId());
 		questionBean.setOptions(buildListOptionBean(tOptions));
 		return questionBean;
