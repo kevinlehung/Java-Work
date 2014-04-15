@@ -47,27 +47,45 @@
                                 </div>
                                 <div class='title'>
                                     About Me
-                                    <a id="inplaceediting-about-me" href="#" class="pull-right">
+                                    <a id="inplaceediting123" data-toggle='modal' href='#update-profileOverview-dialog' role='button' onclick="bindProfileOverview();return false;" class="pull-right">
 			                            <i class="icon-pencil"></i>
 			                            [Edit]
 			                        </a>
                                 </div>
                                 <div class='content' id='inplaceediting-about-me-content' data-type="wysihtml5" data-original-title="About Me" data-toggle="manual">
-                                    <p>
-                                    I have over ten years experience in JAVA-related technologies in web-based programming, system design, technical troubleshooting, problem solving...
-									</p>
-									<p>
-									I am able to perform all aspects of the development and release cycle, including front-end, back-end, database and system development.
-									</p>
-									<p>
-										My technical skills:<br />
-										+ Struts, JPA, Hibernate, Spring Data, Spring MVC,<br />
-										+ Apache, Tomcat, JBoss.<br />
-										+ JMS/ActiveMQ<br />
-										+ Good at using CASE tools and frameworks ( such as CVS, SVN, JMeter, Ant, Maven, GIT)<br />
-									</p>
-									
+                                <c:choose>
+                                	<c:when test="${(empty profile) || (empty profile.overview)}">
+ 											Empty
+ 									</c:when>
+ 									<c:otherwise>
+ 										<c:out value="${profile.overview}"/>
+ 									</c:otherwise>
+                                </c:choose>
                                 </div>
+								<div class='modal hide fade' id='update-profileOverview-dialog' role='dialog' tabindex='-1'>
+					                <div class='modal-header'>
+					                    <button class='close' data-dismiss='modal' type='button'>&times;</button>
+					                    <h3>About Me</h3>
+					                    Introduce yourself.
+					                </div>
+					                <input type="hidden" id="invalidUpdatedOverview" value="${invalidUpdatedOverview}" />
+					                <form:form accept-charset="UTF-8" action="${contextPath}/u/dashboard/updateOverviewProfile.jv" method="post" commandName = "profileForm">
+					                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					                	<div class='modal-body'> 
+					                       
+					                         <div class='control-group'>
+					                            <div class='controls'>
+					                             <form:textarea id="wysihtml5-textarea-overview" name="wysihtml5-textarea" path="overview"/>
+					                             <p class='help-block' />
+					                            </div>
+					                        </div>
+					                    </div>
+					                	<div class='modal-footer'>
+					                    	<button class='btn' data-dismiss='modal'>Close</button>
+					                    	<button class='btn btn-primary' type="submit">Save changes</button>
+					                	</div>
+					            	</form:form>
+					            </div>
                             </li>
                             <li class="deco">
                                 <div class='icon  sea-blue-background'>
@@ -75,16 +93,47 @@
                                 </div>
                                 <div class='title'>
                                     Service Description
-                                    <a id="inplaceediting-service" href="#" class="pull-right">
+                                    <a id="inplaceediting123-service" data-toggle='modal' href='#update-profileServiceDescription-dialog' role='button' onclick="bindProfileServiceDescription();return false;" class="pull-right">
 			                            <i class="icon-pencil"></i>
 			                            [Edit]
-			                            
 			                        </a>
 			                        <a href="#" data-target="#my_modal" data-toggle="modal" data-id="my_id_value">Open Modal</a>
                                 </div>
                                 <div class='content' id="inplaceediting-service-content"  data-type="wysihtml5" data-original-title="Service Description" data-toggle="manual">
-                                    
+								<c:choose>
+									<c:when test="${(empty profile) || (empty profile.serviceDescription)}">
+ 										Empty
+ 									</c:when>
+ 									<c:otherwise>
+ 										<c:out value="${profile.serviceDescription}"/>
+ 									</c:otherwise>
+                                </c:choose>
                                 </div>
+                                
+                                <div class='modal hide fade' id='update-profileServiceDescription-dialog' role='dialog' tabindex='-1'>
+					                <div class='modal-header'>
+					                    <button class='close' data-dismiss='modal' type='button'>&times;</button>
+					                    <h3>Service Description</h3>
+					                </div>
+									<input type="hidden" id="invalidUpdatedServiceDescription" value="${invalidUpdatedServiceDescription}" />
+					                <form:form accept-charset="UTF-8" action="${contextPath}/u/dashboard/updateServiceDescriptionProfile.jv" method="post" commandName = "profileForm">
+					                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					                	<div class='modal-body'> 
+					                       
+					                         <div class='control-group'>
+					                            <div class='controls'>
+					                             <form:textarea id="wysihtml5-textarea-serviceDescription" name="wysihtml5-textarea" path="serviceDescription"/>
+					                             <p class='help-block' />
+					                            </div>
+					                        </div>
+					                    </div>
+					                	<div class='modal-footer'>
+					                    	<button class='btn' data-dismiss='modal'>Close</button>
+					                    	<button class='btn btn-primary' type="submit">Save changes</button>
+					                	</div>
+					            	</form:form>
+					            
+					            </div>
                             </li>
                             <li class="deco">
                                 <div class='icon sea-blue-background'>
@@ -108,8 +157,8 @@
 											<c:forEach items="#{uCertifications}" var="uCertification" varStatus="count">
 												<c:if test="${uCertification.conferringOrganization!=null && uCertification.conferringOrganization!=''}">
 												<tr>
-													<td>
-														<a id="certification-conferringOrganization-${uCertification.certificationId}" href='#update-certification-dialog' data-toggle='modal' role='button' onclick="bindCurrentCertification(${uCertification.certificationId});return false;">
+													<td id="certification-conferringOrganization-${uCertification.certificationId}">
+														<a href='#update-certification-dialog' data-toggle='modal' role='button' onclick="bindCurrentCertification(${uCertification.certificationId});return false;">
 															<h5><c:out value="${uCertification.conferringOrganization}"/></h5>
 														</a>  
 													</td>
@@ -124,7 +173,9 @@
 												
 												<c:if test="${uCertification.dateAwarded!=null && uCertification.dateAwarded!=''}">
 												<tr>
-													<td id="certification-dateAwarded-${uCertification.certificationId}"><c:out value="${uCertification.dateAwarded}"/></td>
+													<td id="certification-dateAwarded-${uCertification.certificationId}">
+														<fmt:formatDate value="${uCertification.dateAwarded}" pattern="MM/dd/yyyy" />
+													</td>
 												</tr>
 												</c:if>
 												
@@ -151,21 +202,23 @@
 					                    Demonstrate your expertise by listing your certifications.
 					                </div>
 					                
-					                <form:form accept-charset="UTF-8" action="${contextPath}/u/dashboard/createUCertification.jv" method="post" commandName = "uCertificationForm">
+									<input type="hidden" id="invalidCreatedCertification" value="${invalidCreatedCertification}" />
+					                <form:form id="frm-CreateUCertification" accept-charset="UTF-8" action="${contextPath}/u/dashboard/createUCertification.jv" method="post" commandName = "uCertificationForm">
 					                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					                	<div class='modal-body'> 
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Conferring Organization</strong></label>
 					                            <div class='controls'>
-					                                <form:input class="span12" id="conferringOrganization" placeholder="Conferring Organization" path="conferringOrganization"/>
-					                                <p class='help-block' />
+					                                <form:input class="span12" id="conferringOrganization" placeholder="Conferring Organization" data-rule-required="true" path="conferringOrganization"/>
 					                            </div>
+												<form:errors path="conferringOrganization" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Professional Certificate</strong></label>
 					                            <div class='controls'>
 					                                <form:input class='span12' type='text' placeholder='Professional certificate' value='' path='professionalCertificate'/>
 					                            </div>
+												<form:errors path="professionalCertificate" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Date Awarded/Received</strong></label>
@@ -176,22 +229,22 @@
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
 								                    </div>
-					                                <p class='help-block' />
+													<form:errors path="dateAwarded" cssClass="help-block error"/>
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Certificate Number</strong> (optional)</label>
 					                            <div class='controls'>
 					                                <form:input class='span12' placeholder='Certificate Number' type='text' value='' path='certificateNumber'/>
-					                                <p class='help-block' />
 					                            </div>
+					                            <form:errors path="certificateNumber" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Description </strong>(optional)</label>
 					                            <div class='controls'>
 					                                <form:textarea class='span12' placeholder='Description' path="description"/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="description" cssClass="help-block error"/>
 					                        </div>
 					                	</div>
 					                	<div class='modal-footer'>
@@ -199,9 +252,10 @@
 					                    	<button class='btn btn-primary' type="submit">Save changes</button>
 					                	</div>
 					            	</form:form>
-					            
+					
 					            </div>
-					            
+								
+								<input type="hidden" id="invalidUpdatedCertification" value="${invalidUpdatedCertification}" />
 					            <div class='modal hide fade' id='update-certification-dialog' role='dialog' tabindex='-1'>
 					                <div class='modal-header'>
 					                    <button class='close' data-dismiss='modal' type='button'>&times;</button>
@@ -209,20 +263,21 @@
 					                    Demonstrate your expertise by listing your certifications.
 					                </div>
 									<form:form id='frm-UpdateUCertification' accept-charset="UTF-8" action="${contextPath}/u/dashboard/updateUCertification.jv" method="post" commandName = "uCertificationForm">
-					                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					                	<div class='modal-body'> 
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Conferring Organization</strong></label>
 					                            <div class='controls'>
 					                                <form:input class="span12" id="certification-conferringOrganization" placeholder="Conferring Organization" path="conferringOrganization"/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="conferringOrganization" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Professional Certificate</strong></label>
 					                            <div class='controls'>
 					                                <form:input class='span12' id="certification-professionalOrganization" type='text' placeholder='Professional certificate' value='' path='professionalCertificate'/>
 					                            </div>
+												<form:errors path="professionalCertificate" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Date Awarded/Received</strong></label>
@@ -233,22 +288,23 @@
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
 								                    </div>
-					                                <p class='help-block' />
+					                                <form:errors path="dateAwarded" cssClass="help-block error"/>
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Certificate Number</strong> (optional)</label>
 					                            <div class='controls'>
 					                                <form:input class='span12' id='certification-certificateNumber' placeholder='Certificate Number' type='text' value='' path='certificateNumber'/>
-					                                <p class='help-block' />
+					                                
 					                            </div>
+					                            <form:errors path="certificateNumber" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Description </strong>(optional)</label>
 					                            <div class='controls'>
 					                                <form:textarea class='span12' id='certification-description' placeholder='Description' path="description"/>
-					                                <p class='help-block' />
 					                            </div>
+					                            <form:errors path="description" cssClass="help-block error"/>
 					                        </div>
 					                	</div>
 					                	<div class='modal-footer'>
@@ -297,7 +353,9 @@
 												
 												<c:if test="${uLicense.dateIssued!=null && uLicense.dateIssued!=''}">
 												<tr>
-													<td id='license-dateIssued-${uLicense.licenseId}'><c:out value="${uLicense.dateIssued}"/></td>
+													<td id='license-dateIssued-${uLicense.licenseId}'>
+														<fmt:formatDate value="${uLicense.dateIssued}" pattern="MM/dd/yyyy" />
+													</td>
 												</tr>
 												</c:if>
 												
@@ -324,7 +382,7 @@
 					                    <h3>License</h3>
 					                    Highlight your qualifications by listing relevant licenses you have acquired.
 					                </div>
-					                
+									<input type="hidden" id="invalidCreatedLicense" value="${invalidCreatedLicense}" />
 									<form:form accept-charset="UTF-8" action="${contextPath}/u/dashboard/createULicense.jv" method="post" commandName = "uLicenseForm">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 										<div class='modal-body'>
@@ -332,14 +390,15 @@
 					                            <label class='control-label'><strong>Conferring Organization</strong></label>
 					                            <div class='controls'>
 					                                <form:input class='span12' type='text' placeholder='Conferring Organization' path='conferringOrganization'/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="conferringOrganization" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Professional License or Membership</strong></label>
 					                            <div class='controls'>
 					                                <form:input class='span12' placeholder='Professional License or Membership' type='text' path='professionalLicense'/>
 					                            </div>
+												<form:errors path="professionalLicense" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Date Issued</strong></label>
@@ -350,7 +409,7 @@
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
 								                    </div>
-					                                <p class='help-block' />
+												<form:errors path="dateIssued" cssClass="help-block error"/>
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
@@ -359,13 +418,14 @@
 					                                <form:input class='span12' placeholder='License Number' type='text' path='licenseNumber'/>
 					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="licenseNumber" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Description </strong>(optional)</label>
 					                            <div class='controls'>
 					                                <form:textarea class='span12' placeholder='Description' path='description'/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="description" cssClass="help-block error"/>
 					                        </div>
 										</div>
 										<div class='modal-footer'>
@@ -381,7 +441,7 @@
 					                    <h3>Update License</h3>
 					                    Highlight your qualifications by listing relevant licenses you have acquired.
 					                </div>
-					                
+									<input type="hidden" id="invalidUpdatedLicense" value="${invalidUpdatedLicense}" />
 									<form:form id="frm-UpdateULicense" accept-charset="UTF-8" action="${contextPath}/u/dashboard/createULicense.jv" method="post" commandName = "uLicenseForm">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 										<div class='modal-body'>
@@ -389,14 +449,15 @@
 					                            <label class='control-label'><strong>Conferring Organization</strong></label>
 					                            <div class='controls'>
 					                                <form:input id='license-conferringOrganization' class='span12' type='text' placeholder='Conferring Organization' path='conferringOrganization'/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="conferringOrganization" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Professional License or Membership</strong></label>
 					                            <div class='controls'>
 					                                <form:input id='license-professionalLicense' class='span12' placeholder='Professional License or Membership' type='text' path='professionalLicense'/>
 					                            </div>
+												<form:errors path="professionalLicense" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Date Issued</strong></label>
@@ -407,22 +468,22 @@
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
 								                    </div>
-					                                <p class='help-block' />
+												<form:errors path="dateIssued" cssClass="help-block error"/>
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>License Number</strong> (optional)</label>
 					                            <div class='controls'>
 					                                <form:input id='license-licenseNumber' class='span12' placeholder='License Number' type='text' path='licenseNumber'/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="licenseNumber" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Description </strong>(optional)</label>
 					                            <div class='controls'>
 					                                <form:textarea id='license-description' class='span12' placeholder='Description' path='description'/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="description" cssClass="help-block error"/>
 					                        </div>
 										</div>
 										<div class='modal-footer'>
@@ -470,13 +531,17 @@
 												
 												<c:if test="${uEducation.graduationStartDate!=null && uEducation.graduationStartDate!=''}">
 												<tr>
-													<td id='education-graduationStartDate-${uEducation.educationId}'><c:out value="${uEducation.graduationStartDate}"/></td>
+													<td id='education-graduationStartDate-${uEducation.educationId}'>
+														<fmt:formatDate value="${uEducation.graduationStartDate}" pattern="MM/dd/yyyy" />
+													</td>
 												</tr>
 												</c:if>
 												
 												<c:if test="${uEducation.graduationEndDate!=null && uEducation.graduationEndDate!=''}">
 												<tr>
-													<td id='education-graduationEndDate-${uEducation.educationId}'><c:out value="${uEducation.graduationEndDate}"/></td>
+													<td id='education-graduationEndDate-${uEducation.educationId}'>
+														<fmt:formatDate value="${uEducation.graduationEndDate}" pattern="MM/dd/yyyy" />
+													</td>
 												</tr>
 												</c:if>
 												
@@ -497,6 +562,7 @@
 					                    <h3>Education</h3>
 					                    Specify your educational background to prospective clients.
 					                </div>
+									<input type="hidden" id="invalidCreatedEducation" value="${invalidCreatedEducation}" />
 									<form:form accept-charset="UTF-8" action="${contextPath}/u/dashboard/createUEducation.jv" method="post" commandName = "uEducationForm">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 										<div class='modal-body'>
@@ -504,14 +570,16 @@
 					                            <label class='control-label'><strong>Institution Name</strong></label>
 					                            <div class='controls'>
 					                                <form:input class='span12' type='text' placeholder='Institution Name' path='institutionName'/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="institutionName" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Name and Type of Degree</strong></label>
 					                            <div class='controls'>
 					                                <form:input class='span12' placeholder='Name and Type of Degree' type='text' path='degreeType'/>
 					                            </div>
+												<form:errors path="degreeType" cssClass="help-block error"/>
+					                            
 					                        </div>
 					                        <!-- try later --------------- 
 					                        <div class='control-group'>
@@ -537,7 +605,7 @@
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
 								                    </div>
-					                                <p class='help-block' />
+													<form:errors path="graduationStartDate" cssClass="help-block error"/>
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
@@ -549,13 +617,13 @@
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
 								                    </div>
-					                                <p class='help-block' />
+													<form:errors path="graduationEndDate" cssClass="help-block error"/>
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Description </strong>(optional)</label>
 					                            <div class='controls'>
-					                                <textarea class='span12' placeholder='Description'></textarea>
+					                                <textarea class='span12' placeholder='Description' path='description'></textarea>
 					                                <p class='help-block' />
 					                            </div>
 					                        </div>
@@ -573,6 +641,7 @@
 					                    <h3>Update Education</h3>
 					                    Specify your educational background to prospective clients.
 					                </div>
+									<input type="hidden" id="invalidUpdatedEducation" value="${invalidUpdatedEducation}" />
 									<form:form id='frm-UpdateUEducation' accept-charset="UTF-8" action="${contextPath}/u/dashboard/createUEducation.jv" method="post" commandName = "uEducationForm">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 										<div class='modal-body'>
@@ -580,14 +649,15 @@
 					                            <label class='control-label'><strong>Institution Name</strong></label>
 					                            <div class='controls'>
 					                                <form:input id='education-institutionName' class='span12' type='text' placeholder='Institution Name' path='institutionName'/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="institutionName" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Name and Type of Degree</strong></label>
 					                            <div class='controls'>
 					                                <form:input id='education-degreeType' class='span12' placeholder='Name and Type of Degree' type='text' path='degreeType'/>
 					                            </div>
+												<form:errors path="degreeType" cssClass="help-block error"/>
 					                        </div>
 											<div class='control-group'>
 					                            <label class='control-label'><strong>Graduation Start Date</strong></label>
@@ -598,7 +668,7 @@
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
 								                    </div>
-					                                <p class='help-block' />
+													<form:errors path="graduationStartDate" cssClass="help-block error"/>
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
@@ -610,15 +680,16 @@
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
 								                    </div>
-					                                <p class='help-block' />
+													<form:errors path="graduationEndDate" cssClass="help-block error"/>
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Description </strong>(optional)</label>
 					                            <div class='controls'>
-					                                <textarea id='education-description' class='span12' placeholder='Description'></textarea>
+					                                <textarea id='education-description' class='span12' placeholder='Description' path='desciption'></textarea>
 					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="description" cssClass="help-block error"/>
 					                        </div>
 										</div>
 										<div class='modal-footer'>
@@ -667,13 +738,17 @@
 												
 												<c:if test="${uEmployment.startDate!=null && uEmployment.startDate!=''}">
 												<tr>
-													<td id='employment-startDate-${uEmployment.employmentId}'><c:out value="${uEmployment.startDate}"/></td>
+													<td id='employment-startDate-${uEmployment.employmentId}'>
+														<fmt:formatDate value="${uEmployment.startDate}" pattern="MM/dd/yyyy" />
+													</td>
 												</tr>
 												</c:if>
 												
 												<c:if test="${uEmployment.endDate!=null && uEmployment.endDate!=''}">
 												<tr>
-													<td id='employment-endDate-${uEmployment.employmentId}'><c:out value="${uEmployment.endDate}"/></td>
+													<td id='employment-endDate-${uEmployment.employmentId}'>
+														<fmt:formatDate value="${uEmployment.endDate}" pattern="MM/dd/yyyy" />
+													</td>
 												</tr>
 												</c:if>
 												
@@ -693,7 +768,7 @@
 					                    <h3>Employment</h3>
 					                    Showcase your work experience by listing prior relevant clients.
 					                </div>
-					                
+									<input type="hidden" id="invalidCreatedEmployment" value="${invalidCreatedEmployment}" />
 					                <form:form accept-charset="UTF-8" action="${contextPath}/u/dashboard/createUEmployment.jv" method="post" commandName = "uEmploymentForm">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					                	<div class='modal-body'>
@@ -701,14 +776,15 @@
 					                            <label class='control-label'><strong>Client name</strong></label>
 					                            <div class='controls'>
 					                                <form:input class='span12' type='text' placeholder='Client name' path='clientName'/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="clientName" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Position held</strong></label>
 					                            <div class='controls'>
 					                                <form:input class='span12' placeholder='Position held' type='text' path='positionHeld'/>
 					                            </div>
+												<form:errors path="positionHeld" cssClass="help-block error"/>
 					                        </div>
 					                        <!-- Try later
 					                        <div class='control-group'>
@@ -734,7 +810,7 @@
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
 								                    </div>
-					                                <p class='help-block' />
+												<form:errors path="startDate" cssClass="help-block error"/>
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
@@ -746,15 +822,14 @@
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
 								                    </div>
-					                                <p class='help-block' />
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Description </strong>(optional)</label>
 					                            <div class='controls'>
 					                                <form:textarea class='span12' placeholder='Description' path='description'/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="description" cssClass="help-block error"/>
 					                        </div>
 					                	</div>
 										<div class='modal-footer'>
@@ -771,7 +846,7 @@
 					                    <h3>Update Employment</h3>
 					                    Showcase your work experience by listing prior relevant clients.
 					                </div>
-					                
+									<input type="hidden" id="invalidUpdatedEmployment" value="${invalidUpdatedEmployment}" />
 					                <form:form id='frm-UpdateUEmployment' accept-charset="UTF-8" action="${contextPath}/u/dashboard/createUEmployment.jv" method="post" commandName = "uEmploymentForm">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					                	<div class='modal-body'>
@@ -779,14 +854,15 @@
 					                            <label class='control-label'><strong>Client name</strong></label>
 					                            <div class='controls'>
 					                                <form:input id='employment-clientName' class='span12' type='text' placeholder='Client name' path='clientName'/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="clientName" cssClass="help-block error"/>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Position held</strong></label>
 					                            <div class='controls'>
 					                                <form:input id='employment-positionHeld' class='span12' placeholder='Position held' type='text' path='positionHeld'/>
 					                            </div>
+												<form:errors path="positionHeld" cssClass="help-block error"/>
 					                        </div>
 											<div class='control-group'>
 					                            <label class='control-label'><strong>Start Date</strong></label>
@@ -797,7 +873,7 @@
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
 								                    </div>
-					                                <p class='help-block' />
+												<form:errors path="startDate" cssClass="help-block error"/>
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
@@ -809,15 +885,15 @@
 											              <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 											            </span>
 								                    </div>
-					                                <p class='help-block' />
+												<form:errors path="endDate" cssClass="help-block error"/>
 					                            </div>
 					                        </div>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Description </strong>(optional)</label>
 					                            <div class='controls'>
 					                                <form:textarea id='employment-description' class='span12' placeholder='Description' path='description'/>
-					                                <p class='help-block' />
 					                            </div>
+												<form:errors path="description" cssClass="help-block error"/>
 					                        </div>
 					                	</div>
 										<div class='modal-footer'>

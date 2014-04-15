@@ -1,6 +1,5 @@
 package vn.jv.web.controller;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import vn.jv.constant.WebConstants;
 import vn.jv.persist.domain.User;
@@ -35,6 +35,7 @@ import vn.jv.service.IUEmploymentService;
 import vn.jv.service.IULicenseService;
 import vn.jv.service.IUserService;
 import vn.jv.web.common.util.SecurityUtil;
+import vn.jv.web.form.ProfileForm;
 import vn.jv.web.form.UCertificationForm;
 import vn.jv.web.form.UEducationForm;
 import vn.jv.web.form.UEmploymentForm;
@@ -47,6 +48,15 @@ import vn.jv.web.form.ULicenseForm;
  */
 @Controller
 public class UserDashboardController extends BaseController {
+	
+	private static final String BINDING_RESULT_ADDED_CERTIFICATION = "bindingResultAddedCertification";
+	private static final String BINDING_RESULT_UPDATED_CERTIFICATION = "bindingResultUpdatedCertification";
+	private static final String BINDING_RESULT_ADDED_EDUCATION = "bindingResultAddedEducation";
+	private static final String BINDING_RESULT_UPDATED_EDUCATION = "bindingResultUpdatedEducation";
+	private static final String BINDING_RESULT_ADDED_EMPLOYMENT = "bindingResultAddedEmployment";
+	private static final String BINDING_RESULT_UPDATED_EMPLOYMENT = "bindingResultUpdatedEmployment";
+	private static final String BINDING_RESULT_ADDED_LICENSE = "bindingResultAddedLicense";
+	private static final String BINDING_RESULT_UPDATED_LICENSE = "bindingResultUpdatedLicense";
 	
 	@Autowired
 	private IProfileService profileService;
@@ -74,6 +84,11 @@ public class UserDashboardController extends BaseController {
 		 binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 	
+	@ModelAttribute("profileForm")
+	public ProfileForm profileForm() {
+		return new ProfileForm();
+	}
+	
 	@ModelAttribute("uCertificationForm")
 	public UCertificationForm uCertificationForm() {
 		return new UCertificationForm(); // populates form for the first time if its null
@@ -85,8 +100,8 @@ public class UserDashboardController extends BaseController {
 	}
 	
 	@ModelAttribute("uEmploymentForm")
-	public UEmployment uEmploymentForm() {
-		return new UEmployment();
+	public UEmploymentForm uEmploymentForm() {
+		return new UEmploymentForm();
 	}
 	
 	@ModelAttribute("uLicenseForm")
@@ -94,162 +109,308 @@ public class UserDashboardController extends BaseController {
 		return new ULicenseForm();
 	}
 	
+	/** View Dash board */
 	@RequestMapping(value = "/u/dashboard")
 	public String viewUserDashboard(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute("uCertificationForm") UCertificationForm uCertificationForm, Model model) {
+			@ModelAttribute("profileForm") ProfileForm profileForm,
+			@ModelAttribute("uCertificationForm") UCertificationForm uCertificationForm,
+			@ModelAttribute("uEducationForm") UEducationForm uEducationForm,
+			@ModelAttribute("uEmploymentForm") UEmploymentForm uEmploymentForm,
+			@ModelAttribute("uLicenseForm") ULicenseForm uLicenseForm, Model model) {
+		
+		model.addAttribute(profileForm);
 		model.addAttribute(uCertificationForm);
+		model.addAttribute(uEducationForm);
+		model.addAttribute(uEmploymentForm);
+		model.addAttribute(uLicenseForm);
+		
+		if(model.asMap().containsKey(UserDashboardController.BINDING_RESULT_ADDED_CERTIFICATION)) {
+			model.addAttribute("org.springframework.validation.BindingResult.uCertificationForm",
+					model.asMap().get(UserDashboardController.BINDING_RESULT_ADDED_CERTIFICATION));
+		}
+		if(model.asMap().containsKey(UserDashboardController.BINDING_RESULT_UPDATED_CERTIFICATION)) {
+			model.addAttribute("org.springframework.validation.BindingResult.uCertificationForm",
+					model.asMap().get(UserDashboardController.BINDING_RESULT_UPDATED_CERTIFICATION));
+		}
+		if(model.asMap().containsKey(UserDashboardController.BINDING_RESULT_ADDED_EDUCATION)) {
+			model.addAttribute("org.springframework.validation.BindingResult.uEducationForm",
+					model.asMap().get(UserDashboardController.BINDING_RESULT_ADDED_EDUCATION));
+		}
+		if(model.asMap().containsKey(UserDashboardController.BINDING_RESULT_UPDATED_EDUCATION)) {
+			model.addAttribute("org.springframework.validation.BindingResult.uEducationForm",
+					model.asMap().get(UserDashboardController.BINDING_RESULT_UPDATED_EDUCATION));
+		}
+		if(model.asMap().containsKey(UserDashboardController.BINDING_RESULT_ADDED_EMPLOYMENT)) {
+			model.addAttribute("org.springframework.validation.BindingResult.uEmploymentForm",
+					model.asMap().get(UserDashboardController.BINDING_RESULT_UPDATED_EMPLOYMENT));
+		}
+		if(model.asMap().containsKey(UserDashboardController.BINDING_RESULT_ADDED_LICENSE)) {
+			model.addAttribute("org.springframework.validation.BindingResult.uLicenseForm",
+					model.asMap().get(UserDashboardController.BINDING_RESULT_ADDED_LICENSE));
+		}
+		if(model.asMap().containsKey(UserDashboardController.BINDING_RESULT_UPDATED_LICENSE)) {
+			model.addAttribute("org.springframework.validation.BindingResult.uLicenseForm",
+					model.asMap().get(UserDashboardController.BINDING_RESULT_UPDATED_LICENSE));
+		}
+		
 		setModelAttributesForViewingUserDashboard(model);
+		
 		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+	}
+	
+	/** User Profile */
+	@RequestMapping(value = "/u/dashboard/updateOverviewProfile", method = RequestMethod.POST)
+	public String updateUserProfileOverviewDashBoard(HttpServletRequest request, HttpServletResponse reponse,
+					@Valid @ModelAttribute ProfileForm profileForm, BindingResult result, Model model) {
+		// find user's profile first, if not exists -> create one valid profile, if exists already must check valid
+		User jvUser = SecurityUtil.getCurrentUser();
+		Profile profile = this.profileService.findOneByUserId(jvUser.getUserId());
+		if(profile == null) {
+			profile = new Profile();
+			profile.setFile(null);
+			profile.setUser(jvUser);
+			profile.setTagline("Empty");
+			profile.setExperience("Empty");
+			profile.setHourlyRate(0);
+			profile.setServiceDescription("Empty");
+			profile.setOverview(profileForm.getOverview());
+			this.profileService.create(profile.getUser(), profile.getFile(), profile.getTagline(), profile.getOverview(),
+										profile.getHourlyRate(), profile.getExperience(), profile.getServiceDescription());
+		} else {
+			profile.setOverview(profileForm.getOverview());
+			this.profileService.update(profile.getProfileId(), profile.getFile(), profile.getTagline(), profile.getOverview(),
+										profile.getHourlyRate(), profile.getExperience(), profile.getServiceDescription());
+		}
+		
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
+	}
+	
+	@RequestMapping(value = "/u/dashboard/updateServiceDescriptionProfile", method = RequestMethod.POST)
+	public String updateUserProfileServiceDescriptionDashBoard(HttpServletRequest request, HttpServletResponse reponse,
+					@Valid @ModelAttribute ProfileForm profileForm, BindingResult result, Model model) {
+		// find user's profile first, if not exists -> create one valid profile, if exists already must check valid
+		User jvUser = SecurityUtil.getCurrentUser();
+		Profile profile = this.profileService.findOneByUserId(jvUser.getUserId());
+		if(profile == null) {
+			profile = new Profile();
+			profile.setFile(null);
+			profile.setUser(jvUser);
+			profile.setTagline("Empty");
+			profile.setExperience("Empty");
+			profile.setHourlyRate(0);
+			profile.setOverview("Empty");
+			profile.setServiceDescription(profileForm.getServiceDescription());
+			this.profileService.create(profile.getUser(), profile.getFile(), profile.getTagline(), profile.getOverview(),
+										profile.getHourlyRate(), profile.getExperience(), profile.getServiceDescription());
+		} else {
+			profile.setServiceDescription(profileForm.getServiceDescription());
+			this.profileService.update(profile.getProfileId(), profile.getFile(), profile.getTagline(), profile.getOverview(),
+										profile.getHourlyRate(), profile.getExperience(), profile.getServiceDescription());
+		}
+		
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	/** UCertification */
 	@RequestMapping(value = "/u/dashboard/createUCertification", method = RequestMethod.POST)
 	public String createUCertification(HttpServletRequest request, HttpServletResponse response,
-					@Valid @ModelAttribute UCertificationForm uCertificationForm,
-					BindingResult result) {
+					@Valid @ModelAttribute("uCertificationForm") UCertificationForm uCertificationForm,
+					BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 		
-		if(!result.hasErrors()) {
+		if(!bindingResult.hasErrors()) {
 			User user = SecurityUtil.getCurrentUser();
 			uCertificationService.create(user, uCertificationForm.getConferringOrganization(), 
 										uCertificationForm.getProfessionalCertificate(), uCertificationForm.getDateAwarded(),
 										uCertificationForm.getCertificateNumber(), uCertificationForm.getDescription());
+		} else {
+			redirectAttributes.addFlashAttribute("invalidCreatedCertification", true);
+			redirectAttributes.addFlashAttribute("uCertificationForm", uCertificationForm);
+			redirectAttributes.addFlashAttribute(UserDashboardController.BINDING_RESULT_ADDED_CERTIFICATION, bindingResult);
 		}
 		
-		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	@RequestMapping(value = "/u/dashboard/{uCertificationId}/updateUCertification", method = RequestMethod.POST)
 	public String updateUCertification(HttpServletRequest request, HttpServletResponse response,
-					@Valid @ModelAttribute UCertificationForm uCertificationForm, BindingResult result, 
-					@PathVariable("uCertificationId") int uCertificationId) {
+					@Valid @ModelAttribute("uCertificationForm") UCertificationForm uCertificationForm,
+					BindingResult bindingResult, @PathVariable("uCertificationId") int uCertificationId,
+					RedirectAttributes redirectAttributes , Model model) {
 		
-		if(!result.hasErrors()) {
+		if(!bindingResult.hasErrors()) {
 			uCertificationService.update(uCertificationId, uCertificationForm.getConferringOrganization(), 
 										uCertificationForm.getProfessionalCertificate(), uCertificationForm.getDateAwarded(),
 										uCertificationForm.getCertificateNumber(), uCertificationForm.getDescription());
+		} else {
+			redirectAttributes.addFlashAttribute("invalidUpdatedCertification", true);
+			redirectAttributes.addFlashAttribute("uCertificationForm", uCertificationForm);
+			redirectAttributes.addFlashAttribute(UserDashboardController.BINDING_RESULT_UPDATED_CERTIFICATION, bindingResult);
 		}
 		
-		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	@RequestMapping(value = "/u/dashboard/{uCertificationId}/deleteUCertification")
 	public String deleteUCertification(HttpServletRequest request, HttpServletResponse response, 
-					@PathVariable("uCertificationId") int uCertificationId) {
+					@PathVariable("uCertificationId") int uCertificationId, Model model) {
 		uCertificationService.delete(uCertificationId);
-		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	/** UEducation */
 	
 	@RequestMapping(value = "/u/dashboard/createUEducation")
 	public String createUEducation(HttpServletRequest request, HttpServletResponse reponse,
-					@Valid @ModelAttribute UEducationForm uEducationForm,
-					BindingResult result) {
-		if(!result.hasErrors()) {
+					@Valid @ModelAttribute("uEducationForm") UEducationForm uEducationForm,
+					BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+		if(!bindingResult.hasErrors()) {
 			User user = SecurityUtil.getCurrentUser();
 			uEducationService.create(user, uEducationForm.getInstitutionName(), uEducationForm.getDegreeType(),
 									uEducationForm.getGraduationStartDate(), uEducationForm.getGraduationEndDate(),
 									uEducationForm.getDescription());
+		} else {
+			redirectAttributes.addFlashAttribute("invalidCreatedEducation", true);
+			redirectAttributes.addFlashAttribute("uEducationForm", uEducationForm);
+			redirectAttributes.addFlashAttribute(UserDashboardController.BINDING_RESULT_ADDED_EDUCATION, bindingResult);
 		}
 		
-		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	@RequestMapping(value = "/u/dashboard/{uEducationId}/updateUEducation")
 	public String updateUEducation(HttpServletRequest request, HttpServletResponse reponse,
-					@Valid @ModelAttribute UEducationForm uEducationForm, BindingResult result,
-					@PathVariable("uEducationId") int uEducationId) {
-		if(!result.hasErrors()) {
+					@Valid @ModelAttribute("uEducationForm") UEducationForm uEducationForm,
+					BindingResult bindingResult, @PathVariable("uEducationId") int uEducationId,
+					RedirectAttributes redirectAttributes, Model model) {
+		if(!bindingResult.hasErrors()) {
 			uEducationService.update(uEducationId, uEducationForm.getInstitutionName(), uEducationForm.getDegreeType(),
 									uEducationForm.getGraduationStartDate(), uEducationForm.getGraduationEndDate(),
 									uEducationForm.getDescription());
+		} else {
+			redirectAttributes.addFlashAttribute("invalidUpdatedEducation", true);
+			redirectAttributes.addFlashAttribute("uEducationForm", uEducationForm);
+			redirectAttributes.addFlashAttribute(UserDashboardController.BINDING_RESULT_UPDATED_EDUCATION, bindingResult);
 		}
 		
-		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	@RequestMapping(value = "/u/dashboard/{uEducationId}/deleteUEducation")
 	public String deleteUEducation(HttpServletRequest request, HttpServletResponse response, 
-			@PathVariable("uEducationId") int uEducationId) {
+			@PathVariable("uEducationId") int uEducationId, Model model) {
 		uEducationService.delete(uEducationId);
-		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	/** UEmployment */
 	
 	@RequestMapping(value = "/u/dashboard/createUEmployment")
 	public String createUEmployment(HttpServletRequest request, HttpServletResponse response,
-					@Valid @ModelAttribute UEmploymentForm uEmploymentForm, BindingResult result) {
-		if(!result.hasErrors()) {
+					@Valid @ModelAttribute("uEmploymentForm") UEmploymentForm uEmploymentForm,
+					BindingResult bindingResult, RedirectAttributes redirectAttributes,Model model) {
+		if(!bindingResult.hasErrors()) {
 			User user = SecurityUtil.getCurrentUser();
 			uEmploymentService.create(user, uEmploymentForm.getClientName(), uEmploymentForm.getPositionHeld(),
 									uEmploymentForm.getStartDate(), uEmploymentForm.getEndDate(),
 									uEmploymentForm.getDescription());
+		} else {
+			redirectAttributes.addFlashAttribute("invalidEmployment", true);
+			redirectAttributes.addFlashAttribute("uEmploymentForm", uEmploymentForm);
+			redirectAttributes.addFlashAttribute(UserDashboardController.BINDING_RESULT_ADDED_EMPLOYMENT, bindingResult);
 		}
 		
-		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	@RequestMapping(value = "/u/dashboard/{uEmploymentId}/updateUEmployment")
 	public String updateUEmployemnt(HttpServletRequest request, HttpServletResponse response,
-					@Valid @ModelAttribute UEmploymentForm uEmploymentForm, BindingResult result,
-					@PathVariable("uEmploymentId") int uEmploymentId) {
-		if(!result.hasErrors()) {
+					@Valid @ModelAttribute("uEmploymentForm") UEmploymentForm uEmploymentForm,
+					BindingResult bindingResult, @PathVariable("uEmploymentId") int uEmploymentId,
+					RedirectAttributes redirectAttributes, Model model) {
+		if(!bindingResult.hasErrors()) {
 			uEmploymentService.update(uEmploymentId, uEmploymentForm.getClientName(), uEmploymentForm.getPositionHeld(),
 									uEmploymentForm.getStartDate(), uEmploymentForm.getEndDate(),
 									uEmploymentForm.getDescription());
+		} else {
+			redirectAttributes.addFlashAttribute("invalidUpdatedEmployment", true);
+			redirectAttributes.addFlashAttribute("uEmploymentForm", uEmploymentForm);
+			redirectAttributes.addFlashAttribute(UserDashboardController.BINDING_RESULT_UPDATED_EMPLOYMENT, bindingResult);
 		}
 		
-		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	@RequestMapping(value = "/u/dashboard/{uEmploymentId}/deleteUEmployment")
 	public String deleteUEmployment(HttpServletRequest request, HttpServletResponse response,
-					@PathVariable("uEmploymentId") int uEmploymentId) {
+					@PathVariable("uEmploymentId") int uEmploymentId, Model model) {
 		uEmploymentService.delete(uEmploymentId);
-	
-		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+		
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	/** ULicense */
 	
 	@RequestMapping(value = "/u/dashboard/createULicense")
 	public String createULicense(HttpServletRequest request, HttpServletResponse response,
-								@Valid @ModelAttribute ULicenseForm uLicenseForm, BindingResult result) {
-		if(!result.hasErrors()) {
+								@Valid @ModelAttribute("uLicenseForm") ULicenseForm uLicenseForm,
+								BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+		if(!bindingResult.hasErrors()) {
 			User user = SecurityUtil.getCurrentUser();
 			uLicenseService.create(user, uLicenseForm.getConferringOrganization(), uLicenseForm.getProfessionalLicense(),
 								uLicenseForm.getDateIssued(), uLicenseForm.getLicenseNumber(), uLicenseForm.getDescription());
+		} else {
+			redirectAttributes.addFlashAttribute("invalidAddedLicense", true);
+			redirectAttributes.addFlashAttribute("uLicenseForm", uLicenseForm);
+			redirectAttributes.addFlashAttribute(UserDashboardController.BINDING_RESULT_ADDED_LICENSE, bindingResult);
 		}
 		
-		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	@RequestMapping(value = "/u/dashboard/{uLicenseId}/updateULicense")
 	public String updateULicense(HttpServletRequest request, HttpServletResponse response,
-					@Valid @ModelAttribute ULicenseForm uLicenseForm, BindingResult result,
-					@PathVariable("uLicenseId") int uLicenseId) {
-		if(!result.hasErrors()) {
+					@Valid @ModelAttribute("uLicenseForm") ULicenseForm uLicenseForm,
+					BindingResult bindingResult, @PathVariable("uLicenseId") int uLicenseId,
+					RedirectAttributes redirectAttributes, Model model) {
+		if(!bindingResult.hasErrors()) {
 			uLicenseService.update(uLicenseId, uLicenseForm.getConferringOrganization(), uLicenseForm.getProfessionalLicense(),
 								uLicenseForm.getDateIssued(), uLicenseForm.getLicenseNumber(), uLicenseForm.getDescription());
+		} else {
+			redirectAttributes.addFlashAttribute("invalidUpdatedLicense", true);
+			redirectAttributes.addFlashAttribute("uLicenseForm", uLicenseForm);
+			redirectAttributes.addFlashAttribute(UserDashboardController.BINDING_RESULT_UPDATED_LICENSE, bindingResult);
 		}
 		
-		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	@RequestMapping(value = "/u/dashboard/{uLicenseId}/deleteULicense")
 	public String deleteULicense(HttpServletRequest request, HttpServletResponse response,
-					@PathVariable("uLicenseId") int uLicenseId) {
+					@PathVariable("uLicenseId") int uLicenseId, Model model) {
 		uLicenseService.delete(uLicenseId);
 		
-		return WebConstants.Views.USER_PROFILE_OVERVIEW;
+		setModelAttributesForViewingUserDashboard(model);
+		return "redirect:/" + WebConstants.Pages.USER_PROFILE_OVERVIEW;
 	}
 	
 	private void setModelAttributesForViewingUserDashboard(Model model) {
 		User jvUser = SecurityUtil.getCurrentUser();
 		
-		List<Profile> profiles = profileService.findByUserId(jvUser.getUserId());
-		model.addAttribute("profiles", profiles);
+		Profile profile = profileService.findOneByUserId(jvUser.getUserId());
+		model.addAttribute("profile", profile);
 		
 		List<UCertification> uCertifications = uCertificationService.findByUserId(jvUser.getUserId());
 		model.addAttribute("uCertifications", uCertifications);

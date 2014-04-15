@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -36,10 +38,12 @@ public class UEducation implements java.io.Serializable {
 
 	@Column(name = "GRADUATION_START_DATE")
 	@DateTimeFormat(pattern = vn.jv.constant.WebConstants.FixValue.DEFAULT_DATE_FORMAT)
+	@Temporal(TemporalType.DATE)
 	private Date graduationStartDate;
 
 	@Column(name = "GRADUATION_END_DATE")
 	@DateTimeFormat(pattern = vn.jv.constant.WebConstants.FixValue.DEFAULT_DATE_FORMAT)
+	@Temporal(TemporalType.DATE)
 	private Date graduationEndDate;
 
 	@Column(name = "DESCRIPTION")

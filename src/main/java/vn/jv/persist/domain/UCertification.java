@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -40,6 +42,7 @@ public class UCertification implements java.io.Serializable {
 	private String professionalCertificate;
 
 	@Column(name = "DATE_AWARDED")
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = vn.jv.constant.WebConstants.FixValue.DEFAULT_DATE_FORMAT)
 	private Date dateAwarded;
 

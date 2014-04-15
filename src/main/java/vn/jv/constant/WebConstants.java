@@ -31,6 +31,7 @@ public interface WebConstants {
     	public static final int PASSWORD_HASH_LENGTH = 32;
     	
     	public static final String DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
+    	public static final String MYSQL_DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
     }
 	
 	public interface Params {
@@ -38,6 +39,11 @@ public interface WebConstants {
     }
     
 	public static final Map<String, String> TIME_ZONES = new HashMap<String, String>() {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		{
 			put("-12:00,0", "International Date Line Wes");
 			put("-11:00,0", "Midway Island");
@@ -130,7 +136,7 @@ public interface WebConstants {
     
     public interface Pages {
         public static final String JOBS_LIST = "jobs/%s/list." + PAGE_SUFFIX;
-        
+        public static final String USER_PROFILE_OVERVIEW ="u/dashboard" + PAGE_SUFFIX;
     }
     
 }

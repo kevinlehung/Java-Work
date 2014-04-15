@@ -49,7 +49,7 @@ public class UCertificationService extends BaseService implements IUCertificatio
 		
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void update(int uCertificationId, String conferringOrganization, String professionalCertificate,
-						Date dateAwarded, String certificateNumber, String description) {
+			Date dateAwarded, String certificateNumber, String description) {
 		UCertification uCertification = uCertificationRepo.findOne(uCertificationId);
 		// Must check null here or throw item not found? Later
 		uCertification.setConferringOrganization(conferringOrganization);

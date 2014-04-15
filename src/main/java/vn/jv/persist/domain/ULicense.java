@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -41,6 +43,7 @@ public class ULicense implements java.io.Serializable {
 
 	@Column(name = "DATE_ISSUED")
 	@DateTimeFormat(pattern = vn.jv.constant.WebConstants.FixValue.DEFAULT_DATE_FORMAT)
+	@Temporal(TemporalType.DATE)
 	private Date dateIssued;
 
 	@Column(name = "LICENSE_NUMBER")

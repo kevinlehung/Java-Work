@@ -2,7 +2,6 @@ package vn.jv.persist.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -19,6 +18,7 @@ public class Profile implements Serializable {
 	@Column(name="PROFILE_ID")
 	private int profileId;
 
+	@Column(name="EXPERIENCE")
 	private String experience;
 
 	@Column(name="HOURLY_RATE")

@@ -9,6 +9,6 @@ import vn.jv.persist.domain.User;
 
 public interface ProfileRepo extends BaseRepo<Profile, Integer>, ProfileCustomRepo<Profile, Integer> {
 
-	List<Profile> findByUser(User user);
+	public List<Profile> findByUser(User user);
 
 }

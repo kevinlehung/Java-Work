@@ -1,14 +1,53 @@
 var currentItem;
 
+$(document).ready(function(){
+	if ($("#invalidCreatedCertification").val()=="true") {
+		$("#add-certification-dialog").modal("show");
+	} else if ($("#invalidUpdatedCertification").val()=="true") {
+		$("#update-certification-dialog").modal("show");
+	} else if ($("#invalidCreatedEducation").val()=="true") {
+		$("#add-education-dialog").modal("show");
+	} else if ($("#invalidUpdatedEducation").val()=="true") {
+		$("#update-education-dialog").modal("show");
+	} else if ($("#invalidCreatedEmployment").val()=="true") {
+		$("#add-employment-dialog").modal("show");
+	} else if ($("#invalidUpdatedEmployment").val()=="true") {
+		$("#update-employment-dialog").modal("show");
+	} else if ($("#invalidCreatedLicense").val()=="true") {
+		$("#add-license-dialog").modal("show");
+	} else if ($("#invalidUpdatedLicense").val()=="true") {
+		$("#update-license-dialog").modal("show");
+	} else if ($("#invalidUpdatedOverview").val()=="true") {
+		$("#update-profileOverview-dialog").modal("show");
+	} else if ($("#invalidUpdatedServiceDescription").val()=="true") {
+		$("#update-profileServiceDescription-dialog").modal("show");
+	}
+	
+});
+
+/** bind profile overview */
+function bindProfileOverview() {
+	$("#wysihtml5-textarea-overview").val($("#inplaceediting-about-me-content").text());
+
+}
+
+/** bind profile service description */
+function bindProfileServiceDescription() {
+	$("#wysihtml5-textarea-serviceDescription").val($("#inplaceediting-service-content").text());
+}
+
 /**bind current Certification item to edit form*/
 function bindCurrentCertification(certificationId){
 	currentItem = certificationId;
-	
-	$("#certification-conferringOrganization").val($("#certification-conferringOrganization-"+ currentItem+" h5").text());
+	var dateTemp;
+	$("#certification-conferringOrganization").val($("#certification-conferringOrganization-" + currentItem + " a h5").text());
 	
 	$("#certification-professionalOrganization").val($("#certification-professionalCertificate-"+ currentItem).text());
 	
-	$("#certification-dateAwarded").val($("#certification-dateAwarded-"+ currentItem).text());
+	dateTemp = $("#certification-dateAwarded-"+ currentItem).text();
+	if(dateTemp){
+		$("#certification-dateAwarded").val(dateTemp.trim());
+	}
 	
 	$("#certification-certificateNumber").val($("#certification-certificateNumber-"+ currentItem).text());
 	
@@ -30,12 +69,16 @@ function deleteUCertification() {
 /**bind current License item to edit form*/
 function bindCurrentLicense(licenseId){
 	currentItem = licenseId;
+	var dateTemp;
 	
-	$("#license-conferringOrganization").val($("#license-conferringOrganization-"+ currentItem+" h5").text());
+	$("#license-conferringOrganization").val($("#license-conferringOrganization-"+ currentItem+" a h5").text());
 	
 	$("#license-professionalLicense").val($("#license-professionalLicense-"+ currentItem).text());
 	
-	$("#license-dateIssued").val($("#license-dateIssued-"+ currentItem).text());
+	dateTemp = $("#license-dateIssued-"+ currentItem).text();
+	if(dateTemp) {
+		$("#license-dateIssued").val(dateTemp.trim());
+	}
 	
 	$("#license-licenseNumber").val($("#license-licenseNumber-"+ currentItem).text());
 	
@@ -57,14 +100,21 @@ function deleteULicense() {
 /**bind current Education item to edit form*/
 function bindCurrentEducation(educationId){
 	currentItem = educationId;
+	var dateTemp;
 	
 	$("#education-institutionName").val($("#education-institutionName-"+ currentItem+ " a h5").text());
 	
 	$("#education-degreeType").val($("#education-degreeType-"+ currentItem).text());
 	
-	$("#education-graduationStartDate").val($("#education-graduationStartDate-"+ currentItem).text());
+	dateTemp = $("#education-graduationStartDate-"+ currentItem).text();
+	if(dateTemp) {
+		$("#education-graduationStartDate").val(dateTemp.trim());
+	}
 	
-	$("#education-graduationEndDate").val($("#education-graduationEndDate-"+ currentItem).text());
+	dateTemp = $("#education-graduationEndDate-"+ currentItem).text();
+	if(dateTemp) {
+		$("#education-graduationEndDate").val(dateTemp.trim());
+	}
 	
 	$("#education-description").val($("#education-description-"+ currentItem).text());
 }
@@ -84,14 +134,21 @@ function deleteUEducation() {
 /**bind current Employment item to edit form*/
 function bindCurrentEmployment(employmentId){
 	currentItem = employmentId;
+	var dateTemp;
 	
 	$("#employment-clientName").val($("#employment-clientName-"+ currentItem+ " a h5").text());
 	
 	$("#employment-positionHeld").val($("#employment-positionHeld-"+ currentItem).text());
 	
-	$("#employment-startDate").val($("#employment-startDate-"+ currentItem).text());
+	dateTemp = $("#employment-startDate-"+ currentItem).text();
+	if(dateTemp) {
+		$("#employment-startDate").val(dateTemp.trim());
+	}
 	
-	$("#employment-endDate").val($("#employment-endDate-"+ currentItem).text());
+	dateTemp = $("#employment-endDate-"+ currentItem).text();
+	if(dateTemp) {
+		$("#employment-endDate").val(dateTemp.trim());
+	}
 	
 	$("#employment-description").val($("#employment-description-"+ currentItem).text());
 }
