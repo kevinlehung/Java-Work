@@ -40,6 +40,7 @@ import vn.jv.web.form.UCertificationForm;
 import vn.jv.web.form.UEducationForm;
 import vn.jv.web.form.UEmploymentForm;
 import vn.jv.web.form.ULicenseForm;
+import vn.jv.web.validator.ProfileFormValidator;
 
 /**
  * This controller is for displaying the page: My Account => Overview
@@ -57,6 +58,8 @@ public class UserDashboardController extends BaseController {
 	private static final String BINDING_RESULT_UPDATED_EMPLOYMENT = "bindingResultUpdatedEmployment";
 	private static final String BINDING_RESULT_ADDED_LICENSE = "bindingResultAddedLicense";
 	private static final String BINDING_RESULT_UPDATED_LICENSE = "bindingResultUpdatedLicense";
+	private static final String BINDING_RESULT_UPDATED_OVERVIEW = "bindingResultUpdatedOverview";
+	private static final String BINDING_RESULT_UPDATED_SERVICE_DESCRIPTION = "bindingResultUpdatedServiceDescription";
 	
 	@Autowired
 	private IProfileService profileService;
@@ -76,17 +79,26 @@ public class UserDashboardController extends BaseController {
 	@Autowired
 	private IUserService userService;
 	
+	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
-		//binder.addValidators(userSignUpFormValidator);
 		SimpleDateFormat dateFormat = new SimpleDateFormat(vn.jv.constant.WebConstants.FixValue.DEFAULT_DATE_FORMAT);
-		 dateFormat.setLenient(false);
-		 binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+	}
+	
+	@InitBinder("profileForm")
+	protected void initProfileBinder(WebDataBinder binder) {
+		binder.addValidators(new ProfileFormValidator());
 	}
 	
 	@ModelAttribute("profileForm")
 	public ProfileForm profileForm() {
-		return new ProfileForm();
+		ProfileForm profileForm = new ProfileForm();
+		// just simple check for Overview and ServiceDescription
+		profileForm.setSimpleCheck(true);
+		
+		return profileForm;
 	}
 	
 	@ModelAttribute("uCertificationForm")
@@ -123,6 +135,16 @@ public class UserDashboardController extends BaseController {
 		model.addAttribute(uEducationForm);
 		model.addAttribute(uEmploymentForm);
 		model.addAttribute(uLicenseForm);
+		
+		if(model.asMap().containsKey(UserDashboardController.BINDING_RESULT_UPDATED_OVERVIEW)) {
+			model.addAttribute("org.springframework.validation.BindingResult.profileForm",
+					model.asMap().get(UserDashboardController.BINDING_RESULT_UPDATED_OVERVIEW));
+		}
+		
+		if(model.asMap().containsKey(UserDashboardController.BINDING_RESULT_UPDATED_SERVICE_DESCRIPTION)) {
+			model.addAttribute("org.springframework.validation.BindingResult.profileForm",
+					model.asMap().get(UserDashboardController.BINDING_RESULT_UPDATED_SERVICE_DESCRIPTION));
+		}
 		
 		if(model.asMap().containsKey(UserDashboardController.BINDING_RESULT_ADDED_CERTIFICATION)) {
 			model.addAttribute("org.springframework.validation.BindingResult.uCertificationForm",
@@ -161,7 +183,9 @@ public class UserDashboardController extends BaseController {
 	/** User Profile */
 	@RequestMapping(value = "/u/dashboard/updateOverviewProfile", method = RequestMethod.POST)
 	public String updateUserProfileOverviewDashBoard(HttpServletRequest request, HttpServletResponse reponse,
-					@Valid @ModelAttribute ProfileForm profileForm, BindingResult result, Model model) {
+					@Valid @ModelAttribute("profileForm") ProfileForm profileForm, BindingResult bindingResult, 
+					RedirectAttributes redirectAttributes , Model model) {
+		
 		// find user's profile first, if not exists -> create one valid profile, if exists already must check valid
 		User jvUser = SecurityUtil.getCurrentUser();
 		Profile profile = this.profileService.findOneByUserId(jvUser.getUserId());
@@ -177,9 +201,15 @@ public class UserDashboardController extends BaseController {
 			this.profileService.create(profile.getUser(), profile.getFile(), profile.getTagline(), profile.getOverview(),
 										profile.getHourlyRate(), profile.getExperience(), profile.getServiceDescription());
 		} else {
-			profile.setOverview(profileForm.getOverview());
-			this.profileService.update(profile.getProfileId(), profile.getFile(), profile.getTagline(), profile.getOverview(),
+			if(!bindingResult.hasErrors()) {
+				profile.setOverview(profileForm.getOverview());
+				this.profileService.update(profile.getProfileId(), profile.getFile(), profile.getTagline(), profile.getOverview(),
 										profile.getHourlyRate(), profile.getExperience(), profile.getServiceDescription());
+			} else {
+				redirectAttributes.addFlashAttribute("invalidUpdatedOverview", true);
+				redirectAttributes.addFlashAttribute("profileForm", profileForm);
+				redirectAttributes.addFlashAttribute(UserDashboardController.BINDING_RESULT_UPDATED_OVERVIEW, bindingResult);
+			}
 		}
 		
 		setModelAttributesForViewingUserDashboard(model);
@@ -188,7 +218,9 @@ public class UserDashboardController extends BaseController {
 	
 	@RequestMapping(value = "/u/dashboard/updateServiceDescriptionProfile", method = RequestMethod.POST)
 	public String updateUserProfileServiceDescriptionDashBoard(HttpServletRequest request, HttpServletResponse reponse,
-					@Valid @ModelAttribute ProfileForm profileForm, BindingResult result, Model model) {
+					@Valid @ModelAttribute("profileForm") ProfileForm profileForm, BindingResult bindingResult,
+					RedirectAttributes redirectAttributes , Model model) {
+		
 		// find user's profile first, if not exists -> create one valid profile, if exists already must check valid
 		User jvUser = SecurityUtil.getCurrentUser();
 		Profile profile = this.profileService.findOneByUserId(jvUser.getUserId());
@@ -204,9 +236,15 @@ public class UserDashboardController extends BaseController {
 			this.profileService.create(profile.getUser(), profile.getFile(), profile.getTagline(), profile.getOverview(),
 										profile.getHourlyRate(), profile.getExperience(), profile.getServiceDescription());
 		} else {
-			profile.setServiceDescription(profileForm.getServiceDescription());
-			this.profileService.update(profile.getProfileId(), profile.getFile(), profile.getTagline(), profile.getOverview(),
+			if(!bindingResult.hasErrors()) {
+				profile.setServiceDescription(profileForm.getServiceDescription());
+				this.profileService.update(profile.getProfileId(), profile.getFile(), profile.getTagline(), profile.getOverview(),
 										profile.getHourlyRate(), profile.getExperience(), profile.getServiceDescription());
+			} else {
+				redirectAttributes.addFlashAttribute("invalidUpdatedServiceDescription", true);
+				redirectAttributes.addFlashAttribute("profileForm", profileForm);
+				redirectAttributes.addFlashAttribute(UserDashboardController.BINDING_RESULT_UPDATED_SERVICE_DESCRIPTION, bindingResult);
+			}
 		}
 		
 		setModelAttributesForViewingUserDashboard(model);

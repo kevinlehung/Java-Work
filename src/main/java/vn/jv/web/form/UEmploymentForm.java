@@ -16,6 +16,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 public class UEmploymentForm {
 	
+	private int uEmploymentId;
+	
 	@NotBlank(message = "Client Name is required")
 	@Size(min = 2, max = 512, message = "Length of Client Name must be from 2 to 512 characters")
 	private String clientName;
@@ -83,5 +85,13 @@ public class UEmploymentForm {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public int getuEmploymentId() {
+		return uEmploymentId;
+	}
+
+	public void setuEmploymentId(int uEmploymentId) {
+		this.uEmploymentId = uEmploymentId;
 	}
 }

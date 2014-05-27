@@ -6,6 +6,7 @@
 <head>
     <title>Post Java Job - Preview</title>
     <link href='${contextPath}/assets/stylesheets/account.css' media='all' rel='stylesheet' type='text/css' />
+	<link href='${contextPath}/assets/stylesheets/javawork.css' rel='stylesheet' type='text/css' />
     <script src='${contextPath}/assets/javascripts/account.js' type='text/javascript'></script>
     <script src='${contextPath}/assets/javascripts/javawork/user_profile_overview.js' type='text/javascript'></script>
 </head>
@@ -52,16 +53,14 @@
 			                            [Edit]
 			                        </a>
                                 </div>
-                                <div class='content' id='inplaceediting-about-me-content' data-type="wysihtml5" data-original-title="About Me" data-toggle="manual">
                                 <c:choose>
                                 	<c:when test="${(empty profile) || (empty profile.overview)}">
- 											Empty
+ 										<div class='content' id='inplaceediting-about-me-content'>Empty</div>
  									</c:when>
  									<c:otherwise>
- 										<c:out value="${profile.overview}"/>
+ 										<div class='content' id='inplaceediting-about-me-content'><c:out value="${profile.overview}"/></div>
  									</c:otherwise>
                                 </c:choose>
-                                </div>
 								<div class='modal hide fade' id='update-profileOverview-dialog' role='dialog' tabindex='-1'>
 					                <div class='modal-header'>
 					                    <button class='close' data-dismiss='modal' type='button'>&times;</button>
@@ -71,13 +70,20 @@
 					                <input type="hidden" id="invalidUpdatedOverview" value="${invalidUpdatedOverview}" />
 					                <form:form accept-charset="UTF-8" action="${contextPath}/u/dashboard/updateOverviewProfile.jv" method="post" commandName = "profileForm">
 					                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+										<c:choose>
+											<c:when test="${(not empty profile)}">
+												<input type="hidden" id="profile-serviceDescription" path="serviceDescription" value="${profileForm.serviceDescription}"/>
+											</c:when>
+											<c:otherwise>
+												<input type="hidden" id="profile-serviceDescription" path="serviceDescription" value="Empty"/>
+											</c:otherwise>
+										</c:choose>
 					                	<div class='modal-body'> 
-					                       
 					                         <div class='control-group'>
 					                            <div class='controls'>
-					                             <form:textarea id="wysihtml5-textarea-overview" name="wysihtml5-textarea" path="overview"/>
-					                             <p class='help-block' />
+					                             <form:textarea class="span14heightspan5" id="wysihtml5-textarea-overview" name="wysihtml5-textarea" path="overview"/>
 					                            </div>
+												<form:errors path="overview" cssClass="help-block error"/>
 					                        </div>
 					                    </div>
 					                	<div class='modal-footer'>
@@ -99,17 +105,14 @@
 			                        </a>
 			                        <a href="#" data-target="#my_modal" data-toggle="modal" data-id="my_id_value">Open Modal</a>
                                 </div>
-                                <div class='content' id="inplaceediting-service-content"  data-type="wysihtml5" data-original-title="Service Description" data-toggle="manual">
 								<c:choose>
 									<c:when test="${(empty profile) || (empty profile.serviceDescription)}">
- 										Empty
+ 										<div class='content' id="inplaceediting-service-content">Empty</div>
  									</c:when>
  									<c:otherwise>
- 										<c:out value="${profile.serviceDescription}"/>
+ 										<div class='content' id="inplaceediting-service-content"><c:out value="${profile.serviceDescription}"/></div>
  									</c:otherwise>
                                 </c:choose>
-                                </div>
-                                
                                 <div class='modal hide fade' id='update-profileServiceDescription-dialog' role='dialog' tabindex='-1'>
 					                <div class='modal-header'>
 					                    <button class='close' data-dismiss='modal' type='button'>&times;</button>
@@ -118,13 +121,20 @@
 									<input type="hidden" id="invalidUpdatedServiceDescription" value="${invalidUpdatedServiceDescription}" />
 					                <form:form accept-charset="UTF-8" action="${contextPath}/u/dashboard/updateServiceDescriptionProfile.jv" method="post" commandName = "profileForm">
 					                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+										<c:choose>
+											<c:when test="${(not empty profile)}">
+												<input type="hidden" id="profile-overview" path="overview" value="${profileForm.overview}"/>
+											</c:when>
+											<c:otherwise>
+												<input type="hidden" id="profile-overview" path="overview" value="Empty"/>
+											</c:otherwise>
+										</c:choose>
 					                	<div class='modal-body'> 
-					                       
 					                         <div class='control-group'>
 					                            <div class='controls'>
-					                             <form:textarea id="wysihtml5-textarea-serviceDescription" name="wysihtml5-textarea" path="serviceDescription"/>
-					                             <p class='help-block' />
+					                             <form:textarea class="span14heightspan5" id="wysihtml5-textarea-serviceDescription" name="wysihtml5-textarea" path="serviceDescription"/>
 					                            </div>
+												<form:errors path="serviceDescription" cssClass="help-block error"/>
 					                        </div>
 					                    </div>
 					                	<div class='modal-footer'>
@@ -153,43 +163,45 @@
  											Empty
  										</c:when>
  										<c:otherwise>
-											<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ 											<table name='CertificationInfor'>
 											<c:forEach items="#{uCertifications}" var="uCertification" varStatus="count">
 												<c:if test="${uCertification.conferringOrganization!=null && uCertification.conferringOrganization!=''}">
-												<tr>
-													<td id="certification-conferringOrganization-${uCertification.certificationId}">
+													<tr>
+														<td colspan="2">
 														<a href='#update-certification-dialog' data-toggle='modal' role='button' onclick="bindCurrentCertification(${uCertification.certificationId});return false;">
-															<h5><c:out value="${uCertification.conferringOrganization}"/></h5>
-														</a>  
-													</td>
-												</tr>
+															<div id="certification-conferringOrganization-${uCertification.certificationId}" class='mainitemfont'>${uCertification.conferringOrganization}</div>
+														</a>
+														</td>
+													</tr>  
 												</c:if>
-												
 												<c:if test="${uCertification.professionalCertificate!=null && uCertification.professionalCertificate!=''}">
-												<tr>
-													<td id="certification-professionalCertificate-${uCertification.certificationId}"><c:out value="${uCertification.professionalCertificate}"/></td>
-												</tr>
+													<tr>
+														<td class='itemlabelfont'>Professional:</td>
+														<td id="certification-professionalCertificate-${uCertification.certificationId}" class='itemvaluefont'>${uCertification.professionalCertificate}</td>
+													</tr>
 												</c:if>
 												
 												<c:if test="${uCertification.dateAwarded!=null && uCertification.dateAwarded!=''}">
-												<tr>
-													<td id="certification-dateAwarded-${uCertification.certificationId}">
-														<fmt:formatDate value="${uCertification.dateAwarded}" pattern="MM/dd/yyyy" />
-													</td>
-												</tr>
+													<tr>
+														<td class='itemlabelfont'>Date Awarded:</td>
+														<td id="certification-dateAwarded-${uCertification.certificationId}" class='itemvaluefont'><fmt:formatDate value="${uCertification.dateAwarded}" pattern="MM/dd/yyyy" /></td>
+													</tr>
 												</c:if>
 												
 												<c:if test="${uCertification.certificateNumber!=null && uCertification.certificateNumber!=''}">
-												<tr>
-													<td id="certification-certificateNumber-${uCertification.certificationId}"><c:out value="${uCertification.certificateNumber}"/></td>
-												</tr>
+													<tr>
+														<td class='itemlabelfont'>Certificate Number:</td>
+														<td id="certification-certificateNumber-${uCertification.certificationId}" class='itemvaluefont'>${uCertification.certificateNumber}</td>
+													</tr>
 												</c:if>
 												
 												<c:if test="${uCertification.description!=null && uCertification.description!=''}">
-												<tr>
-													<td id="certification-description-${uCertification.certificationId}" ><c:out value="${uCertification.description}"/></td>
-												</tr>
+													<tr>
+														<td class='itemlabelfont'>Description:</td>
+														<td id="certification-description-${uCertification.certificationId}" class='itemvaluefont'>${uCertification.description}</td>
+													</tr>
 												</c:if>
+												<tr><td>&nbsp;</td></tr>
 											</c:forEach>
 											</table>
 										</c:otherwise>
@@ -264,6 +276,7 @@
 					                </div>
 									<form:form id='frm-UpdateUCertification' accept-charset="UTF-8" action="${contextPath}/u/dashboard/updateUCertification.jv" method="post" commandName = "uCertificationForm">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+										<input type="hidden" id="certification-uCertificationId" path="uCertificationId" value="${uCertificationForm.uCertificationId}"/>
 					                	<div class='modal-body'> 
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Conferring Organization</strong></label>
@@ -333,13 +346,13 @@
  											Empty
  										</c:when>
  										<c:otherwise>
-											<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<table name='LicenseInfor'>
 											<c:forEach items="#{uLicenses}" var="uLicense" varStatus="count">
 												<c:if test="${uLicense.conferringOrganization!=null && uLicense.conferringOrganization!=''}">
 												<tr>
-													<td id='license-conferringOrganization-${uLicense.licenseId}'>
+													<td colspan="4">
 														<a href='#update-license-dialog' data-toggle='modal' role='button' onclick="bindCurrentLicense(${uLicense.licenseId});return false;">
-															<h5><c:out value="${uLicense.conferringOrganization}"/></h5>
+															<div id='license-conferringOrganization-${uLicense.licenseId}' class='mainitemfont'>${uLicense.conferringOrganization}</div>
 														</a>
 													</td> 
 												</tr>
@@ -347,13 +360,15 @@
 												
 												<c:if test="${uLicense.professionalLicense!=null && uLicense.professionalLicense!=''}">
 												<tr>
-													<td id='license-professionalLicense-${uLicense.licenseId}'><c:out value="${uLicense.professionalLicense}"/></td>
+													<td class='itemlabelfont'>Professional License:</td>
+													<td id='license-professionalLicense-${uLicense.licenseId}' class='itemvaluefont'>${uLicense.professionalLicense}</td>
 												</tr>
 												</c:if>
 												
 												<c:if test="${uLicense.dateIssued!=null && uLicense.dateIssued!=''}">
 												<tr>
-													<td id='license-dateIssued-${uLicense.licenseId}'>
+													<td class='itemlabelfont'>Date Issued:</td>
+													<td id='license-dateIssued-${uLicense.licenseId}' class='itemvaluefont'>
 														<fmt:formatDate value="${uLicense.dateIssued}" pattern="MM/dd/yyyy" />
 													</td>
 												</tr>
@@ -361,14 +376,17 @@
 												
 												<c:if test="${uLicense.licenseNumber!=null && uLicense.licenseNumber!=''}">
 												<tr>
-													<td id='license-licenseNumber-${uLicense.licenseId}'><c:out value="${uLicense.licenseNumber}"/></td>
+													<td class='itemlabelfont'>License Number:</td>
+													<td id='license-licenseNumber-${uLicense.licenseId}' class='itemvaluefont'>${uLicense.licenseNumber}</td>
 												</tr>
 												</c:if>
 												
 												<c:if test="${uLicense.description!=null && uLicense.description!=''}">
 												<tr>
-													<td id='license-description-${uLicense.licenseId}'>;<c:out value="${uLicense.description}"/></td>
+													<td class='itemlabelfont'>Description:</td>
+													<td id='license-description-${uLicense.licenseId}' class='itemvaluefont'>${uLicense.description}</td>
 												</tr>
+												<tr><td>&nbsp;</td></tr>
 												</c:if>
 											</c:forEach>
 											</table>
@@ -444,6 +462,7 @@
 									<input type="hidden" id="invalidUpdatedLicense" value="${invalidUpdatedLicense}" />
 									<form:form id="frm-UpdateULicense" accept-charset="UTF-8" action="${contextPath}/u/dashboard/createULicense.jv" method="post" commandName = "uLicenseForm">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+										<input type="hidden" id="license-uLicenseId" path="uLicenseId" value="${uLicenseForm.uLicenseId}"/>
 										<div class='modal-body'>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Conferring Organization</strong></label>
@@ -511,44 +530,49 @@
  											Empty
  										</c:when>
  										<c:otherwise>
-											<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<table name='EducationsInfor' width="100%">
 											<c:forEach items="#{uEducations}" var="uEducation" varStatus="count">
 												<c:if test="${uEducation.institutionName!=null && uCertification.institutionName!=''}">
 												<tr>
-													<td id='education-institutionName-${uEducation.educationId}'>
+													<td colspan="4">
 														<a href='#update-education-dialog' data-toggle='modal' role='button' onclick="bindCurrentEducation(${uEducation.educationId});return false;">
-															<h5><c:out value="${uEducation.institutionName}"/></h5>
+															<div id='education-institutionName-${uEducation.educationId}' class='mainitemfont'>${uEducation.institutionName}</div>
 														</a>
 													</td>
 												</tr>
 												</c:if>
 												
 												<c:if test="${uEducation.degreeType!=null && uEducation.degreeType!=''}">
-												<tr id='education-degreeType-${uEducation.educationId}'>
-													<td><c:out value="${uEducation.degreeType}"/></td>
+												<tr>
+													<td class='itemlabelfont'>Degree Type:</td>
+													<td id='education-degreeType-${uEducation.educationId}' class='itemvaluefont'>${uEducation.degreeType}</td>
 												</tr>
 												</c:if>
 												
-												<c:if test="${uEducation.graduationStartDate!=null && uEducation.graduationStartDate!=''}">
+												<c:if test="${(uEducation.graduationStartDate!=null && uEducation.graduationStartDate!='') || (uEducation.graduationEndDate!=null && uEducation.graduationEndDate!='')}">
 												<tr>
-													<td id='education-graduationStartDate-${uEducation.educationId}'>
+													<td class='itemlabelfont'>Graduation Start Date:</td>
+													<td id='education-graduationStartDate-${uEducation.educationId}' class='itemvaluefont'>
+														<c:if test="${uEducation.graduationStartDate!=null && uEducation.graduationStartDate!=''}">
 														<fmt:formatDate value="${uEducation.graduationStartDate}" pattern="MM/dd/yyyy" />
+														</c:if>
 													</td>
-												</tr>
-												</c:if>
-												
-												<c:if test="${uEducation.graduationEndDate!=null && uEducation.graduationEndDate!=''}">
-												<tr>
-													<td id='education-graduationEndDate-${uEducation.educationId}'>
+													
+													<td class='itemlabelfont'>Graduation End Date:</td>
+													<td id='education-graduationEndDate-${uEducation.educationId}' class='itemvaluefont'>
+														<c:if test="${uEducation.graduationEndDate!=null && uEducation.graduationEndDate!=''}">
 														<fmt:formatDate value="${uEducation.graduationEndDate}" pattern="MM/dd/yyyy" />
+														</c:if>
 													</td>
 												</tr>
 												</c:if>
 												
 												<c:if test="${uEducation.description!=null && uEducation.description!=''}">
 												<tr>
-													<td id='education-description-${uEducation.educationId}'><c:out value="${uEducation.description}"/></td>
+													<td class='itemlabelfont'>Description:</td>
+													<td id='education-description-${uEducation.educationId}' class='itemvaluefont'>${uEducation.description}</td>
 												</tr>
+												<tr><td>&nbsp;</td></tr>
 												</c:if>
 											</c:forEach>
 											</table>
@@ -644,6 +668,7 @@
 									<input type="hidden" id="invalidUpdatedEducation" value="${invalidUpdatedEducation}" />
 									<form:form id='frm-UpdateUEducation' accept-charset="UTF-8" action="${contextPath}/u/dashboard/createUEducation.jv" method="post" commandName = "uEducationForm">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+										<input type="hidden" id="education-uEducationId" path="uEducationId" value="${uEducationForm.uEducationId}"/>
 										<div class='modal-body'>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Institution Name</strong></label>
@@ -718,13 +743,13 @@
  											Empty
  										</c:when>
  										<c:otherwise>
-											<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<table name='EmploymentsInfor'>
 											<c:forEach items="#{uEmployments}" var="uEmployment" varStatus="count">
 												<c:if test="${uEmployment.clientName!=null && uEmployment.clientName!=''}">
 												<tr>
-													<td  id='employment-clientName-${uEmployment.employmentId}'>
+													<td colspan="4">
 														<a href='#update-employment-dialog' data-toggle='modal' role='button' onclick="bindCurrentEmployment(${uEmployment.employmentId});return false;">
-															<h5><c:out value="${uEmployment.clientName}"/></h5>
+															<div id='employment-clientName-${uEmployment.employmentId}' class='mainitemfont'>${uEmployment.clientName}</div>
 														</a>
 													</td>
 												</tr>
@@ -732,31 +757,37 @@
 												
 												<c:if test="${uEmployment.positionHeld!=null && uEmployment.positionHeld!=''}">
 												<tr>
-													<td id='employment-positionHeld-${uEmployment.employmentId}'><c:out value="${uEmployment.positionHeld}"/></td>
+													<td class='itemlabelfont'>Position Held:</td>
+													<td id='employment-positionHeld-${uEmployment.employmentId}' class='itemvaluefont'>${uEmployment.positionHeld}</td>
 												</tr>
 												</c:if>
 												
-												<c:if test="${uEmployment.startDate!=null && uEmployment.startDate!=''}">
+												<c:if test="${(uEmployment.startDate!=null && uEmployment.startDate!='') || (uEmployment.endDate!=null && uEmployment.endDate!='')}">
 												<tr>
-													<td id='employment-startDate-${uEmployment.employmentId}'>
+													<td class='itemlabelfont'>Start Date:</td>
+													<td id='employment-startDate-${uEmployment.employmentId}' class='itemvaluefont'>
+														<c:if test="${uEmployment.startDate!=null && uEmployment.startDate!=''}">
 														<fmt:formatDate value="${uEmployment.startDate}" pattern="MM/dd/yyyy" />
+														</c:if>
 													</td>
-												</tr>
-												</c:if>
-												
-												<c:if test="${uEmployment.endDate!=null && uEmployment.endDate!=''}">
-												<tr>
-													<td id='employment-endDate-${uEmployment.employmentId}'>
+													
+													<td class='itemlabelfont'>End Date:</td>
+													<td id='employment-endDate-${uEmployment.employmentId}' class='itemvaluefont'>
+														<c:if test="${uEmployment.endDate!=null && uEmployment.endDate!=''}">
 														<fmt:formatDate value="${uEmployment.endDate}" pattern="MM/dd/yyyy" />
+														</c:if>
 													</td>
 												</tr>
 												</c:if>
 												
 												<c:if test="${uEmployment.description!=null && uEmployment.description!=''}">
 												<tr>
-													<td id='employment-description-${uEmployment.employmentId}'><c:out value="${uEmployment.description}"/></td>
+													<td class='itemlabelfont'>Description:</td>
+													<td id='employment-description-${uEmployment.employmentId}' class='itemvaluefont'>${uEmployment.description}</td>
 												</tr>
 												</c:if>
+												
+												<tr><td>&nbsp;</td></tr>
 											</c:forEach>
 											</table>
 										</c:otherwise>
@@ -849,6 +880,7 @@
 									<input type="hidden" id="invalidUpdatedEmployment" value="${invalidUpdatedEmployment}" />
 					                <form:form id='frm-UpdateUEmployment' accept-charset="UTF-8" action="${contextPath}/u/dashboard/createUEmployment.jv" method="post" commandName = "uEmploymentForm">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+										<input type="hidden" id="education-uEmploymentId" path="uEmploymentId" value="${uEmploymentForm.uEmploymentId}"/>
 					                	<div class='modal-body'>
 					                        <div class='control-group'>
 					                            <label class='control-label'><strong>Client name</strong></label>

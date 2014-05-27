@@ -16,6 +16,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 public class ULicenseForm {
 	
+	private int uLicenseId;
+	
 	@NotBlank(message = "Conferring Organization is required")
 	@Size(min = 2, max = 512, message = "Length of Conferring Organization must be from 2 to 512 characters")
 	private String conferringOrganization;
@@ -82,5 +84,13 @@ public class ULicenseForm {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public int getuLicenseId() {
+		return uLicenseId;
+	}
+
+	public void setuLicenseId(int uLicenseId) {
+		this.uLicenseId = uLicenseId;
 	}
 }

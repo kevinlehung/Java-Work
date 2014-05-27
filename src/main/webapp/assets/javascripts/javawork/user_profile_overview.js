@@ -4,18 +4,22 @@ $(document).ready(function(){
 	if ($("#invalidCreatedCertification").val()=="true") {
 		$("#add-certification-dialog").modal("show");
 	} else if ($("#invalidUpdatedCertification").val()=="true") {
+		currentItem = $("#certification-uCertificationId").val();
 		$("#update-certification-dialog").modal("show");
 	} else if ($("#invalidCreatedEducation").val()=="true") {
 		$("#add-education-dialog").modal("show");
 	} else if ($("#invalidUpdatedEducation").val()=="true") {
+		currentItem = $("#education-uEducationId").val();
 		$("#update-education-dialog").modal("show");
 	} else if ($("#invalidCreatedEmployment").val()=="true") {
 		$("#add-employment-dialog").modal("show");
 	} else if ($("#invalidUpdatedEmployment").val()=="true") {
+		currentItem = $("education-uEmploymentId").val(); 
 		$("#update-employment-dialog").modal("show");
 	} else if ($("#invalidCreatedLicense").val()=="true") {
 		$("#add-license-dialog").modal("show");
 	} else if ($("#invalidUpdatedLicense").val()=="true") {
+		currentItem = $("#license-uLicenseId").val();
 		$("#update-license-dialog").modal("show");
 	} else if ($("#invalidUpdatedOverview").val()=="true") {
 		$("#update-profileOverview-dialog").modal("show");
@@ -27,20 +31,21 @@ $(document).ready(function(){
 
 /** bind profile overview */
 function bindProfileOverview() {
-	$("#wysihtml5-textarea-overview").val($("#inplaceediting-about-me-content").text());
+	$("#wysihtml5-textarea-overview").text($("#inplaceediting-about-me-content").text());
 
 }
 
 /** bind profile service description */
 function bindProfileServiceDescription() {
-	$("#wysihtml5-textarea-serviceDescription").val($("#inplaceediting-service-content").text());
+	$("#wysihtml5-textarea-serviceDescription").text($("#inplaceediting-service-content").text());
 }
 
 /**bind current Certification item to edit form*/
 function bindCurrentCertification(certificationId){
 	currentItem = certificationId;
 	var dateTemp;
-	$("#certification-conferringOrganization").val($("#certification-conferringOrganization-" + currentItem + " a h5").text());
+	$("#certification-uCertificationId").val(currentItem);
+	$("#certification-conferringOrganization").val($("#certification-conferringOrganization-" + currentItem).text());
 	
 	$("#certification-professionalOrganization").val($("#certification-professionalCertificate-"+ currentItem).text());
 	
@@ -71,7 +76,7 @@ function bindCurrentLicense(licenseId){
 	currentItem = licenseId;
 	var dateTemp;
 	
-	$("#license-conferringOrganization").val($("#license-conferringOrganization-"+ currentItem+" a h5").text());
+	$("#license-conferringOrganization").val($("#license-conferringOrganization-"+ currentItem).text());
 	
 	$("#license-professionalLicense").val($("#license-professionalLicense-"+ currentItem).text());
 	
@@ -102,7 +107,7 @@ function bindCurrentEducation(educationId){
 	currentItem = educationId;
 	var dateTemp;
 	
-	$("#education-institutionName").val($("#education-institutionName-"+ currentItem+ " a h5").text());
+	$("#education-institutionName").val($("#education-institutionName-"+ currentItem).text());
 	
 	$("#education-degreeType").val($("#education-degreeType-"+ currentItem).text());
 	
@@ -136,7 +141,7 @@ function bindCurrentEmployment(employmentId){
 	currentItem = employmentId;
 	var dateTemp;
 	
-	$("#employment-clientName").val($("#employment-clientName-"+ currentItem+ " a h5").text());
+	$("#employment-clientName").val($("#employment-clientName-"+ currentItem).text());
 	
 	$("#employment-positionHeld").val($("#employment-positionHeld-"+ currentItem).text());
 	

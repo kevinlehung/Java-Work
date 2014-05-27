@@ -1,9 +1,5 @@
 package vn.jv.web.form;
 
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotBlank;
-
 /**
  * Model Attribute for updating Profile actions
  *
@@ -12,21 +8,21 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class ProfileForm {
 	
-	@NotBlank(message="Tagline is required")
-	@Size(min = 3, max = 128, message = "Length of Tagline must be from 3 to 128 characters")
+	private int profileId;
+	
+	/**
+	 * Additional Field, Not save on DB, when it is true, just check valid for Overview and ServiceDescription 
+	 */
+	private boolean isSimpleCheck;
+	
 	private String tagline;
 	
-	@NotBlank(message="Overview is required")
-	@Size(min = 3, max = 1024, message = "Length of Overview must be from 3 to 1024 characters")
 	private String overview;
 	
 	private int hourlyRate;
 	
-	@NotBlank(message="Experience is required")
-	@Size(min = 3, max = 1024, message = "Length of Experience must be from 3 to 1024 characters")
 	private String experience;
 	
-	@Size(max = 1024, message = "Length of Service Description must be from 3 to 1024 characters")
 	private String serviceDescription;
 	
 	private int photoAttachFileId;
@@ -87,6 +83,22 @@ public class ProfileForm {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public int getProfileId() {
+		return profileId;
+	}
+
+	public void setProfileId(int profileId) {
+		this.profileId = profileId;
+	}
+
+	public boolean isSimpleCheck() {
+		return isSimpleCheck;
+	}
+
+	public void setSimpleCheck(boolean isSimpleCheck) {
+		this.isSimpleCheck = isSimpleCheck;
 	}
 
 }

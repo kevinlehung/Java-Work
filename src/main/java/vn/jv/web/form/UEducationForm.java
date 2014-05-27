@@ -6,6 +6,7 @@ import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.ScriptAssert;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -14,7 +15,11 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author tthieucdl@gmail.com
  *
  */
+
+@ScriptAssert(lang = "javascript", script = "_this.graduationStartDate.before(_this.graduationEndDate)", message = "The Graduation End Date must be greater than the Graduation Start Date")
 public class UEducationForm {
+	
+	private int uEducationId;
 	
 	@NotBlank(message = "Institution Name is required")
 	@Size(min = 2, max = 512, message = "Length of Institution Name must be from 2 to 512 characters")
@@ -83,6 +88,14 @@ public class UEducationForm {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public int getuEducationId() {
+		return uEducationId;
+	}
+
+	public void setuEducationId(int uEducationId) {
+		this.uEducationId = uEducationId;
 	}
 	
 }
