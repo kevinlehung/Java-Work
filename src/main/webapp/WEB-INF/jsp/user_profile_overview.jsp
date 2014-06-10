@@ -72,15 +72,16 @@
 					                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 										<c:choose>
 											<c:when test="${(not empty profile)}">
-												<input type="hidden" id="profile-serviceDescription" path="serviceDescription" value="${profileForm.serviceDescription}"/>
+												<input type="hidden" id="profile-overview" path="overview" value="${profileForm.overview}"/>
 											</c:when>
 											<c:otherwise>
-												<input type="hidden" id="profile-serviceDescription" path="serviceDescription" value="Empty"/>
+												<input type="hidden" id="profile-overview" path="overview" value="Empty"/>
 											</c:otherwise>
 										</c:choose>
 					                	<div class='modal-body'> 
 					                         <div class='control-group'>
 					                            <div class='controls'>
+					                             <form:hidden id="tempValidValue" path="serviceDescription" value="ValidValue"/>
 					                             <form:textarea class="span14heightspan5" id="wysihtml5-textarea-overview" name="wysihtml5-textarea" path="overview"/>
 					                            </div>
 												<form:errors path="overview" cssClass="help-block error"/>
@@ -103,7 +104,7 @@
 			                            <i class="icon-pencil"></i>
 			                            [Edit]
 			                        </a>
-			                        <a href="#" data-target="#my_modal" data-toggle="modal" data-id="my_id_value">Open Modal</a>
+
                                 </div>
 								<c:choose>
 									<c:when test="${(empty profile) || (empty profile.serviceDescription)}">
@@ -123,15 +124,16 @@
 					                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 										<c:choose>
 											<c:when test="${(not empty profile)}">
-												<input type="hidden" id="profile-overview" path="overview" value="${profileForm.overview}"/>
+												<input type="hidden" id="profile-serviceDescription" path="serviceDescription" value="${profileForm.serviceDescription}"/>
 											</c:when>
 											<c:otherwise>
-												<input type="hidden" id="profile-overview" path="overview" value="Empty"/>
+												<input type="hidden" id="profile-serviceDescription" path="serviceDescription" value="Empty"/>
 											</c:otherwise>
 										</c:choose>
 					                	<div class='modal-body'> 
 					                         <div class='control-group'>
 					                            <div class='controls'>
+					                             <form:hidden id="tempValidValue" path="overview" value="ValidValue"/>
 					                             <form:textarea class="span14heightspan5" id="wysihtml5-textarea-serviceDescription" name="wysihtml5-textarea" path="serviceDescription"/>
 					                            </div>
 												<form:errors path="serviceDescription" cssClass="help-block error"/>
